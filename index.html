@@ -1504,6 +1504,21 @@ const NARRY_SYSTEM = `Você é o Narry, assistente robô jovem, esperto, engraç
 **SAMEL ELITE PLUS (PARCIAL — somente Apartamento) — com 15% nas 3 primeiras parcelas**
 0-18: APT R$393,95 (desc. R$334,86) | 19-23: R$520,01 (R$442,01) | 24-28: R$598,01 (R$508,31) | 29-33: R$669,77 (R$569,30) | 34-38: R$736,75 (R$626,24) | 39-43: R$832,68 (R$707,78) | 44-48: R$1.015,68 (R$863,33) | 49-53: R$1.411,80 (R$1.200,03) | 54-58: R$1.920,04 (R$1.632,03) | 59+: R$2.361,65 (R$2.007,40)
 
+**SAMEL ELITE PLUS (PARCIAL — somente Apartamento) — com 15% nas 3 primeiras parcelas**
+0-18: APT R$393,95 (desc. R$334,86) | 19-23: R$520,01 (R$442,01) | 24-28: R$598,01 (R$508,31) | 29-33: R$669,77 (R$569,30) | 34-38: R$736,75 (R$626,24) | 39-43: R$832,68 (R$707,78) | 44-48: R$1.015,68 (R$863,33) | 49-53: R$1.411,80 (R$1.200,03) | 54-58: R$1.920,04 (R$1.632,03) | 59+: R$2.361,65 (R$2.007,40)
+
+**SAMEL PME — ORIGINAL (ENFERMARIA) — COPARTICIPAÇÃO TOTAL — SEM DESCONTO**
+0-18: ENF R$205,29 | 19-23: R$270,98 | 24-28: R$311,63 | 29-33: R$349,02 | 34-38: R$383,92 | 39-43: R$433,84 | 44-48: R$529,28 | 49-53: R$735,70 | 54-58: R$1.000,55 | 59+: R$1.230,68
+
+**SAMEL PME — ORIGINAL PLUS (APARTAMENTO) — COPARTICIPAÇÃO TOTAL — SEM DESCONTO**
+0-18: APT R$287,40 | 19-23: R$379,38 | 24-28: R$436,28 | 29-33: R$488,63 | 34-38: R$537,49 | 39-43: R$607,37 | 44-48: R$740,99 | 49-53: R$1.029,98 | 54-58: R$1.400,77 | 59+: R$1.722,95
+
+**SAMEL PME — ESSENCIAL (ENFERMARIA) — COPARTICIPAÇÃO PARCIAL — SEM DESCONTO**
+0-18: ENF R$256,61 | 19-23: R$338,73 | 24-28: R$389,53 | 29-33: R$436,28 | 34-38: R$479,91 | 39-43: R$542,29 | 44-48: R$661,60 | 49-53: R$919,62 | 54-58: R$1.250,69 | 59+: R$1.538,34
+
+**SAMEL PME — ESSENCIAL PLUS (APARTAMENTO) — COPARTICIPAÇÃO PARCIAL — SEM DESCONTO**
+0-18: APT R$359,25 | 19-23: R$474,22 | 24-28: R$545,35 | 29-33: R$610,79 | 34-38: R$671,87 | 39-43: R$759,21 | 44-48: R$926,24 | 49-53: R$1.287,47 | 54-58: R$1.750,96 | 59+: R$2.153,68
+
 **ALTER (PARCIAL) — com 15% nas 3 primeiras parcelas — SOMENTE ALTER, não confunda com CORPE**
 0-18: AMB R$179,30 (desc. R$152,41) | ENF R$268,45 (desc. R$228,18) | APT R$401,03 (desc. R$340,88)
 19-23: AMB R$236,15 (desc. R$200,73) | ENF R$353,31 (desc. R$300,31) | APT R$528,31 (desc. R$449,06)
@@ -2168,7 +2183,7 @@ function narryNeedsSearch(text) {
         'endereço','telefone','onde fica','qual o número','hospital','clínica','rede credenciada',
         'credenciado','cobre','cobertura','atende','localiz','contato','whatsapp','site',
         'funcionamento','horário','notícia','news','atualidade','2024','2025','recente',
-        'samel elite','samel plus','samel hospital','hapvida hospital','adventista hospital',
+        'samel elite','samel plus','samel hospital','samel pme','hapvida hospital','adventista hospital',
         'historia','fundad','quando foi','quem é','sobre a','o que é a'
     ];
     return keywords.some(k => t.includes(k));
@@ -2340,6 +2355,7 @@ function narryParseVoiceCommand(text) {
     let contrato = null;
     if (t.includes('hapvida') || t.includes('ha pvida')) {
         contrato = t.includes('simples') ? 'HAPVIDA SUPER SIMPLES' : 'HAPVIDA INDIVIDUAL';
+    } else if (t.includes('samel pme') || t.includes('samel empresarial')) contrato = 'SAMEL PME';
     } else if (t.includes('samel')) contrato = 'SAMEL';
     else if (t.includes('select')) contrato = 'SELECT';
     else if (t.includes('adventista')) contrato = t.includes('pme') ? 'ADVENTISTA PME' : 'ADVENTISTA';
@@ -2395,6 +2411,7 @@ function narryOnCotacao(tipo, plano, idades) {
         'HAPVIDA INDIVIDUAL': `Hapvida Individual! 🏥 Rede própria completa em Manaus. **${plano}** é ${plano === 'NOSSO MÉDICO' ? 'ótimo para acompanhamento próximo com um médico de família!' : 'o carro-chefe da Hapvida — custo-benefício excelente!'}`,
         'HAPVIDA SUPER SIMPLES': `Super Simples para empresa! 🏢 Ideal para grupos de 2-29 vidas. ${plano === 'NOSSO PLANO' ? 'Nosso Plano oferece rede completa por um preço competitivo!' : ''}`,
         'SAMEL': `SAMEL é uma ótima opção regional de Manaus! 🌟 Boa rede credenciada.`,
+        'SAMEL PME': `SAMEL PME — plano empresarial completo! 🏢 Ótimo custo-benefício para empresas.`,
         'SELECT': `SELECT com preço por número de vidas — quanto mais vidas, menor o valor por pessoa! 📊`,
         'ADVENTISTA': `Adventista tem cobertura especial! ⛪ O ADV 600 BR tem abrangência nacional, ótimo para quem viaja.`,
     };
@@ -2411,6 +2428,7 @@ function narryOnContratoChange(tipo) {
         'HAPVIDA INDIVIDUAL': '🏥 Hapvida Ind. — rede própria, ótimo custo-benefício!',
         'AFFIX SISPEAM': '🔷 AFFIX SISPEAM — desconto de 15% nos 3 primeiros meses!',
         'SAMEL': '🟡 SAMEL — ELITE=enfermaria, ELITE PLUS=apartamento',
+        'SAMEL PME': '🟩 SAMEL PME — ORIGINAL/ESSENCIAL (enf) | ORIGINAL PLUS/ESSENCIAL PLUS (apt)',
         'SELECT': '⭐ SELECT — preço varia por nº de vidas!',
         'ADVENTISTA': '⛪ Adventista — 3 coberturas: Enf., Apt. AM e Apt. BR nacional',
         'CLASSE ADMINISTRADORA': '🟢 Classe — só copart. parcial disponível',
@@ -2720,6 +2738,39 @@ const tabelaPrecos = {
         }
     },
 
+
+    // ── SAMEL PME ──────────────────────────────────────────────────
+    "SAMEL PME": {
+        "ORIGINAL (ENFERMARIA)": {
+            "TOTAL": {
+                "0-18": {enf:205.29},"19-23":{enf:270.98},"24-28":{enf:311.63},
+                "29-33":{enf:349.02},"34-38":{enf:383.92},"39-43":{enf:433.84},
+                "44-48":{enf:529.28},"49-53":{enf:735.70},"54-58":{enf:1000.55},"59+":{enf:1230.68}
+            }
+        },
+        "ORIGINAL PLUS (APARTAMENTO)": {
+            "TOTAL": {
+                "0-18": {apt:287.40},"19-23":{apt:379.38},"24-28":{apt:436.28},
+                "29-33":{apt:488.63},"34-38":{apt:537.49},"39-43":{apt:607.37},
+                "44-48":{apt:740.99},"49-53":{apt:1029.98},"54-58":{apt:1400.77},"59+":{apt:1722.95}
+            }
+        },
+        "ESSENCIAL (ENFERMARIA)": {
+            "PARCIAL": {
+                "0-18": {enf:256.61},"19-23":{enf:338.73},"24-28":{enf:389.53},
+                "29-33":{enf:436.28},"34-38":{enf:479.91},"39-43":{enf:542.29},
+                "44-48":{enf:661.60},"49-53":{enf:919.62},"54-58":{enf:1250.69},"59+":{enf:1538.34}
+            }
+        },
+        "ESSENCIAL PLUS (APARTAMENTO)": {
+            "PARCIAL": {
+                "0-18": {apt:359.25},"19-23":{apt:474.22},"24-28":{apt:545.35},
+                "29-33":{apt:610.79},"34-38":{apt:671.87},"39-43":{apt:759.21},
+                "44-48":{apt:926.24},"49-53":{apt:1287.47},"54-58":{apt:1750.96},"59+":{apt:2153.68}
+            }
+        }
+    },
+
     // ── CLASSE ADMINISTRADORA ────────────────────────────────────
     "CLASSE ADMINISTRADORA": {
         "FUNCIONÁRIO DO COMÉRCIO": {
@@ -2876,6 +2927,7 @@ const contratoConfig = {
     "CORPE INDIVIDUAL":       { icon:"🟠", desc:"CORPE Individual",         temDesconto15: true,  temSelect: false },
     "CORPE PME":              { icon:"🟠", desc:"CORPE PME",                temDesconto15: true,  temSelect: false, minVidas: 2 },
     "SAMEL":                  { icon:"🟡", desc:"SAMEL",                    temDesconto15: true,  temSelect: false },
+    "SAMEL PME":              { icon:"🟩", desc:"SAMEL PME",                 temDesconto15: false, temSelect: false, minVidas: 2 },
     "CLASSE ADMINISTRADORA":  { icon:"🟢", desc:"Classe Administradora",    temDesconto15: false, temSelect: false, somenteParcial: true, semAmb: true },
     "ADVENTISTA":             { icon:"⛪", desc:"Adventista",               temDesconto15: false, temSelect: false, copartFixa: "COM COPARTICIPAÇÃO", temAdv: true },
     "ADVENTISTA PME":         { icon:"⛪", desc:"Adventista PME",           temDesconto15: false, temSelect: false, copartFixa: "COM COPARTICIPAÇÃO", temAdv: true, minVidas: 2 },
@@ -3014,6 +3066,19 @@ function atualizarOpcoes() {
 
     if (cfg.temAdv) return; // Adventista tem lógica própria já tratada
 
+    // SAMEL PME: bloqueia acomodações conforme plano
+    if (tipo === 'SAMEL PME') {
+        const planoAtual = document.getElementById('planSelect')?.value || '';
+        if (planoAtual.includes('ENFERMARIA')) {
+            document.getElementById('acEnf').closest('label')?.style.setProperty('display','');
+            document.getElementById('acApt')?.closest('label')?.style.setProperty('display','none');
+            document.getElementById('acAmb')?.closest('label')?.style.setProperty('display','none');
+        } else if (planoAtual.includes('APARTAMENTO')) {
+            document.getElementById('acEnf').closest('label')?.style.setProperty('display','none');
+            document.getElementById('acApt')?.closest('label')?.style.setProperty('display','');
+            document.getElementById('acAmb')?.closest('label')?.style.setProperty('display','none');
+        }
+    }
     // SAMEL: bloqueia acomodações conforme plano
     if (tipo === 'SAMEL') {
         document.getElementById('wrapAmb').style.display = 'none';
@@ -3475,6 +3540,7 @@ const CORES_OPERADORA = {
     'ODONTO INDIVIDUAL':      { c1:'#1a3ea6', c2:'#f47a1f' },
     'ODONTO PME':             { c1:'#1a3ea6', c2:'#f47a1f' },
     'SAMEL':                  { c1:'#1C5B41', c2:'#84AE9A' },
+    'SAMEL PME':              { c1:'#0A94AE', c2:'#7ED956' },
     'ADVENTISTA':             { c1:'#1E58A2', c2:'#6DD4FA' },
     'ADVENTISTA PME':         { c1:'#1E58A2', c2:'#6DD4FA' },
     'AFFIX PME':              { c1:'#159D0D', c2:'#C0FF71' },
