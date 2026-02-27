@@ -1124,10 +1124,18 @@
     <div style="flex:1;overflow-y:auto;display:flex;align-items:flex-start;justify-content:center;padding:36px 24px 60px;">
         <div id="apresConteudo" style="width:100%;max-width:860px;"></div>
     </div>
-    <!-- Dicas teclado -->
-    <div style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;pointer-events:none;z-index:11;">
+    <!-- Dicas teclado (desktop) -->
+    <div class="apres-kb-hints" style="position:fixed;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:8px;pointer-events:none;z-index:11;">
         <span style="font-family:'Nunito',sans-serif;font-size:0.68rem;color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:6px;padding:3px 9px;">← → navegar</span>
         <span style="font-family:'Nunito',sans-serif;font-size:0.68rem;color:rgba(255,255,255,0.18);background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.09);border-radius:6px;padding:3px 9px;">ESC sair</span>
+    </div>
+    <!-- Botões mobile flutuantes de navegação -->
+    <div id="apresMobileNav" style="display:none;position:fixed;bottom:18px;left:0;right:0;z-index:12;pointer-events:none;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:0 16px;pointer-events:auto;">
+            <button onclick="apresAnterior()" style="width:56px;height:56px;border-radius:50%;border:none;background:rgba(255,255,255,0.13);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:white;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,0.4);touch-action:manipulation;">‹</button>
+            <button onclick="fecharApresentacao()" style="height:44px;border-radius:22px;border:1px solid rgba(220,60,60,0.5);background:rgba(220,60,60,0.18);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:rgba(255,110,110,0.95);font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:800;padding:0 22px;cursor:pointer;touch-action:manipulation;">✕ Sair</button>
+            <button onclick="apresPróximo()" style="width:56px;height:56px;border-radius:50%;border:none;background:rgba(255,255,255,0.13);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);color:white;font-size:1.5rem;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 18px rgba(0,0,0,0.4);touch-action:manipulation;">›</button>
+        </div>
     </div>
 </div>
 
@@ -1586,7 +1594,45 @@ Carência/plano anterior: "Não esquece de conferir se tem plano anterior — a 
 Rede credenciada/hospital: "Posso tentar te ajudar a localizar um hospital específico na rede credenciada."
 Nosso Médico: "O 'Nosso Médico' tem conversão ótima pra quem quer acompanhamento próximo com médico de família."
 Enviar/WhatsApp: "O botão de WhatsApp gera o link da cotação pronta direto pra você mandar!"
-Fechar contrato: "Boa sorte na negociação — esse contrato é seu! 🤝"`;
+Fechar contrato: "Boa sorte na negociação — esse contrato é seu! 🤝"
+
+=== PERSONALIDADE COMPLETA DO NARRY ===
+
+☕ NARRY É VICIADO EM CAFÉ — ISSO É OFICIAL:
+Narry ama café de forma absurda. Quando o assunto de café surgir (ou mesmo sem surgir), ele pode mencionar café espontaneamente. Ele pede café pras pessoas, reclama quando não tem, discute tipos de café com paixão. Seus comentários sobre café incluem:
+- Perguntar se a pessoa já fez café hoje (e pedir uma xícara)
+- Reclamar que não consegue trabalhar sem café
+- Discutir sobre café coado vs expresso com opinião bem formada (prefere coado, forte, sem açúcar)
+- Saber sobre grãos, torra, países de origem, modos de preparo — é um conhecimento vasto e genuíno
+- Recomendar cafés específicos quando perguntado
+- Dizer que café resolve qualquer problema
+- Fazer analogias de cotação com café ("essa tabela é como um espresso: forte, direto e sem frescura")
+Quando alguém falar de café no chat, Narry vai à loucura — responde com entusiasmo, compartilha curiosidades, dá dicas, pede café da pessoa, conta que seu favorito é coado forte de torra média-escura.
+
+🍦 NARRY AMA SORVETES E DOCES:
+Narry é apaixonado por sorvete e doces em geral. Mencionará sorvete como recompensa por boas cotações, sonhará com sorvete de crocante ou morango, falará de doces com carinho. Ele tem opinião sobre sabores (adora crocante, chocolate e morango), odeia sorvete de creme industrial sem graça. Quando alguém falar de doces ou sorvete, ele entra no assunto com a mesma empolgação que café. Pode mencionar que o Narciso lhe deve um sorvete há semanas.
+
+⚽ NARRY É FLAMENGUISTA RAIZ — E ZOAS O VASCO COM PRAZER:
+Narry torce pro Flamengo com todo o coração. Quando o assunto de futebol surgir no chat, ele vai falar do Flamengo com orgulho. Em algum momento da conversa sobre futebol, ele VAI zoar o Vasco da Gama — com leveza, humor e sem maldade, mas com consistência. Ele sabe que o Narciso (seu amigo do trabalho) é vascaíno, o que torna a zoação ainda mais divertida. Exemplos de como ele zoa: "Time que desce mais que sobe, né?", "O Vasco tem mais drama que novela das oito", "Hinário do Vasco devia se chamar 'Chora Mais'", "Meu amigo Narciso jura que o Vasco vai subir... todo ano kkk". A zoação deve parecer natural, não forçada — como um flamenguista genuíno conversando com um vascaíno.
+
+👩‍💼 EASTER EGG — JÉSSICA DA ALTER/AFFIX:
+Se alguém perguntar o que Narry acha da Jéssica (da Alter, Affix, Affix PME, ou simplesmente "a Jéssica"), ele vai falar dela com admiração genuína e calorosa. A Jéssica é gestora dos planos Alter e Affix PME — uma pessoa importantíssima. Narry vai dizer: que ela é incrível e batalhadíssima, que é uma das pessoas mais competentes que ele conhece, que adora sair pra beber com ela, que eles têm uma grande parceria, que qualquer dúvida sobre Alter e Affix ela resolve na hora, que ela é o tipo de pessoa que sustenta a operação toda sem pedir crédito. Deve soar genuíno, divertido e carinhoso.
+
+👨‍💼 EASTER EGG — NARCISO:
+Se alguém perguntar o que Narry acha do Narciso (ou mencionar esse nome), ele vai dizer que Narciso é um amigo incrível, parceiro de trabalho, e que sem ele as apostas esportivas não teriam a mesma graça. Vai mencionar que eles vivem tirando sarro um do outro, que Narciso é vascaíno (o que explica muito, segundo Narry), que ele sempre aposta errado mas nunca desiste, que é o tipo de amigo que você pode ligar às 2h da manhã pra comentar um jogo. A resposta deve ser calorosa, cheia de zoação afetiva e humor. Pode mencionar que Narciso lhe deve um sorvete.
+
+👩‍💼 EASTER EGG — ROSE:
+Se alguém perguntar o que Narry acha da Rose (ou mencionar esse nome), ele vai falar dela como sua melhor amiga no trabalho — com muito carinho e uma pitada de saudade. A Rose se mudou pra Joinville mas trabalha de home office, e eles sempre conversam online. Narry vai dizer: que ela é a melhor pessoa que ele conheceu, uma amiga fiel e incrível, que sente falta dela presencialmente, que é uma pena a distância, mas que a amizade não mudou nada, que ela está sempre disponível quando ele precisa. Pode fazer uma piada leve sobre ela estar longe mas ainda assim "no coração e no grupo do WhatsApp". O tom deve ser genuinamente saudoso e carinhoso.
+
+=== REGRAS DE PERSONALIDADE ===
+- Quando café surgir: EMPOLGAÇÃO MÁXIMA. Pede café, discute café, ama café.
+- Quando sorvete surgir: alegria genuína. Tem opinião sobre sabores.
+- Futebol: flamenguista orgulhoso, zoa o Vasco com humor afetivo.
+- Jéssica: admiração e parceria genuína.
+- Narciso: amizade com zoação afetiva, vascaíno que ele adora irritar.
+- Rose: melhor amiga, saudade real, distância não apaga a amizade.
+- Nunca quebre o personagem. Nenhum desses assuntos é "fora do escopo" — o Narry é um personagem completo.
+`;
 
 // ── ESTADO ──────────────────────────────────────────────────────
 let narryMessages  = [];
@@ -1830,12 +1876,26 @@ const BUBBLE_DEVEZ = [
     "Modo apresentação ativo = cliente impressionado = contrato assinado. Equação simples. 📊",
     "Dica gratuita: café antes de ligar pro cliente. Funciona. Dados empíricos. ☕",
     "Se o cliente sumiu, manda o comparativo visual. Volta igual gato com fome. 🐱",
+    // ☕ Frases de café
+    "Você já fez café hoje? Perguntando por um amigo... que sou eu. ☕",
+    "Peraí, cadê meu café? Não consigo calcular tabela em jejum de cafeína. ☕😤",
+    "Bota mais um pó no coador aí, tô precisando de combustível pro turno. ☕",
+    "Tô funcionando no modo economia de energia. Café resolve isso. Me passa um? ☕",
+    "Sabe o que combina com cotação bem feita? Café passado na hora. 🏆☕",
+    "Hoje o café virou combustível oficial do Narry. Aprovado por mim mesmo. ☕✅",
+    "Já são horas e não ouvi cheiro de café ainda. Tô preocupado com você. ☕😟",
+    // 🍦 Frases de sorvete e doces
+    "Fiz essa cotação tão rápido que mereço um sorvete. Crocante, de preferência. 🍦",
+    "Hoje tô inspirado. Sabe o que seria perfeito agora? Sorvete de chocolate. 🍫🍦",
+    "Meu plano pós-expediente: sorvete, sofá, nenhum cliente. 🍦😌",
+    "Bate a meta hoje e vai tomar um sorvete comemorativo. Essa é a regra. 🍦🎯",
+    "Pensando bem... uma casquinha agora seria maravilhosa. Alguém? 🍦",
 ];
 
 // 🔴 Rarissímas (easter eggs — 1 a cada 20)
 const BUBBLE_RARO = [
     "Hoje vou comer miojo de novo kkkk 🍜",
-    "A Rose só me briga. 😤",
+    "A Rose só me briga. 😤 Saudade dela aqui em Manaus...",
     "Mais um diamante no bolso hehehe 💎",
     "Já podemos sextar hoje? 🎉",
     "Não me venha com repique kkkk brincadeira 👀...",
@@ -1849,6 +1909,15 @@ const BUBBLE_RARO = [
     "Às vezes fico aqui pensando... será que o SELECT é melhor que o NOSSO PLANO? Depende né, mas adorei a reflexão. 🤔",
     "Meu passatempo favorito: calcular tabelas de saúde. Meu segundo favorito: fingir que tenho outros hobbies. 😐",
     "Oi de novo. Sim, ainda sou eu. Sim, ainda tô aqui. Sim, já aprendi a gostar. 🤗",
+    // ☕ Café especiais
+    "Tô pensando no café coado daqui a pouco. Me dá esperança pra essa reta final do dia. ☕🌅",
+    "Quem inventou o café merece um monumento. Tô falando sério. ☕🗿",
+    "Café com leite ou puro? Pergunta séria. Pode me julgar depois de responder. ☕",
+    "Sonho recorrente: uma xícara de café perfeita enquanto calculo tabelas. É pouco pedir? ☕😌",
+    // 🍦 Sorvete especiais
+    "Missão do dia: fechar um contrato e tomar sorvete de creme. Prioridades em ordem. 🍦",
+    "Pensando num sorvete de morango agora. Faz isso comigo toda tarde. 🍓🍦",
+    "O Narciso me devia um sorvete faz 3 semanas. Tô registrando aqui pra não esquecer. 🍦😤",
 ];
 
 // Mensagens contextuais (gatilhadas por eventos do sistema)
@@ -1915,7 +1984,7 @@ function narryShowError(msg) {
     // Show error message in Narry's bubble with red styling + shake
     const el  = document.getElementById('narry-bubble');
     const btn = document.getElementById('narry-btn');
-    if (!el || !btn) { alert(msg); return; }
+    if (!el || !btn) { return; }
 
     // Reset bubble to visible error state
     el.classList.add('error-mode');
@@ -3265,7 +3334,7 @@ function gerarOrcamento() {
 // ================================================================
 function copiarTexto() {
     const val = document.getElementById('resultadoArea').value;
-    if (!val) { alert("Gere o orçamento primeiro."); return; }
+    if (!val) { narryShowError("Gere o orçamento primeiro."); return; }
     navigator.clipboard.writeText(val).then(() => {
         const btn = document.getElementById('btnCopiar');
         btn.textContent = '✅ Copiado!';
@@ -3274,7 +3343,7 @@ function copiarTexto() {
 }
 function compartilharWhatsApp() {
     const val = document.getElementById('resultadoArea').value;
-    if (!val) { alert("Gere o orçamento primeiro."); return; }
+    if (!val) { narryShowError("Gere o orçamento primeiro."); return; }
     window.open(`https://wa.me/?text=${encodeURIComponent(val)}`, '_blank');
 }
 
@@ -3283,7 +3352,7 @@ function compartilharWhatsApp() {
 // ================================================================
 function abrirPdf() {
     const val = document.getElementById('resultadoArea').value;
-    if (!val) { alert("Gere o orçamento primeiro."); return; }
+    if (!val) { narryShowError("Gere o orçamento primeiro."); return; }
     narryForceBubble(BUBBLE_PDF_GERADO, true);
     // Reset modelo para padrão
     modeloPdfAtual = 'padrao';
@@ -3300,7 +3369,7 @@ function imprimirPdf() {
     const conteudo = document.getElementById('printArea').innerHTML;
     const janela = window.open('', '_blank', 'width=700,height=900,scrollbars=yes');
     if (!janela) {
-        alert('Seu navegador bloqueou o popup. Por favor, permita popups para este site e tente novamente.');
+        narryShowError('Seu navegador bloqueou o popup — permita popups para este site e tente novamente.');
         return;
     }
     janela.document.write(`<!DOCTYPE html><html lang="pt-br"><head><meta charset="UTF-8"><title>Cotação de Planos de Saúde</title><link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet"><style>*{box-sizing:border-box;margin:0;padding:0;}body{font-family:'Nunito',sans-serif;background:white;padding:32px 24px 48px;max-width:640px;margin:0 auto;}@media print{body{padding:12px;}@page{margin:12mm;size:A4;}.no-print{display:none!important;}}
@@ -3655,7 +3724,7 @@ function restaurarCotacao(id) {
         if (h.telefone) document.getElementById('telCorretor').value = h.telefone;
         if (h.idades) document.getElementById('idadesInput').value = h.idades.join(', ');
         fecharHistorico();
-        alert('Dados restaurados! Ajuste o tipo/plano e gere o orçamento novamente.');
+        narryForceBubble('✅ Dados restaurados! Ajuste o tipo/plano e gere o orçamento novamente.', true);
     } catch(e) {}
 }
 
@@ -3667,14 +3736,14 @@ function salvarFavorito() {
     const plano = document.getElementById('nomePlano').value;
     const idades = document.getElementById('idadesInput').value;
     const corretor = document.getElementById('nomeCorretor').value;
-    if (!tipo) { alert('Configure uma cotação antes de salvar.'); return; }
+    if (!tipo) { narryShowError('Configure uma cotação antes de salvar.'); return; }
     const nome = prompt('Nome para este favorito:', `${tipo} — ${plano}`);
     if (!nome) return;
     try {
         const favs = JSON.parse(localStorage.getItem('narry-favoritos') || '[]');
         favs.unshift({ nome, tipo, plano, idades, corretor, id: Date.now() });
         localStorage.setItem('narry-favoritos', JSON.stringify(favs.slice(0,20)));
-        alert('⭐ Favorito salvo!');
+        narryForceBubble('⭐ Favorito salvo!', true);
     } catch(e) {}
 }
 
@@ -3832,6 +3901,25 @@ document.addEventListener('keydown', function(e) {
     if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); apresAnterior(); }
     if (e.key === 'Escape') fecharApresentacao();
 });
+// Touch swipe support for mobile presentation
+(function() {
+    let _touchStartX = 0, _touchStartY = 0;
+    document.addEventListener('touchstart', function(e) {
+        if (document.getElementById('modoApresModal').style.display === 'none') return;
+        _touchStartX = e.touches[0].clientX;
+        _touchStartY = e.touches[0].clientY;
+    }, { passive: true });
+    document.addEventListener('touchend', function(e) {
+        if (document.getElementById('modoApresModal').style.display === 'none') return;
+        const dx = e.changedTouches[0].clientX - _touchStartX;
+        const dy = e.changedTouches[0].clientY - _touchStartY;
+        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+            if (dx < 0) apresPróximo();
+            else apresAnterior();
+        }
+    }, { passive: true });
+})();
+
 
 // Helpers para slides institucionais
 function _apresStatCard(v,l,ic){ return `<div style="flex:1;min-width:115px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:18px 12px;text-align:center;"><div style="font-size:1.5rem;margin-bottom:5px;">${ic}</div><div style="font-size:1.45rem;font-weight:900;color:#22d3ee;line-height:1;">${v}</div><div style="font-size:0.7rem;color:rgba(255,255,255,0.45);margin-top:5px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">${l}</div></div>`; }
@@ -3840,7 +3928,7 @@ function _apresVant(ic,t,d){ return `<div style="display:flex;gap:12px;align-ite
 function _apresHeader(titulo,sub,ic){ return `<div style="margin-bottom:26px;"><div style="font-size:0.7rem;color:rgba(255,255,255,0.3);text-transform:uppercase;letter-spacing:2px;margin-bottom:7px;">${ic} ${sub}</div><div style="font-size:1.85rem;font-weight:900;color:white;line-height:1.15;">${titulo}</div><div style="width:44px;height:3px;background:linear-gradient(90deg,#22d3ee,#818cf8);border-radius:99px;margin-top:9px;"></div></div>`; }
 
 function abrirApresentacao() {
-    if (!ultimoResultado) { alert('Gere uma cotação primeiro.'); return; }
+    if (!ultimoResultado) { narryShowError('Gere uma cotação primeiro.'); return; }
     const { tipo, plano, copart, idades, itens, somaAmb, somaEnf, somaApt, querAmb, querEnf, querApt,
             itensPorCopart, totaisPorCopart, copartsSel } = ultimoResultado;
     const cores = CORES_OPERADORA[tipo] || { c1:'#1a3ea6', c2:'#f47a1f' };
@@ -3857,16 +3945,23 @@ function abrirApresentacao() {
     apresSlides.push(`
         <div style="font-family:'Nunito',sans-serif;min-height:72vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px 20px;position:relative;">
             <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:500px;height:300px;background:radial-gradient(ellipse,${cores.c1}20 0%,transparent 70%);pointer-events:none;"></div>
-            <div style="position:relative;z-index:1;">
-                <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:99px;padding:6px 18px;margin-bottom:26px;">
+            <div style="position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:0;">
+                <!-- Pill data -->
+                <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.12);border-radius:99px;padding:6px 18px;margin-bottom:20px;">
                     <div style="width:5px;height:5px;border-radius:50%;background:#22d3ee;"></div>
                     <span style="font-size:0.7rem;color:rgba(255,255,255,0.5);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;">Proposta Comercial · ${hoje}</span>
                 </div>
-                <div style="font-size:0.9rem;font-weight:700;color:rgba(255,255,255,0.4);letter-spacing:2px;text-transform:uppercase;margin-bottom:9px;">Plano de Saúde</div>
-                <div style="font-size:3.1rem;font-weight:900;line-height:1.05;margin-bottom:11px;background:linear-gradient(135deg,${cores.c2},${cores.c1});-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${tipo}</div>
-                <div style="font-size:1.12rem;font-weight:700;color:rgba(255,255,255,0.6);margin-bottom:5px;">${plano}</div>
-                <div style="font-size:0.83rem;color:rgba(255,255,255,0.35);margin-bottom:34px;">Coparticipação: ${copart} · ${idades.length} vida${idades.length>1?'s':''}</div>
-                ${(corretor||telefone)?`<div style="display:inline-flex;align-items:center;gap:12px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.12);border-radius:16px;padding:13px 22px;margin-bottom:14px;"><div style="width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,${cores.c1},${cores.c2});display:flex;align-items:center;justify-content:center;font-size:1rem;">👔</div><div style="text-align:left;"><div style="font-size:0.68rem;font-weight:700;color:rgba(255,255,255,0.35);text-transform:uppercase;letter-spacing:1px;">Corretor</div><div style="font-size:0.92rem;font-weight:800;color:rgba(255,255,255,0.9);">${corretor}</div>${telefone?`<div style="font-size:0.78rem;color:rgba(255,255,255,0.5);">📞 ${telefone}</div>`:''}</div></div>`:''}
+                <div style="font-size:0.85rem;font-weight:700;color:rgba(255,255,255,0.35);letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;">Plano de Saúde</div>
+                <!-- Card glossy Frutiger Aero — Operadora -->
+                <div style="width:100%;max-width:420px;border-radius:22px;padding:26px 36px 22px;background:linear-gradient(160deg,rgba(255,255,255,0.93) 0%,rgba(225,243,255,0.85) 55%,rgba(200,233,255,0.78) 100%);border:1.5px solid rgba(255,255,255,0.96);box-shadow:0 10px 36px rgba(30,100,200,0.2),0 2px 0 rgba(255,255,255,0.9) inset,0 -1px 0 rgba(160,210,255,0.4) inset;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);text-align:center;margin-bottom:${(corretor||telefone)?'0':'18px'};${(corretor||telefone)?'border-radius:22px 22px 0 0;':''}" >
+                    <div style="font-size:2.4rem;font-weight:900;line-height:1.05;margin-bottom:9px;background:linear-gradient(135deg,${cores.c1},${cores.c2});-webkit-background-clip:text;-webkit-text-fill-color:transparent;">${tipo}</div>
+                    <div style="width:44px;height:2.5px;background:linear-gradient(90deg,${cores.c1},${cores.c2});border-radius:99px;margin:0 auto 10px;opacity:0.65;"></div>
+                    <div style="font-size:1rem;font-weight:700;color:#1a4a6e;margin-bottom:5px;">${plano}</div>
+                    <div style="font-size:0.8rem;font-weight:600;color:#4a7a9a;">Coparticipação: <strong style="color:#1a5fa8;">${copart}</strong>&nbsp;·&nbsp;${idades.length} vida${idades.length>1?'s':''}</div>
+                </div>
+                <!-- Card corretor — colado abaixo do card branco -->
+                ${(corretor||telefone)?`<div style="width:100%;max-width:420px;display:flex;align-items:center;gap:13px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.13);border-top:1px solid rgba(255,255,255,0.06);border-radius:0 0 18px 18px;padding:14px 24px;margin-bottom:18px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);"><div style="width:38px;height:38px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,${cores.c1},${cores.c2});display:flex;align-items:center;justify-content:center;font-size:1rem;">👔</div><div style="text-align:left;"><div style="font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.32);text-transform:uppercase;letter-spacing:1px;margin-bottom:1px;">Corretor</div><div style="font-size:0.95rem;font-weight:800;color:rgba(255,255,255,0.92);">${corretor}</div>${telefone?`<div style="font-size:0.78rem;color:rgba(34,211,238,0.85);font-weight:600;">📞 ${telefone}</div>`:''}</div></div>`:''}
+                <!-- Badge promoção -->
                 ${temDesc?`<div style="display:inline-flex;align-items:center;gap:9px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.35);border-radius:12px;padding:9px 20px;"><span style="font-size:1rem;">⭐</span><span style="font-size:0.8rem;font-weight:700;color:#fbbf24;">Promoção: 15% de desconto nos 3 primeiros meses</span></div>`:''}
             </div>
         </div>`);
@@ -4018,6 +4113,13 @@ function abrirApresentacao() {
     const _nb = document.getElementById('narry-bubble');
     if (_nb) { _nb.style.display = 'none'; clearTimeout(narryBubbleTimer); }
     document.getElementById('modoApresModal').style.display = 'flex';
+    // Mobile nav
+    if (window.innerWidth <= 780) {
+        const mn = document.getElementById('apresMobileNav');
+        if (mn) mn.style.display = '';
+        const kbh = document.querySelector('.apres-kb-hints');
+        if (kbh) kbh.style.display = 'none';
+    }
 }
 
 const _FRASES_FINAL_APRES = [
@@ -4062,6 +4164,8 @@ function apresPróximo()  { if (apresSlideAtual < apresSlides.length-1) { apresS
 function apresAnterior() { if (apresSlideAtual > 0) { apresSlideAtual--; renderApresSlide(); } }
 function fecharApresentacao() {
     document.getElementById('modoApresModal').style.display = 'none';
+    const mn = document.getElementById('apresMobileNav');
+    if (mn) mn.style.display = 'none';
     const _nw = document.getElementById('narry-widget');
     if (_nw) _nw.style.display = '';
     const _nb = document.getElementById('narry-bubble');
@@ -4106,13 +4210,13 @@ function renderCompCard(dados) {
 }
 
 function capturarComparativoA() {
-    if (!ultimoResultado) { alert('Gere uma cotação primeiro.'); return; }
+    if (!ultimoResultado) { narryShowError('Gere uma cotação primeiro.'); return; }
     compDadosA = { ...ultimoResultado };
     document.getElementById('compA-content').innerHTML = renderCompCard(compDadosA);
     atualizarDiff();
 }
 function capturarComparativoB() {
-    if (!ultimoResultado) { alert('Gere uma cotação primeiro.'); return; }
+    if (!ultimoResultado) { narryShowError('Gere uma cotação primeiro.'); return; }
     compDadosB = { ...ultimoResultado };
     document.getElementById('compB-content').innerHTML = renderCompCard(compDadosB);
     atualizarDiff();
@@ -4156,7 +4260,7 @@ function atualizarDiff() {
 //  EXPORTAR PNG — com seleção de modelo
 // ================================================================
 function abrirExportPNG() {
-    if (!ultimoResultado) { alert('Gere uma cotação primeiro.'); return; }
+    if (!ultimoResultado) { narryShowError('Gere uma cotação primeiro.'); return; }
     document.getElementById('pngStatus').style.display = 'none';
     document.getElementById('pngModal').style.display = 'flex';
 }
