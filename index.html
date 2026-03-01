@@ -713,6 +713,74 @@
 <!-- ══════════════════════════════════════════════════════════════ -->
 <!--  TELA INICIAL — Frutiger Aero                                -->
 <!-- ══════════════════════════════════════════════════════════════ -->
+<!-- ============================================================
+     TELA DE LOGIN FIREBASE
+============================================================ -->
+<div id="telaLogin" style="display:none;position:fixed;inset:0;z-index:9000;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;">
+    <!-- Fundo -->
+    <div style="position:absolute;inset:0;background:linear-gradient(155deg,#0d1b2a 0%,#1a2e4a 50%,#0a1628 100%);z-index:0;"></div>
+    <div style="position:absolute;top:-160px;left:-100px;width:560px;height:560px;background:radial-gradient(ellipse,rgba(58,143,212,0.2) 0%,transparent 68%);border-radius:50%;z-index:1;animation:tiBlob1 9s ease-in-out infinite;pointer-events:none;"></div>
+    <div style="position:absolute;bottom:-130px;right:-80px;width:480px;height:480px;background:radial-gradient(ellipse,rgba(26,95,168,0.15) 0%,transparent 68%);border-radius:50%;z-index:1;animation:tiBlob2 11s ease-in-out infinite;pointer-events:none;"></div>
+
+    <div style="position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:32px 28px;max-width:420px;width:100%;">
+        <!-- Logo/Avatar -->
+        <div style="width:90px;height:90px;border-radius:50%;background:linear-gradient(145deg,rgba(58,143,212,0.4),rgba(26,95,168,0.6));backdrop-filter:blur(20px);border:2px solid rgba(58,143,212,0.5);display:flex;align-items:center;justify-content:center;margin-bottom:24px;box-shadow:0 0 40px rgba(58,143,212,0.3);">
+            <img id="loginNarryImg" src="" width="80" height="80" alt="Narry" style="width:80px;height:80px;object-fit:cover;object-position:center top;border-radius:50%;">
+        </div>
+        <div style="font-family:'Nunito',sans-serif;font-size:1.5rem;font-weight:900;color:white;margin-bottom:6px;">Bem-vindo de volta! 👋</div>
+        <div style="font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:600;color:rgba(255,255,255,0.5);margin-bottom:28px;">Cotação de Planos de Saúde · Narry</div>
+
+        <!-- Card Login -->
+        <div style="background:rgba(255,255,255,0.06);backdrop-filter:blur(24px);border:1.5px solid rgba(255,255,255,0.12);border-radius:22px;padding:28px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,0.4);">
+            <div style="margin-bottom:16px;">
+                <label style="font-family:'Nunito',sans-serif;font-size:0.75rem;font-weight:800;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.8px;display:block;margin-bottom:8px;">E-mail</label>
+                <input type="email" id="loginEmail" placeholder="seu@email.com"
+                    style="width:100%;padding:13px 18px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:700;color:white;outline:none;box-sizing:border-box;transition:border 0.2s;"
+                    onfocus="this.style.borderColor='rgba(58,143,212,0.7)'"
+                    onblur="this.style.borderColor='rgba(255,255,255,0.15)'"
+                    onkeydown="if(event.key==='Enter')document.getElementById('loginSenha').focus()">
+            </div>
+            <div style="margin-bottom:20px;">
+                <label style="font-family:'Nunito',sans-serif;font-size:0.75rem;font-weight:800;color:rgba(255,255,255,0.55);text-transform:uppercase;letter-spacing:0.8px;display:block;margin-bottom:8px;">Senha</label>
+                <input type="password" id="loginSenha" placeholder="••••••••"
+                    style="width:100%;padding:13px 18px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.15);background:rgba(255,255,255,0.08);font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:700;color:white;outline:none;box-sizing:border-box;transition:border 0.2s;"
+                    onfocus="this.style.borderColor='rgba(58,143,212,0.7)'"
+                    onblur="this.style.borderColor='rgba(255,255,255,0.15)'"
+                    onkeydown="if(event.key==='Enter')fazerLogin()">
+            </div>
+            <div id="loginErro" style="display:none;background:rgba(220,50,50,0.2);border:1px solid rgba(220,50,50,0.4);border-radius:10px;padding:10px 14px;font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:700;color:#ff8080;margin-bottom:14px;"></div>
+            <button onclick="fazerLogin()" id="btnFazerLogin"
+                style="width:100%;padding:15px;border-radius:12px;border:none;background:linear-gradient(135deg,#3a8fd4,#1a5fa8);color:white;font-family:'Nunito',sans-serif;font-size:1rem;font-weight:900;cursor:pointer;box-shadow:0 8px 24px rgba(58,143,212,0.4);transition:all 0.2s;letter-spacing:0.3px;">
+                🔐 Entrar
+            </button>
+        </div>
+        <div style="font-family:'Nunito',sans-serif;font-size:0.7rem;color:rgba(255,255,255,0.3);margin-top:20px;font-weight:600;">✦ desenvolvido por Narry · Lider Saúde</div>
+    </div>
+</div>
+
+<!-- ============================================================
+     PAINEL ADMIN
+============================================================ -->
+<div id="painelAdmin" style="display:none;position:fixed;inset:0;z-index:8500;background:rgba(0,0,0,0.7);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+    <div style="background:var(--modal-card);border-radius:20px;width:95%;max-width:760px;max-height:88vh;overflow-y:auto;box-shadow:0 24px 70px rgba(0,0,0,0.6);">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid var(--modal-border);background:var(--modal-top-bg);border-radius:20px 20px 0 0;position:sticky;top:0;z-index:1;">
+            <div>
+                <div style="font-size:0.9rem;font-weight:900;color:var(--modal-title);text-transform:uppercase;letter-spacing:0.8px;">👑 Painel Admin</div>
+                <div style="font-size:0.72rem;font-weight:600;color:var(--text-light);">Acessos e atividade dos usuários</div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <button onclick="adminCarregarDados()" style="padding:7px 14px;border-radius:20px;border:1.5px solid var(--pill-border);background:var(--pill-bg);color:var(--text-dark);font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:800;cursor:pointer;">🔄 Atualizar</button>
+                <button onclick="fecharAdmin()" style="border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;background:#e5e7eb;color:#374151;font-weight:800;">✕</button>
+            </div>
+        </div>
+        <div style="padding:20px;">
+            <div id="adminStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;"></div>
+            <div style="font-size:0.75rem;font-weight:800;color:var(--text-light);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">📋 Histórico de Acessos</div>
+            <div id="adminLogs" style="display:flex;flex-direction:column;gap:8px;"></div>
+        </div>
+    </div>
+</div>
+
 <div id="telaInicial" style="display:none;position:fixed;inset:0;z-index:6000;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;">
 
     <!-- Fundo degradê azul Frutiger Aero -->
@@ -747,10 +815,11 @@
         <div id="telaInicialNomeWrap" style="margin-bottom:18px;width:100%;max-width:320px;">
             <div style="position:relative;">
                 <input type="text" id="telaInicialNome" maxlength="40"
-                    placeholder="Seu nome (opcional) 👤"
+                    placeholder="Seu nome (obrigatório) 👤"
                     style="width:100%;padding:12px 18px;border-radius:50px;border:1.5px solid rgba(255,255,255,0.7);background:rgba(255,255,255,0.45);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:700;color:#1a4a6e;outline:none;box-shadow:0 4px 18px rgba(20,90,190,0.15),0 1px 0 rgba(255,255,255,0.8) inset;text-align:center;letter-spacing:0.2px;transition:border 0.2s,box-shadow 0.2s;"
                     onfocus="this.style.borderColor='rgba(255,255,255,0.95)';this.style.boxShadow='0 4px 22px rgba(20,90,190,0.28),0 1px 0 rgba(255,255,255,0.9) inset';"
-                    onblur="this.style.borderColor='rgba(255,255,255,0.7)';this.style.boxShadow='0 4px 18px rgba(20,90,190,0.15),0 1px 0 rgba(255,255,255,0.8) inset';">
+                    onblur="this.style.borderColor='rgba(255,255,255,0.7)';this.style.boxShadow='0 4px 18px rgba(20,90,190,0.15),0 1px 0 rgba(255,255,255,0.8) inset';"
+                    onkeydown="if(event.key==='Enter')entrarNoCotador()">
             </div>
         </div>
 
@@ -785,19 +854,80 @@
 
 <div class="page-wrap">
 
+<!-- ============================================================
+     MODAL PERFIL DO CORRETOR
+============================================================ -->
+<div id="modalPerfil" style="display:none;position:fixed;inset:0;z-index:8400;background:rgba(0,0,0,0.65);backdrop-filter:blur(8px);align-items:center;justify-content:center;">
+    <div style="background:var(--modal-card);border-radius:22px;width:95%;max-width:420px;box-shadow:0 24px 70px rgba(0,0,0,0.5);overflow:hidden;">
+        <!-- Header -->
+        <div style="background:linear-gradient(135deg,#3a8fd4,#1a5fa8);padding:20px 24px;display:flex;align-items:center;justify-content:space-between;">
+            <div>
+                <div style="font-size:1rem;font-weight:900;color:white;letter-spacing:0.3px;">👤 Meu Perfil</div>
+                <div style="font-size:0.72rem;color:rgba(255,255,255,0.7);margin-top:2px;">Dados que aparecem nas cotações</div>
+            </div>
+            <button onclick="fecharPerfil()" style="border:none;border-radius:50%;width:30px;height:30px;cursor:pointer;background:rgba(255,255,255,0.2);color:white;font-weight:900;font-size:1rem;">✕</button>
+        </div>
+
+        <div style="padding:24px;">
+            <!-- Foto -->
+            <div style="display:flex;flex-direction:column;align-items:center;margin-bottom:22px;">
+                <div id="perfilFotoPreview" onclick="document.getElementById('perfilFotoInput').click()" style="width:100px;height:100px;border-radius:50%;background:linear-gradient(135deg,rgba(58,143,212,0.3),rgba(26,95,168,0.5));border:3px solid rgba(58,143,212,0.5);display:flex;align-items:center;justify-content:center;cursor:pointer;overflow:hidden;position:relative;transition:all 0.2s;" title="Clique para trocar a foto">
+                    <span id="perfilFotoEmoji" style="font-size:2.5rem;">👤</span>
+                    <img id="perfilFotoImg" src="" style="display:none;width:100%;height:100%;object-fit:cover;object-position:center;position:absolute;inset:0;">
+                    <div style="position:absolute;inset:0;background:rgba(0,0,0,0);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:background 0.2s;" id="perfilFotoOverlay">
+                        <span style="color:white;font-size:1.2rem;opacity:0;transition:opacity 0.2s;" id="perfilFotoIconOverlay">📷</span>
+                    </div>
+                </div>
+                <input type="file" id="perfilFotoInput" accept="image/*" style="display:none;" onchange="perfilCarregarFoto(this)">
+                <div style="margin-top:8px;display:flex;gap:8px;">
+                    <button onclick="document.getElementById('perfilFotoInput').click()" style="font-size:0.72rem;padding:5px 12px;border-radius:20px;border:1.5px solid rgba(58,143,212,0.4);background:rgba(58,143,212,0.1);color:var(--text-dark);font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer;">📷 Trocar foto</button>
+                    <button onclick="perfilRemoverFoto()" id="btnRemoverFoto" style="display:none;font-size:0.72rem;padding:5px 12px;border-radius:20px;border:1.5px solid rgba(220,50,50,0.4);background:rgba(220,50,50,0.1);color:#dc2626;font-family:'Nunito',sans-serif;font-weight:700;cursor:pointer;">🗑️ Remover</button>
+                </div>
+                <div style="font-size:0.68rem;color:var(--text-light);margin-top:5px;">Aparece nos PDFs e imagens exportadas</div>
+            </div>
+
+            <!-- Nome -->
+            <div style="margin-bottom:14px;">
+                <label style="font-size:0.72rem;font-weight:800;color:var(--text-light);text-transform:uppercase;letter-spacing:0.6px;display:block;margin-bottom:6px;">Nome do Corretor</label>
+                <input type="text" id="perfilNome" placeholder="Ex: João Silva" class="text-input" style="width:100%;box-sizing:border-box;" oninput="perfilSincronizarNome()">
+            </div>
+
+            <!-- Telefone -->
+            <div style="margin-bottom:20px;">
+                <label style="font-size:0.72rem;font-weight:800;color:var(--text-light);text-transform:uppercase;letter-spacing:0.6px;display:block;margin-bottom:6px;">Telefone / WhatsApp</label>
+                <input type="tel" id="perfilTel" placeholder="(92) 99999-9999" class="text-input" style="width:100%;box-sizing:border-box;" maxlength="15" oninput="mascaraTelefone(this);perfilSincronizarTel()">
+            </div>
+
+            <!-- Botão salvar -->
+            <button onclick="salvarPerfil()" style="width:100%;padding:13px;border-radius:12px;border:none;background:linear-gradient(135deg,#3a8fd4,#1a5fa8);color:white;font-family:'Nunito',sans-serif;font-size:0.95rem;font-weight:900;cursor:pointer;box-shadow:0 6px 20px rgba(58,143,212,0.35);transition:all 0.2s;">
+                ✅ Salvar Perfil
+            </button>
+
+            <div id="perfilMsgSalvo" style="display:none;text-align:center;margin-top:10px;font-size:0.8rem;font-weight:700;color:#16a34a;">✔ Perfil salvo com sucesso!</div>
+        </div>
+    </div>
+</div>
+
     <div class="site-header">
         <h1>✨ Cotação de Planos de Saúde</h1>
-        <p>desenvolvido por Narry :D</p>
+        <p id="headerUserLabel" style="font-size:0.72rem;opacity:0.7;">desenvolvido por Narry :D</p>
         <div class="header-btns">
             <button class="theme-toggle" onclick="ciclarTema()" id="themeBtn">🌙 Escuro</button>
-            <button class="theme-toggle" onclick="voltarTelaInicial()" style="background:rgba(220,50,50,0.22);border-color:rgba(220,80,80,0.5);" title="Voltar à tela inicial">🚪 Sair</button>
+            <button id="btnAdminPanel" class="theme-toggle" onclick="abrirAdmin()" style="display:none;background:rgba(251,191,36,0.2);border-color:rgba(251,191,36,0.5);color:#92400e;" title="Painel Admin">👑 Admin</button>
+            <button class="theme-toggle" onclick="abrirPerfil()" style="background:rgba(58,143,212,0.2);border-color:rgba(58,143,212,0.5);padding:4px 10px;display:flex;align-items:center;gap:6px;" title="Meu Perfil" id="btnPerfil">
+                <span id="headerFotoMini" style="width:22px;height:22px;border-radius:50%;background:rgba(58,143,212,0.4);display:inline-flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;overflow:hidden;">👤</span>
+                <span>Perfil</span>
+            </button>
+            <button class="theme-toggle" onclick="voltarTelaInicial()" style="background:rgba(220,50,50,0.22);border-color:rgba(220,80,80,0.5);" title="Voltar à tela inicial">🚪 Início</button>
+            <button class="theme-toggle" onclick="fazerLogout()" style="background:rgba(100,100,100,0.2);border-color:rgba(150,150,150,0.4);" title="Sair da conta">🔒 Sair</button>
         </div>
     </div>
 
     <div class="toolbar-extra">
         <button class="btn-tool" onclick="abrirHistorico()">📚 Histórico</button>
         <button class="btn-tool" onclick="abrirFav()">⭐ Favoritos</button>
-        <button class="btn-tool" onclick="abrirCalc()">💰 Calculadora</button>
+        <button class="btn-tool" onclick="abrirCalc()">🧮 Calculator%</button>
+        <button class="btn-tool" onclick="abrirCalcSimples()">➕ Calculadora</button>
         <button class="btn-tool" onclick="abrirComparativo()">⚖️ Comparativo</button>
     </div>
 
@@ -811,16 +941,18 @@
             </div>
             <div class="form-body">
 
-                <div class="grid-2-sm">
-                    <div>
-                        <label class="field-label" for="nomeCorretor">Nome do Corretor</label>
-                        <input type="text" id="nomeCorretor" class="text-input" placeholder="Ex: João Silva" aria-label="Nome do corretor">
+                <!-- Banner do perfil do corretor — clicável para editar -->
+                <div id="bannerPerfilCotacao" onclick="abrirPerfil()" title="Clique para editar seu perfil" style="display:flex;align-items:center;gap:12px;background:var(--card-bg);border:1.5px dashed var(--border-color);border-radius:12px;padding:11px 15px;cursor:pointer;transition:all 0.2s;margin-bottom:2px;" onmouseenter="this.style.borderColor='rgba(58,143,212,0.7)';this.style.background='rgba(58,143,212,0.06)'" onmouseleave="this.style.borderColor='';this.style.background=''">
+                    <div id="bannerFotoMini" style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,rgba(58,143,212,0.3),rgba(26,95,168,0.5));display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;overflow:hidden;">👤</div>
+                    <div style="flex:1;min-width:0;">
+                        <div id="bannerNomeCorretor" style="font-size:0.85rem;font-weight:800;color:var(--text-dark);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">Configure seu perfil</div>
+                        <div id="bannerTelCorretor" style="font-size:0.72rem;color:var(--text-light);margin-top:1px;">Nome e telefone aparecerão nas cotações</div>
                     </div>
-                    <div>
-                        <label class="field-label" for="telCorretor">Telefone</label>
-                        <input type="tel" id="telCorretor" class="text-input" placeholder="(92) 99999-9999" aria-label="Telefone do corretor" maxlength="15" oninput="mascaraTelefone(this)">
-                    </div>
+                    <div style="font-size:0.7rem;color:rgba(58,143,212,0.8);font-weight:700;flex-shrink:0;">✏️ Editar</div>
                 </div>
+                <!-- Campos hidden mantidos para compatibilidade com o resto do código -->
+                <input type="hidden" id="nomeCorretor">
+                <input type="hidden" id="telCorretor">
 
                 <!-- TIPO DE CONTRATO — DROPDOWN -->
                 <div>
@@ -918,6 +1050,7 @@
                         <label class="field-label" for="validadeInput">Validade da Cotação</label>
                         <select id="validadeInput" class="text-input">
                             <option value="">Sem validade</option>
+                            <option value="hoje">Somente hoje</option>
                             <option value="3">3 dias</option>
                             <option value="7" selected>7 dias</option>
                             <option value="15">15 dias</option>
@@ -1005,7 +1138,7 @@
 <div id="calcModal" style="display:none;position:fixed;inset:0;background:var(--modal-bg);backdrop-filter:blur(5px);z-index:1001;align-items:center;justify-content:center;">
     <div style="background:var(--modal-card);border-radius:20px;width:92%;max-width:420px;box-shadow:0 24px 70px rgba(10,50,120,0.45);">
         <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--modal-border);background:var(--modal-top-bg);border-radius:20px 20px 0 0;">
-            <span style="font-size:0.85rem;font-weight:800;color:var(--modal-title);text-transform:uppercase;letter-spacing:0.8px;">💰 Calculadora de Desconto</span>
+            <span style="font-size:0.85rem;font-weight:800;color:var(--modal-title);text-transform:uppercase;letter-spacing:0.8px;">🧮 Calculator%</span>
             <button onclick="fecharCalc()" style="border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;background:#e5e7eb;color:#374151;font-weight:800;">✕</button>
         </div>
         <div style="padding:20px;display:flex;flex-direction:column;gap:14px;">
@@ -1021,6 +1154,42 @@
                 <div style="font-size:0.78rem;font-weight:700;color:var(--text-light);margin-bottom:4px;">Valor com desconto:</div>
                 <div id="calcValorDesc" style="font-size:1.6rem;font-weight:900;color:var(--text-dark);"></div>
                 <div id="calcEconomia" style="font-size:0.8rem;font-weight:700;color:#16a34a;margin-top:4px;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CALCULADORA SIMPLES -->
+<div id="calcSimplesModal" style="display:none;position:fixed;inset:0;background:var(--modal-bg);backdrop-filter:blur(5px);z-index:1001;align-items:center;justify-content:center;">
+    <div style="background:var(--modal-card);border-radius:20px;width:92%;max-width:340px;box-shadow:0 24px 70px rgba(10,50,120,0.45);">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--modal-border);background:var(--modal-top-bg);border-radius:20px 20px 0 0;">
+            <span style="font-size:0.85rem;font-weight:800;color:var(--modal-title);text-transform:uppercase;letter-spacing:0.8px;">➕ Calculadora</span>
+            <button onclick="fecharCalcSimples()" style="border:none;border-radius:50%;width:28px;height:28px;cursor:pointer;background:#e5e7eb;color:#374151;font-weight:800;">✕</button>
+        </div>
+        <div style="padding:20px;">
+            <div id="calcSimplesDisplay" style="background:var(--input-bg);border:1.5px solid var(--input-border);border-radius:12px;padding:14px 16px;margin-bottom:12px;text-align:right;min-height:60px;">
+                <div id="calcSimplesExpr" style="font-size:0.78rem;color:var(--text-light);min-height:18px;word-break:break-all;"></div>
+                <div id="calcSimplesVal" style="font-size:2rem;font-weight:900;color:var(--text-dark);">0</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+                <button onclick="csBtn('C')" style="grid-column:span 2;padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:rgba(220,50,50,0.18);color:#dc2626;font-weight:900;font-size:1rem;cursor:pointer;font-family:'Nunito',sans-serif;">C</button>
+                <button onclick="csBtn('⌫')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--pill-bg);color:var(--text-dark);font-weight:900;font-size:1rem;cursor:pointer;font-family:'Nunito',sans-serif;">⌫</button>
+                <button onclick="csBtn('÷')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--pill-bg);color:var(--text-mid);font-weight:900;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">÷</button>
+                <button onclick="csBtn('7')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">7</button>
+                <button onclick="csBtn('8')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">8</button>
+                <button onclick="csBtn('9')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">9</button>
+                <button onclick="csBtn('×')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--pill-bg);color:var(--text-mid);font-weight:900;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">×</button>
+                <button onclick="csBtn('4')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">4</button>
+                <button onclick="csBtn('5')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">5</button>
+                <button onclick="csBtn('6')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">6</button>
+                <button onclick="csBtn('−')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--pill-bg);color:var(--text-mid);font-weight:900;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">−</button>
+                <button onclick="csBtn('1')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">1</button>
+                <button onclick="csBtn('2')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">2</button>
+                <button onclick="csBtn('3')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">3</button>
+                <button onclick="csBtn('+')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--pill-bg);color:var(--text-mid);font-weight:900;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">+</button>
+                <button onclick="csBtn('0')" style="grid-column:span 2;padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">0</button>
+                <button onclick="csBtn(',')" style="padding:13px;border-radius:10px;border:1.5px solid var(--pill-border);background:var(--glass);color:var(--text-dark);font-weight:800;font-size:1.1rem;cursor:pointer;font-family:'Nunito',sans-serif;">,</button>
+                <button onclick="csBtn('=')" style="padding:13px;border-radius:10px;border:none;background:linear-gradient(135deg,#3a8fd4,#1a5fa8);color:white;font-weight:900;font-size:1.2rem;cursor:pointer;font-family:'Nunito',sans-serif;">=</button>
             </div>
         </div>
     </div>
@@ -1205,9 +1374,22 @@
     max-width: 82%; padding: 8px 12px; border-radius: 16px;
     font-size: 0.82rem; font-weight: 600; line-height: 1.5;
     color: #1a3a5c; background: #f0f7ff; border: 1.5px solid rgba(100,180,255,0.18);
+    position: relative;
 }
 .nmsg.user .nmsg-bubble { background: linear-gradient(135deg,#1a5fa8,#2e9fd8); color: white; border-color: transparent; }
 .nmsg-av { width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0; overflow: hidden; border: 2px solid rgba(100,180,255,0.3); }
+
+/* Botão de voz nas mensagens do Narry */
+.narry-speak-btn {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%;
+    border: none; background: rgba(100,180,255,0.18); cursor: pointer;
+    font-size: 0.72rem; line-height: 1; vertical-align: middle;
+    margin-left: 6px; margin-top: 2px; transition: all 0.15s;
+    flex-shrink: 0; padding: 0;
+}
+.narry-speak-btn:hover { background: rgba(58,143,212,0.35); transform: scale(1.15); }
+.narry-speak-btn:disabled { opacity: 0.6; cursor: default; transform: none; }
 
 .nthinking { display: flex; gap: 4px; padding: 10px 14px; align-items: center; }
 .nthinking span {
@@ -2107,12 +2289,121 @@ function narryTogglePanel() {
     }
 }
 
+// ── ELEVENLABS TTS ───────────────────────────────────────────
+const _EL_KEY     = 'c825ceb53e9530aa1fba0861d9e3f473a8612af21a7dff9dbbf267ff0eb7c6d9';
+const _EL_VOICE   = 'tS45q0QcrDHqHoaWdCDR';
+const _EL_URL     = `https://api.elevenlabs.io/v1/text-to-speech/${_EL_VOICE}`;
+let _elAudio      = null;
+let _elPlayingBtn = null;
+
+async function narrySpeak(text, btn) {
+    const hasBtn = btn !== null && btn !== undefined;
+
+    // Toggle pause/resume se clicou no mesmo botão
+    if (hasBtn && _elPlayingBtn === btn && _elAudio && !_elAudio.paused) {
+        _elAudio.pause();
+        btn.innerHTML = '🔊'; btn.title = 'Ouvir';
+        _elPlayingBtn = null;
+        narrySetExpr('idle'); narrySpeaking = false;
+        return;
+    }
+
+    // Parar áudio anterior
+    if (_elAudio) { _elAudio.pause(); _elAudio = null; }
+    if (_elPlayingBtn) { _elPlayingBtn.innerHTML = '🔊'; _elPlayingBtn.title = 'Ouvir'; _elPlayingBtn = null; }
+
+    // Limpar texto para TTS (sem emojis, sem markdown)
+    const cleanText = text
+        .replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27FF}]/gu, '')
+        .replace(/[^\x00-\xFF]/g, '')
+        .replace(/\*\*(.*?)\*\*/g, '$1')
+        .replace(/\n+/g, '. ')
+        .replace(/\.{2,}/g, '.')
+        .slice(0, 300)
+        .trim();
+
+    if (!cleanText) return;
+
+    if (hasBtn) { btn.innerHTML = '⏳'; btn.title = 'Carregando...'; btn.disabled = true; }
+
+    try {
+        const res = await fetch(_EL_URL, {
+            method: 'POST',
+            headers: {
+                'xi-api-key': _EL_KEY,
+                'Content-Type': 'application/json',
+                'Accept': 'audio/mpeg'
+            },
+            body: JSON.stringify({
+                text: cleanText,
+                model_id: 'eleven_multilingual_v2',
+                voice_settings: { stability: 0.45, similarity_boost: 0.82, style: 0.35, use_speaker_boost: true }
+            })
+        });
+
+        if (!res.ok) {
+            const err = await res.text();
+            console.warn('ElevenLabs error:', res.status, err);
+            if (hasBtn) {
+                btn.innerHTML = '❌'; btn.title = 'Erro'; btn.disabled = false;
+                setTimeout(() => { btn.innerHTML = '🔊'; btn.title = 'Ouvir'; }, 2500);
+            }
+            return;
+        }
+
+        const blob = await res.blob();
+        const url  = URL.createObjectURL(blob);
+        _elAudio   = new Audio(url);
+        if (hasBtn) _elPlayingBtn = btn;
+
+        _elAudio.onplay = () => {
+            narrySpeaking = true;
+            narrySetExpr('speaking');
+            if (hasBtn) { btn.innerHTML = '⏸️'; btn.title = 'Pausar'; btn.disabled = false; }
+        };
+        _elAudio.onpause = () => {
+            if (hasBtn) { btn.innerHTML = '🔊'; btn.title = 'Ouvir'; }
+        };
+        _elAudio.onended = () => {
+            narrySpeaking = false;
+            narrySetExpr('happy');
+            if (hasBtn) { btn.innerHTML = '🔊'; btn.title = 'Ouvir'; _elPlayingBtn = null; }
+            URL.revokeObjectURL(url);
+        };
+        _elAudio.onerror = () => {
+            narrySpeaking = false; narrySetExpr('idle');
+            if (hasBtn) { btn.innerHTML = '❌'; btn.disabled = false; setTimeout(() => { btn.innerHTML = '🔊'; btn.title = 'Ouvir'; }, 2000); }
+        };
+
+        await _elAudio.play();
+
+    } catch(e) {
+        console.warn('narrySpeak error:', e);
+        narrySpeaking = false;
+        if (hasBtn) { btn.innerHTML = '🔊'; btn.title = 'Ouvir'; btn.disabled = false; }
+    }
+}
+
 // ── MENSAGENS ────────────────────────────────────────────────
 function narryAddBot(text) {
     const msgs = document.getElementById('narry-messages');
     const div  = document.createElement('div');
     div.className = 'nmsg bot';
-    div.innerHTML = `<div class="nmsg-av">${MINI_SVG}</div><div class="nmsg-bubble">${narryFmt(text)}</div>`;
+    // Criar botão de voz
+    const speakBtn = document.createElement('button');
+    speakBtn.className = 'narry-speak-btn';
+    speakBtn.innerHTML = '🔊';
+    speakBtn.title = 'Ouvir';
+    speakBtn.onclick = () => narrySpeak(text, speakBtn);
+    const bubble = document.createElement('div');
+    bubble.className = 'nmsg-bubble';
+    bubble.innerHTML = narryFmt(text);
+    bubble.appendChild(speakBtn);
+    const av = document.createElement('div');
+    av.className = 'nmsg-av';
+    av.innerHTML = MINI_SVG;
+    div.appendChild(av);
+    div.appendChild(bubble);
     msgs.appendChild(div);
     msgs.scrollTop = msgs.scrollHeight;
 }
@@ -2253,7 +2544,7 @@ async function narrySend() {
         else narrySetExpr('happy');
 
         narryAddBot(reply);
-        narrySpeak(reply.replace(/\*\*/g,'').replace(/[✨🎯💡😎🔍👋]/g,''));
+        narrySpeak(reply, null);
         if (narryMessages.length > 20) narryMessages = narryMessages.slice(-16);
 
     } catch(e) {
@@ -2265,36 +2556,11 @@ async function narrySend() {
     }
 }
 
-// ── ELEVENLABS TTS ───────────────────────────────────────────
-async function narrySpeak(text) {
-    narryStopAudio();
-    // Limitar texto para não gastar muita cota
-    const shortText = text.slice(0, 200);
-    try {
-        const res = await fetch(EL_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'xi-api-key': EL_KEY
-            },
-            body: JSON.stringify({
-                text: shortText,
-                model_id: 'eleven_multilingual_v2',
-                voice_settings: { stability: 0.5, similarity_boost: 0.75, style: 0.3, use_speaker_boost: true }
-            })
-        });
-        if (!res.ok) return;
-        const blob = await res.blob();
-        const url  = URL.createObjectURL(blob);
-        narryCurrentAudio = new Audio(url);
-        narryCurrentAudio.onplay  = () => { narrySpeaking = true; narrySetExpr('speaking'); };
-        narryCurrentAudio.onended = () => { narrySpeaking = false; narrySetExpr('idle'); URL.revokeObjectURL(url); };
-        narryCurrentAudio.play();
-    } catch(e) { /* falha silenciosa */ }
-}
 function narryStopAudio() {
-    if (narryCurrentAudio) { narryCurrentAudio.pause(); narryCurrentAudio = null; }
+    if (_elAudio) { _elAudio.pause(); _elAudio = null; }
+    if (_elPlayingBtn) { _elPlayingBtn.innerHTML = '🔊'; _elPlayingBtn.title = 'Ouvir'; _elPlayingBtn = null; }
     narrySpeaking = false;
+    narrySetExpr('idle');
 }
 
 // ── MIC / RECONHECIMENTO DE VOZ ──────────────────────────────
@@ -3115,6 +3381,154 @@ function validarIdades(input) {
 }
 
 // ================================================================
+//  PERFIL DO CORRETOR
+// ================================================================
+let _perfilFotoBase64 = '';
+
+function abrirPerfil() {
+    // Carregar dados salvos
+    try {
+        const p = JSON.parse(localStorage.getItem('narry_perfil') || '{}');
+        document.getElementById('perfilNome').value = p.nome || document.getElementById('nomeCorretor').value || '';
+        document.getElementById('perfilTel').value  = p.tel  || document.getElementById('telCorretor').value  || '';
+        _perfilFotoBase64 = p.foto || '';
+        _perfilAtualizarPreview();
+    } catch(e) {}
+    document.getElementById('perfilMsgSalvo').style.display = 'none';
+    document.getElementById('modalPerfil').style.display = 'flex';
+}
+
+function fecharPerfil() {
+    document.getElementById('modalPerfil').style.display = 'none';
+}
+
+function _perfilAtualizarPreview() {
+    const img    = document.getElementById('perfilFotoImg');
+    const emoji  = document.getElementById('perfilFotoEmoji');
+    const btnRem = document.getElementById('btnRemoverFoto');
+    const mini   = document.getElementById('headerFotoMini');
+    const bannerFoto  = document.getElementById('bannerFotoMini');
+    const bannerNome  = document.getElementById('bannerNomeCorretor');
+    const bannerTel   = document.getElementById('bannerTelCorretor');
+
+    // Foto no modal e no header
+    if (_perfilFotoBase64) {
+        img.src = _perfilFotoBase64;
+        img.style.display = 'block';
+        emoji.style.display = 'none';
+        btnRem.style.display = '';
+        mini.innerHTML = `<img src="${_perfilFotoBase64}" style="width:22px;height:22px;border-radius:50%;object-fit:cover;object-position:center;">`;
+        if (bannerFoto) bannerFoto.innerHTML = `<img src="${_perfilFotoBase64}" style="width:38px;height:38px;border-radius:50%;object-fit:cover;object-position:center;">`;
+    } else {
+        img.style.display = 'none';
+        emoji.style.display = '';
+        btnRem.style.display = 'none';
+        mini.textContent = '👤';
+        if (bannerFoto) { bannerFoto.innerHTML = ''; bannerFoto.textContent = '👤'; }
+    }
+
+    // Nome e telefone no banner da cotação
+    const nome = document.getElementById('nomeCorretor')?.value || '';
+    const tel  = document.getElementById('telCorretor')?.value  || '';
+    if (bannerNome) {
+        if (nome) {
+            bannerNome.textContent = nome;
+            bannerNome.style.color = '';
+        } else {
+            bannerNome.textContent = 'Configure seu perfil';
+            bannerNome.style.color = 'var(--text-light)';
+        }
+    }
+    if (bannerTel) {
+        bannerTel.textContent = tel ? `📞 ${tel}` : 'Nome e telefone aparecerão nas cotações';
+    }
+}
+
+function perfilCarregarFoto(input) {
+    const file = input.files[0];
+    if (!file) return;
+    if (file.size > 3 * 1024 * 1024) { narryShowError('Foto muito grande! Use uma imagem menor que 3MB.'); return; }
+    const reader = new FileReader();
+    reader.onload = e => {
+        // Redimensionar para max 300x300 para não pesar
+        const img = new Image();
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            const size = 300;
+            const ratio = Math.min(size / img.width, size / img.height);
+            canvas.width  = img.width  * ratio;
+            canvas.height = img.height * ratio;
+            canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+            _perfilFotoBase64 = canvas.toDataURL('image/jpeg', 0.85);
+            _perfilAtualizarPreview();
+        };
+        img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+}
+
+function perfilRemoverFoto() {
+    _perfilFotoBase64 = '';
+    document.getElementById('perfilFotoInput').value = '';
+    _perfilAtualizarPreview();
+}
+
+function perfilSincronizarNome() {
+    document.getElementById('nomeCorretor').value = document.getElementById('perfilNome').value;
+    salvarRascunho();
+}
+
+function perfilSincronizarTel() {
+    document.getElementById('telCorretor').value = document.getElementById('perfilTel').value;
+    salvarRascunho();
+}
+
+function salvarPerfil() {
+    const nome = document.getElementById('perfilNome').value.trim();
+    const tel  = document.getElementById('perfilTel').value.trim();
+    // Sincronizar com campos da cotação
+    document.getElementById('nomeCorretor').value = nome;
+    document.getElementById('telCorretor').value  = tel;
+    // Salvar no localStorage
+    try {
+        localStorage.setItem('narry_perfil', JSON.stringify({ nome, tel, foto: _perfilFotoBase64 }));
+    } catch(e) { narryShowError('Erro ao salvar: ' + e.message); return; }
+    salvarRascunho();
+    _perfilAtualizarPreview();
+    document.getElementById('perfilMsgSalvo').style.display = 'block';
+    setTimeout(() => {
+        document.getElementById('perfilMsgSalvo').style.display = 'none';
+        fecharPerfil();
+    }, 1400);
+}
+
+function carregarPerfilSalvo() {
+    try {
+        const p = JSON.parse(localStorage.getItem('narry_perfil') || '{}');
+        if (p.nome) document.getElementById('nomeCorretor').value = p.nome;
+        if (p.tel)  document.getElementById('telCorretor').value  = p.tel;
+        if (p.foto) { _perfilFotoBase64 = p.foto; _perfilAtualizarPreview(); }
+    } catch(e) {}
+}
+
+// Hover effect na foto
+document.addEventListener('DOMContentLoaded', function() {
+    const preview = document.getElementById('perfilFotoPreview');
+    const overlay = document.getElementById('perfilFotoOverlay');
+    const icon    = document.getElementById('perfilFotoIconOverlay');
+    if (preview) {
+        preview.addEventListener('mouseenter', () => {
+            overlay.style.background = 'rgba(0,0,0,0.35)';
+            icon.style.opacity = '1';
+        });
+        preview.addEventListener('mouseleave', () => {
+            overlay.style.background = 'rgba(0,0,0,0)';
+            icon.style.opacity = '0';
+        });
+    }
+});
+
+// ================================================================
 //  PERSISTÊNCIA LOCAL (localStorage)
 // ================================================================
 function salvarRascunho() {
@@ -3525,7 +3939,7 @@ function renderPdfComModelo(dados, modelo) {
     const telefone = document.getElementById('telCorretor').value.trim();
     const obs = document.getElementById('obsInput')?.value.trim() || '';
     const validade = document.getElementById('validadeInput')?.value;
-    const validadeTexto = validade ? ` · Válida por ${validade} dias` : '';
+    const validadeTexto = validade === 'hoje' ? ' · Válida somente hoje' : validade ? ` · Válida por ${validade} dias` : '';
     const temDesconto = ['HAPVIDA INDIVIDUAL','HAPVIDA SUPER SIMPLES','AFFIX SISPEAM','AFFIX PME','ALTER','CORPE INDIVIDUAL','CORPE PME','SAMEL'].includes(tipo);
 
     const benefHTML = (itens || []).map((b, idx) => {
@@ -3568,7 +3982,9 @@ function renderPdfComModelo(dados, modelo) {
 
     const corretorHTML = (corretor || telefone) ? `
         <div style="background:${c.border}33;border:1.5px solid ${c.border};border-radius:12px;padding:14px 16px;margin-bottom:16px;display:flex;align-items:center;gap:14px;">
-            <div style="background:${c.grad};border-radius:50%;width:40px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:20px;">👔</span></div>
+            ${_perfilFotoBase64
+                ? `<img src="${_perfilFotoBase64}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;object-position:center;flex-shrink:0;border:2px solid ${c.border};">`
+                : `<div style="background:${c.grad};border-radius:50%;width:42px;height:42px;display:flex;align-items:center;justify-content:center;flex-shrink:0;"><span style="font-size:20px;">👔</span></div>`}
             <div>
                 <div style="font-size:10px;font-weight:800;color:${c.acc};text-transform:uppercase;letter-spacing:0.6px;margin-bottom:3px;">Corretor Responsável</div>
                 ${corretor ? `<div style="font-size:14px;font-weight:800;color:${c.text};">${corretor}</div>` : ''}
@@ -3834,7 +4250,8 @@ function trocarModelo(n) {
 }
 
 function renderModelo2(dados) {
-    const { tipo, plano, copart, idades, itens, somaAmb, somaEnf, somaApt, querAmb, querEnf, querApt } = dados;
+    const { tipo, plano, copart, idades, itens, somaAmb, somaEnf, somaApt, querAmb, querEnf, querApt,
+            itensPorCopart, totaisPorCopart, copartsSel } = dados;
     const cores = CORES_OPERADORA[tipo] || { c1:'#0d4fa0', c2:'#1a7bbf' };
     const hoje = new Date().toLocaleDateString('pt-BR');
     const corretor = document.getElementById('nomeCorretor').value.trim();
@@ -3843,32 +4260,65 @@ function renderModelo2(dados) {
     const validade = document.getElementById('validadeInput')?.value;
     const temDesc = ['HAPVIDA INDIVIDUAL','HAPVIDA SUPER SIMPLES','AFFIX SISPEAM','AFFIX PME','ALTER','CORPE INDIVIDUAL','CORPE PME','SAMEL'].includes(tipo);
 
-    const benefCards = (itens || []).map((b, idx) => {
-        const rows = b.linhas.map(l => `
-            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.06);">
-                <span style="font-size:0.88rem;font-weight:700;color:#374151;">${l.label}</span>
-                <div style="text-align:right;">
-                    <div style="font-size:1rem;font-weight:900;color:${cores.c1};">${fmt(l.vDesc)}</div>
-                    ${l.vDesc !== l.valorBase ? `<div style="font-size:0.7rem;color:#9ca3af;margin-top:1px;">após 3 meses: ${fmt(l.valorBase)}</div>` : ''}
-                </div>
-            </div>`).join('');
-        return `
-        <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,0.09);margin-bottom:12px;">
-            <div style="background:linear-gradient(135deg,${cores.c1},${cores.c2});padding:12px 16px;display:flex;align-items:center;gap:12px;">
-                <div style="background:rgba(255,255,255,0.25);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:900;color:white;font-size:0.9rem;">${idx+1}</div>
-                <div>
-                    <div style="font-weight:900;color:white;font-size:0.95rem;">Beneficiário — ${b.idade} anos</div>
-                    <div style="font-size:0.72rem;color:rgba(255,255,255,0.8);">Faixa etária: ${b.faixa} anos · Copart. ${b.copart}</div>
-                </div>
-            </div>
-            <div style="padding:4px 16px 12px;">${rows}</div>
-        </div>`;
-    }).join('');
+    // Se tiver itensPorCopart com múltiplas coparts (Parcial + Total), renderizar ambas
+    const coparts = (itensPorCopart && copartsSel && copartsSel.length > 1) ? copartsSel : null;
 
-    let totaisHTML = '';
-    if (querAmb && somaAmb>0) totaisHTML += `<div style="flex:1;min-width:120px;text-align:center;background:white;border-radius:14px;padding:14px 10px;box-shadow:0 2px 10px rgba(0,0,0,0.08);"><div style="font-size:0.68rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">Ambulatorial</div><div style="font-size:1.3rem;font-weight:900;color:${cores.c1};">${fmt(somaAmb)}</div><div style="font-size:0.68rem;color:#9ca3af;margin-top:2px;">/mês</div></div>`;
-    if (querEnf && somaEnf>0) totaisHTML += `<div style="flex:1;min-width:120px;text-align:center;background:white;border-radius:14px;padding:14px 10px;box-shadow:0 2px 10px rgba(0,0,0,0.08);"><div style="font-size:0.68rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">Enfermaria</div><div style="font-size:1.3rem;font-weight:900;color:${cores.c1};">${fmt(somaEnf)}</div><div style="font-size:0.68rem;color:#9ca3af;margin-top:2px;">/mês</div></div>`;
-    if (querApt && somaApt>0) totaisHTML += `<div style="flex:1;min-width:120px;text-align:center;background:white;border-radius:14px;padding:14px 10px;box-shadow:0 2px 10px rgba(0,0,0,0.08);"><div style="font-size:0.68rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">Apartamento</div><div style="font-size:1.3rem;font-weight:900;color:${cores.c1};">${fmt(somaApt)}</div><div style="font-size:0.68rem;color:#9ca3af;margin-top:2px;">/mês</div></div>`;
+    function renderBlocoCopart(itensList, totais, copartNome) {
+        const benefCards = (itensList || []).map((b, idx) => {
+            const rows = b.linhas.map(l => `
+                <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0;border-bottom:1px solid rgba(0,0,0,0.06);">
+                    <span style="font-size:0.88rem;font-weight:700;color:#374151;">${l.label}</span>
+                    <div style="text-align:right;">
+                        <div style="font-size:1rem;font-weight:900;color:${cores.c1};">${fmt(l.vDesc)}</div>
+                        ${l.vDesc !== l.valorBase ? `<div style="font-size:0.7rem;color:#9ca3af;margin-top:1px;">após 3 meses: ${fmt(l.valorBase)}</div>` : ''}
+                    </div>
+                </div>`).join('');
+            return `
+            <div style="background:white;border-radius:16px;overflow:hidden;box-shadow:0 3px 14px rgba(0,0,0,0.09);margin-bottom:12px;">
+                <div style="background:linear-gradient(135deg,${cores.c1},${cores.c2});padding:12px 16px;display:flex;align-items:center;gap:12px;">
+                    <div style="background:rgba(255,255,255,0.25);border-radius:50%;width:30px;height:30px;display:flex;align-items:center;justify-content:center;font-weight:900;color:white;font-size:0.9rem;">${idx+1}</div>
+                    <div>
+                        <div style="font-weight:900;color:white;font-size:0.95rem;">Beneficiário — ${b.idade} anos</div>
+                        <div style="font-size:0.72rem;color:rgba(255,255,255,0.8);">Faixa etária: ${b.faixa} anos · Copart. ${b.copart}</div>
+                    </div>
+                </div>
+                <div style="padding:4px 16px 12px;">${rows}</div>
+            </div>`;
+        }).join('');
+
+        let totaisHTML = '';
+        if (totais) {
+            if (querAmb && totais.amb>0) totaisHTML += `<div style="flex:1;min-width:120px;text-align:center;background:white;border-radius:14px;padding:14px 10px;box-shadow:0 2px 10px rgba(0,0,0,0.08);"><div style="font-size:0.68rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">Ambulatorial</div><div style="font-size:1.3rem;font-weight:900;color:${cores.c1};">${fmt(totais.amb)}</div><div style="font-size:0.68rem;color:#9ca3af;margin-top:2px;">/mês</div></div>`;
+            if (querEnf && totais.enf>0) totaisHTML += `<div style="flex:1;min-width:120px;text-align:center;background:white;border-radius:14px;padding:14px 10px;box-shadow:0 2px 10px rgba(0,0,0,0.08);"><div style="font-size:0.68rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">Enfermaria</div><div style="font-size:1.3rem;font-weight:900;color:${cores.c1};">${fmt(totais.enf)}</div><div style="font-size:0.68rem;color:#9ca3af;margin-top:2px;">/mês</div></div>`;
+            if (querApt && totais.apt>0) totaisHTML += `<div style="flex:1;min-width:120px;text-align:center;background:white;border-radius:14px;padding:14px 10px;box-shadow:0 2px 10px rgba(0,0,0,0.08);"><div style="font-size:0.68rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">Apartamento</div><div style="font-size:1.3rem;font-weight:900;color:${cores.c1};">${fmt(totais.apt)}</div><div style="font-size:0.68rem;color:#9ca3af;margin-top:2px;">/mês</div></div>`;
+        } else {
+            if (querAmb && somaAmb>0) totaisHTML += `<div style="flex:1;min-width:120px;text-align:center;background:white;border-radius:14px;padding:14px 10px;box-shadow:0 2px 10px rgba(0,0,0,0.08);"><div style="font-size:0.68rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">Ambulatorial</div><div style="font-size:1.3rem;font-weight:900;color:${cores.c1};">${fmt(somaAmb)}</div><div style="font-size:0.68rem;color:#9ca3af;margin-top:2px;">/mês</div></div>`;
+            if (querEnf && somaEnf>0) totaisHTML += `<div style="flex:1;min-width:120px;text-align:center;background:white;border-radius:14px;padding:14px 10px;box-shadow:0 2px 10px rgba(0,0,0,0.08);"><div style="font-size:0.68rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">Enfermaria</div><div style="font-size:1.3rem;font-weight:900;color:${cores.c1};">${fmt(somaEnf)}</div><div style="font-size:0.68rem;color:#9ca3af;margin-top:2px;">/mês</div></div>`;
+            if (querApt && somaApt>0) totaisHTML += `<div style="flex:1;min-width:120px;text-align:center;background:white;border-radius:14px;padding:14px 10px;box-shadow:0 2px 10px rgba(0,0,0,0.08);"><div style="font-size:0.68rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:0.7px;margin-bottom:4px;">Apartamento</div><div style="font-size:1.3rem;font-weight:900;color:${cores.c1};">${fmt(somaApt)}</div><div style="font-size:0.68rem;color:#9ca3af;margin-top:2px;">/mês</div></div>`;
+        }
+
+        const copartBadge = copartNome ? `<div style="display:inline-block;background:linear-gradient(135deg,${cores.c1},${cores.c2});color:white;font-size:0.72rem;font-weight:900;padding:4px 12px;border-radius:20px;margin-bottom:12px;text-transform:uppercase;letter-spacing:0.5px;">Coparticipação ${copartNome}</div>` : '';
+
+        return `
+        <div style="${coparts ? 'background:#f8fafc;border-radius:16px;padding:14px;margin-bottom:16px;border:1.5px solid #e2e8f0;' : ''}">
+            ${copartBadge}
+            ${benefCards}
+            <div style="margin-top:4px;">
+                <div style="font-size:0.7rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:10px;">Resumo Total Mensal</div>
+                <div style="display:flex;gap:10px;flex-wrap:wrap;">${totaisHTML}</div>
+            </div>
+        </div>`;
+    }
+
+    let blocosHTML = '';
+    if (coparts) {
+        // Múltiplas coparts: renderizar uma seção pra cada
+        coparts.forEach(c => {
+            blocosHTML += renderBlocoCopart(itensPorCopart[c], totaisPorCopart[c], c);
+        });
+    } else {
+        blocosHTML = renderBlocoCopart(itens, null, null);
+    }
 
     document.getElementById('painelM2').innerHTML = `
         <div style="font-family:'Nunito',sans-serif;">
@@ -3876,18 +4326,12 @@ function renderModelo2(dados) {
             <div style="background:linear-gradient(135deg,${cores.c1},${cores.c2});border-radius:16px;padding:20px;margin-bottom:16px;color:white;">
                 <div style="font-size:1.1rem;font-weight:900;margin-bottom:2px;">✨ Cotação de Planos de Saúde</div>
                 <div style="font-size:0.8rem;opacity:0.85;">${tipo} · ${plano} · Copart. ${copart} · ${idades.length} vida${idades.length>1?'s':''}</div>
-                <div style="font-size:0.75rem;opacity:0.7;margin-top:4px;">📅 Gerada em ${hoje}${validade ? ' · válida por '+validade+' dias' : ''}</div>
-                ${corretor ? `<div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.2);font-size:0.8rem;opacity:0.9;">👔 ${corretor}${telefone ? ' · 📞 '+telefone : ''}</div>` : ''}
+                <div style="font-size:0.75rem;opacity:0.7;margin-top:4px;">📅 Gerada em ${hoje}${validade === 'hoje' ? ' · válida somente hoje' : validade ? ' · válida por '+validade+' dias' : ''}</div>
+                ${(corretor||telefone) ? `<div style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.2);display:flex;align-items:center;gap:10px;">${_perfilFotoBase64?`<img src="${_perfilFotoBase64}" style="width:36px;height:36px;border-radius:50%;object-fit:cover;object-position:center;flex-shrink:0;border:2px solid rgba(255,255,255,0.4);">`:`<span style="font-size:1.1rem;">👔</span>`}<div><div style="font-size:0.85rem;font-weight:800;opacity:0.95;">${corretor||''}</div>${telefone?`<div style="font-size:0.72rem;opacity:0.75;">📞 ${telefone}</div>`:''}</div></div>` : ''}
             </div>
             ${temDesc ? `<div style="background:#fffbeb;border-left:3px solid #f59e0b;border-radius:8px;padding:9px 13px;margin-bottom:14px;font-size:0.8rem;color:#92400e;font-weight:700;">⭐ Desconto de 15% válido nos 3 primeiros meses. Após este período aplica-se o valor normal.</div>` : ''}
             ${obs ? `<div style="background:#f0fdf4;border-left:3px solid #16a34a;border-radius:8px;padding:9px 13px;margin-bottom:14px;font-size:0.8rem;color:#14532d;font-weight:700;">📝 ${obs}</div>` : ''}
-            <!-- Beneficiários -->
-            ${benefCards}
-            <!-- Totais -->
-            <div style="margin-top:4px;">
-                <div style="font-size:0.7rem;font-weight:800;color:#6b7280;text-transform:uppercase;letter-spacing:1px;text-align:center;margin-bottom:10px;">Resumo Total Mensal</div>
-                <div style="display:flex;gap:10px;flex-wrap:wrap;">${totaisHTML}</div>
-            </div>
+            ${blocosHTML}
             <div style="margin-top:14px;text-align:right;font-size:0.68rem;color:#9ca3af;font-style:italic;">✦ Sistema de cotação desenvolvido por Narry</div>
         </div>`;
 }
@@ -3964,7 +4408,7 @@ function abrirApresentacao() {
                     <div style="font-size:0.8rem;font-weight:600;color:#4a7a9a;">Coparticipação: <strong style="color:#1a5fa8;">${copart}</strong>&nbsp;·&nbsp;${idades.length} vida${idades.length>1?'s':''}</div>
                 </div>
                 <!-- Card corretor — colado abaixo do card branco -->
-                ${(corretor||telefone)?`<div style="width:100%;max-width:420px;display:flex;align-items:center;gap:13px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.13);border-top:1px solid rgba(255,255,255,0.06);border-radius:0 0 18px 18px;padding:14px 24px;margin-bottom:18px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);"><div style="width:38px;height:38px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,${cores.c1},${cores.c2});display:flex;align-items:center;justify-content:center;font-size:1rem;">👔</div><div style="text-align:left;"><div style="font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.32);text-transform:uppercase;letter-spacing:1px;margin-bottom:1px;">Corretor</div><div style="font-size:0.95rem;font-weight:800;color:rgba(255,255,255,0.92);">${corretor}</div>${telefone?`<div style="font-size:0.78rem;color:rgba(34,211,238,0.85);font-weight:600;">📞 ${telefone}</div>`:''}</div></div>`:''}
+                ${(corretor||telefone)?`<div style="width:100%;max-width:420px;display:flex;align-items:center;gap:13px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.13);border-top:1px solid rgba(255,255,255,0.06);border-radius:0 0 18px 18px;padding:14px 24px;margin-bottom:18px;backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);">${_perfilFotoBase64?`<img src="${_perfilFotoBase64}" style="width:40px;height:40px;border-radius:50%;object-fit:cover;object-position:center;flex-shrink:0;border:2px solid rgba(255,255,255,0.3);">`:`<div style="width:38px;height:38px;flex-shrink:0;border-radius:50%;background:linear-gradient(135deg,${cores.c1},${cores.c2});display:flex;align-items:center;justify-content:center;font-size:1rem;">👔</div>`}<div style="text-align:left;"><div style="font-size:0.65rem;font-weight:700;color:rgba(255,255,255,0.32);text-transform:uppercase;letter-spacing:1px;margin-bottom:1px;">Corretor</div><div style="font-size:0.95rem;font-weight:800;color:rgba(255,255,255,0.92);">${corretor}</div>${telefone?`<div style="font-size:0.78rem;color:rgba(34,211,238,0.85);font-weight:600;">📞 ${telefone}</div>`:''}</div></div>`:''}
                 <!-- Badge promoção -->
                 ${temDesc?`<div style="display:inline-flex;align-items:center;gap:9px;background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.35);border-radius:12px;padding:9px 20px;"><span style="font-size:1rem;">⭐</span><span style="font-size:0.8rem;font-weight:700;color:#fbbf24;">Promoção: 15% de desconto nos 3 primeiros meses</span></div>`:''}
             </div>
@@ -4095,8 +4539,8 @@ function abrirApresentacao() {
                 <div style="font-size:2.6rem;margin-bottom:18px;animation:tiFloat 3s ease-in-out infinite;">🤝</div>
                 <div style="font-size:0.72rem;color:rgba(255,255,255,0.28);text-transform:uppercase;letter-spacing:2px;margin-bottom:9px;">Próximos passos</div>
                 <div style="font-size:2.1rem;font-weight:900;color:white;line-height:1.2;margin-bottom:14px;">Pronto para proteger<br>sua saúde?</div>
-                <div style="font-size:0.88rem;color:rgba(255,255,255,0.42);max-width:460px;line-height:1.7;margin-bottom:30px;">Esta cotação é informativa e válida por ${document.getElementById('validadeInput')?.value||'3'} dias. Entre em contato para formalizar a adesão.</div>
-                ${(corretor||telefone)?`<div style="display:inline-flex;align-items:center;gap:12px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.13);border-radius:16px;padding:15px 26px;margin-bottom:26px;"><div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,${cores.c1},${cores.c2});display:flex;align-items:center;justify-content:center;font-size:1.1rem;">👔</div><div style="text-align:left;"><div style="font-size:0.7rem;color:rgba(255,255,255,0.32);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">Fale com seu corretor</div><div style="font-size:0.97rem;font-weight:900;color:white;">${corretor||'Corretor'}</div>${telefone?`<div style="font-size:0.83rem;color:#22d3ee;font-weight:700;">📞 ${telefone}</div>`:''}</div></div>`:''}
+                <div style="font-size:0.88rem;color:rgba(255,255,255,0.42);max-width:460px;line-height:1.7;margin-bottom:30px;">Esta cotação é informativa e ${(document.getElementById('validadeInput')?.value === 'hoje' ? 'válida somente hoje' : 'válida por '+(document.getElementById('validadeInput')?.value||'3')+' dias')}. Entre em contato para formalizar a adesão.</div>
+                ${(corretor||telefone)?`<div style="display:inline-flex;align-items:center;gap:12px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.13);border-radius:16px;padding:15px 26px;margin-bottom:26px;">${_perfilFotoBase64?`<img src="${_perfilFotoBase64}" style="width:42px;height:42px;border-radius:50%;object-fit:cover;object-position:center;flex-shrink:0;border:2px solid rgba(255,255,255,0.3);">`:`<div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,${cores.c1},${cores.c2});display:flex;align-items:center;justify-content:center;font-size:1.1rem;">👔</div>`}<div style="text-align:left;"><div style="font-size:0.7rem;color:rgba(255,255,255,0.32);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">Fale com seu corretor</div><div style="font-size:0.97rem;font-weight:900;color:white;">${corretor||'Corretor'}</div>${telefone?`<div style="font-size:0.83rem;color:#22d3ee;font-weight:700;">📞 ${telefone}</div>`:''}</div></div>`:''}
                 <!-- Narry com brilho dourado -->
                 <div style="display:flex;flex-direction:column;align-items:center;gap:9px;margin-top:4px;">
                     <div style="position:relative;display:inline-block;">
@@ -4342,9 +4786,23 @@ function mostrarTelaInicial() {
 
 function entrarNoCotador() {
     _telaVisitada = true;
-    // Salvar nome se fornecido
+    // Validar nome obrigatório
     const nomeInput = document.getElementById('telaInicialNome');
     const nomeDigitado = nomeInput ? nomeInput.value.trim() : '';
+    if (!nomeDigitado) {
+        if (nomeInput) {
+            nomeInput.style.borderColor = 'rgba(255,80,80,0.9)';
+            nomeInput.style.boxShadow = '0 4px 22px rgba(220,50,50,0.35),0 1px 0 rgba(255,255,255,0.9) inset';
+            nomeInput.placeholder = '⚠️ Nome obrigatório!';
+            nomeInput.focus();
+            setTimeout(() => {
+                nomeInput.style.borderColor = 'rgba(255,255,255,0.7)';
+                nomeInput.style.boxShadow = '0 4px 18px rgba(20,90,190,0.15),0 1px 0 rgba(255,255,255,0.8) inset';
+                nomeInput.placeholder = 'Seu nome (obrigatório) 👤';
+            }, 2500);
+        }
+        return;
+    }
     if (nomeDigitado) {
         window._narryNomeCorretor = nomeDigitado;
         try { localStorage.setItem('narry-nome-corretor', nomeDigitado); } catch(e) {}
@@ -4410,7 +4868,17 @@ function voltarTelaInicial() {
 
 // Botão hover efeito
 document.addEventListener('DOMContentLoaded', function() {
-    mostrarTelaInicial();
+    // Mostrar tela de login por cima de tudo — Firebase vai liberar depois
+    const telaLoginEl = document.getElementById('telaLogin');
+    if (telaLoginEl) {
+        telaLoginEl.style.display = 'flex';
+        const img = document.getElementById('loginNarryImg');
+        if (img) img.src = typeof NARRY_TELA_SRC !== 'undefined' ? NARRY_TELA_SRC : (typeof NARRY_AVATAR !== 'undefined' ? NARRY_AVATAR : '');
+    }
+
+    // Carregar perfil do corretor salvo
+    carregarPerfilSalvo();
+
     const btn = document.getElementById('btnEntrarCotador');
     if (btn) {
         btn.addEventListener('mouseenter', () => { btn.style.transform='scale(1.06) translateY(-2px)'; btn.style.boxShadow='0 14px 38px rgba(20,90,190,0.6),0 1px 0 rgba(255,255,255,0.4) inset'; });
@@ -4421,6 +4889,277 @@ document.addEventListener('DOMContentLoaded', function() {
 buildContratoCheckboxes();
 atualizarOpcoesTipo('HAPVIDA INDIVIDUAL');
 carregarRascunho();
+
+// ================================================================
+//  CALCULADORA SIMPLES
+// ================================================================
+let _csExpr = '';
+function abrirCalcSimples() { document.getElementById('calcSimplesModal').style.display = 'flex'; }
+function fecharCalcSimples() { document.getElementById('calcSimplesModal').style.display = 'none'; }
+function csBtn(v) {
+    const exprEl = document.getElementById('calcSimplesExpr');
+    const valEl  = document.getElementById('calcSimplesVal');
+    if (v === 'C') { _csExpr = ''; exprEl.textContent = ''; valEl.textContent = '0'; return; }
+    if (v === '⌫') { _csExpr = _csExpr.slice(0,-1); exprEl.textContent = _csExpr; if(!_csExpr) valEl.textContent = '0'; return; }
+    if (v === '=') {
+        try {
+            exprEl.textContent = _csExpr + ' =';
+            let expr = _csExpr.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/,/g,'.');
+            let res = Function('"use strict";return ('+expr+')')();
+            res = Math.round(res * 1e10) / 1e10;
+            valEl.textContent = res.toLocaleString('pt-BR');
+            _csExpr = String(res).replace('.',',');
+        } catch(e) { valEl.textContent = 'Erro'; _csExpr = ''; }
+        return;
+    }
+    _csExpr += v;
+    exprEl.textContent = _csExpr;
+    try {
+        let expr = _csExpr.replace(/×/g,'*').replace(/÷/g,'/').replace(/−/g,'-').replace(/,/g,'.');
+        let res = Function('"use strict";return ('+expr+')')();
+        res = Math.round(res * 1e10) / 1e10;
+        valEl.textContent = res.toLocaleString('pt-BR');
+    } catch(e) {}
+}
+</script>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getFirestore, doc, setDoc, getDoc, collection, query, orderBy, limit, getDocs, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+const FIREBASE_CONFIG = {
+    apiKey: "AIzaSyCZW6Nnb6AT_O7QQXB2k0diJVRY8Scxh7M",
+    authDomain: "chatbotnarry.firebaseapp.com",
+    projectId: "chatbotnarry",
+    storageBucket: "chatbotnarry.firebasestorage.app",
+    messagingSenderId: "391383218983",
+    appId: "1:391383218983:web:554703ab48854539734702",
+    measurementId: "G-2HQM3LR9NE"
+};
+const ADMIN_EMAIL = 'cadastroindividual@lider-saude.com';
+const SESSION_ID = Math.random().toString(36).slice(2) + Date.now().toString(36);
+
+const firebaseApp = initializeApp(FIREBASE_CONFIG);
+const auth = getAuth(firebaseApp);
+const db   = getFirestore(firebaseApp);
+
+// ── Expor funções globais para onclick handlers ──────────────────
+window.fazerLogin = async function() {
+    const email  = document.getElementById('loginEmail').value.trim();
+    const senha  = document.getElementById('loginSenha').value;
+    const errEl  = document.getElementById('loginErro');
+    const btnEl  = document.getElementById('btnFazerLogin');
+    errEl.style.display = 'none';
+    btnEl.textContent = '⏳ Entrando...';
+    btnEl.disabled = true;
+    try {
+        await signInWithEmailAndPassword(auth, email, senha);
+    } catch(e) {
+        let msg = 'E-mail ou senha incorretos.';
+        if (e.code === 'auth/too-many-requests') msg = 'Muitas tentativas. Aguarde um momento.';
+        if (e.code === 'auth/network-request-failed') msg = 'Erro de conexão. Verifique a internet.';
+        errEl.textContent = '❌ ' + msg;
+        errEl.style.display = 'block';
+        btnEl.textContent = '🔐 Entrar';
+        btnEl.disabled = false;
+    }
+};
+
+window.fazerLogout = async function() {
+    if (!confirm('Deseja sair da conta?')) return;
+    try {
+        const user = auth.currentUser;
+        if (user) {
+            await setDoc(doc(db, 'sessions', user.uid), { active: false, sessionId: '' }, { merge: true });
+        }
+    } catch(e) {}
+    await signOut(auth);
+};
+
+window.abrirAdmin = function() {
+    document.getElementById('painelAdmin').style.display = 'flex';
+    adminCarregarDados();
+};
+window.fecharAdmin = function() {
+    document.getElementById('painelAdmin').style.display = 'none';
+};
+
+window.adminCarregarDados = async function() {
+    const statsEl = document.getElementById('adminStats');
+    const logsEl  = document.getElementById('adminLogs');
+    statsEl.innerHTML = '<div style="font-size:0.8rem;color:var(--text-light);padding:10px;">⏳ Carregando...</div>';
+    logsEl.innerHTML  = '';
+    try {
+        // Buscar logs (coleção accessLogs)
+        const q = query(collection(db, 'accessLogs'), orderBy('timestamp', 'desc'), limit(50));
+        const snap = await getDocs(q);
+        const logs = [];
+        snap.forEach(d => logs.push({ id: d.id, ...d.data() }));
+
+        // Stats
+        const usuarios = [...new Set(logs.map(l => l.email))];
+        const hoje = new Date().toLocaleDateString('pt-BR');
+        const logHoje = logs.filter(l => {
+            if (!l.timestamp) return false;
+            const d = l.timestamp.toDate ? l.timestamp.toDate() : new Date(l.timestamp);
+            return d.toLocaleDateString('pt-BR') === hoje;
+        });
+
+        // Tempo médio (se houver campo duration)
+        const comDuracao = logs.filter(l => l.duration > 0);
+        const tempoMedio = comDuracao.length ? Math.round(comDuracao.reduce((a,b)=>a+b.duration,0)/comDuracao.length) : 0;
+
+        statsEl.innerHTML = `
+            <div style="background:var(--pill-bg);border:1.5px solid var(--pill-border);border-radius:12px;padding:14px;text-align:center;">
+                <div style="font-size:1.8rem;font-weight:900;color:var(--text-dark);">${logs.length}</div>
+                <div style="font-size:0.7rem;color:var(--text-light);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">Acessos Totais</div>
+            </div>
+            <div style="background:var(--pill-bg);border:1.5px solid var(--pill-border);border-radius:12px;padding:14px;text-align:center;">
+                <div style="font-size:1.8rem;font-weight:900;color:var(--text-dark);">${usuarios.length}</div>
+                <div style="font-size:0.7rem;color:var(--text-light);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">Usuários Únicos</div>
+            </div>
+            <div style="background:var(--pill-bg);border:1.5px solid var(--pill-border);border-radius:12px;padding:14px;text-align:center;">
+                <div style="font-size:1.8rem;font-weight:900;color:var(--text-dark);">${logHoje.length}</div>
+                <div style="font-size:0.7rem;color:var(--text-light);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">Acessos Hoje</div>
+            </div>
+            <div style="background:var(--pill-bg);border:1.5px solid var(--pill-border);border-radius:12px;padding:14px;text-align:center;">
+                <div style="font-size:1.8rem;font-weight:900;color:var(--text-dark);">${tempoMedio ? tempoMedio+'min' : '—'}</div>
+                <div style="font-size:0.7rem;color:var(--text-light);font-weight:700;text-transform:uppercase;letter-spacing:0.5px;">Tempo Médio</div>
+            </div>
+        `;
+
+        if (logs.length === 0) {
+            logsEl.innerHTML = '<div style="color:var(--text-light);font-size:0.85rem;text-align:center;padding:20px;">Nenhum acesso registrado ainda.</div>';
+            return;
+        }
+
+        logsEl.innerHTML = logs.map(l => {
+            const dt = l.timestamp ? (l.timestamp.toDate ? l.timestamp.toDate() : new Date(l.timestamp)).toLocaleString('pt-BR') : '—';
+            const dur = l.duration ? `⏱ ${l.duration}min` : '';
+            const device = l.device || '';
+            const isAdmin = l.email === ADMIN_EMAIL ? ' 👑' : '';
+            return `<div style="background:var(--pill-bg);border:1.5px solid var(--pill-border);border-radius:10px;padding:12px 16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+                <div>
+                    <div style="font-weight:800;color:var(--text-dark);font-size:0.88rem;">${l.email || ''}${isAdmin}</div>
+                    <div style="font-size:0.72rem;color:var(--text-light);margin-top:2px;">${l.nome ? l.nome+' · ' : ''}${device}</div>
+                </div>
+                <div style="text-align:right;">
+                    <div style="font-size:0.78rem;font-weight:700;color:var(--text-mid);">${dt}</div>
+                    ${dur ? `<div style="font-size:0.7rem;color:var(--text-light);">${dur}</div>` : ''}
+                </div>
+            </div>`;
+        }).join('');
+    } catch(e) {
+        statsEl.innerHTML = `<div style="color:#dc2626;font-size:0.82rem;padding:10px;">❌ Erro ao carregar: ${e.message}</div>`;
+        console.error('Admin error:', e);
+    }
+};
+
+// ── Controle de autenticação ─────────────────────────────────────
+let _loginStartTime = null;
+
+function mostrarTelaLogin() {
+    const tl = document.getElementById('telaLogin');
+    if (tl) {
+        const img = document.getElementById('loginNarryImg');
+        if (img) img.src = typeof NARRY_TELA_SRC !== 'undefined' ? NARRY_TELA_SRC : (typeof NARRY_AVATAR !== 'undefined' ? NARRY_AVATAR : '');
+        tl.style.display = 'flex';
+    }
+    // Ocultar widgets do app mas manter page-wrap funcionando
+    const telaInicial = document.getElementById('telaInicial');
+    if (telaInicial) telaInicial.style.display = 'none';
+    const nw = document.getElementById('narry-widget');
+    if (nw) nw.style.display = 'none';
+}
+
+function esconderTelaLogin() {
+    const tl = document.getElementById('telaLogin');
+    if (tl) {
+        tl.style.opacity = '0';
+        tl.style.transition = 'opacity 0.3s ease';
+        setTimeout(() => { tl.style.display = 'none'; tl.style.opacity = ''; }, 300);
+    }
+}
+
+async function onLogin(user) {
+    _loginStartTime = Date.now();
+    esconderTelaLogin();
+
+    // Registrar nova sessão (sobrescreve qualquer sessão anterior)
+    const sessionRef = doc(db, 'sessions', user.uid);
+    try {
+        await setDoc(sessionRef, {
+            active: true,
+            sessionId: SESSION_ID,
+            email: user.email,
+            lastLogin: serverTimestamp()
+        }, { merge: true });
+    } catch(e) { console.warn('Session write failed:', e); }
+
+    // Registrar log de acesso
+    try {
+        const logRef = doc(collection(db, 'accessLogs'));
+        const nome = window._narryNomeCorretor || localStorage.getItem('narry-nome-corretor') || '';
+        await setDoc(logRef, {
+            uid: user.uid,
+            email: user.email,
+            nome: nome,
+            sessionId: SESSION_ID,
+            timestamp: serverTimestamp(),
+            device: navigator.userAgent.includes('Mobile') ? 'Mobile' : 'Desktop',
+            duration: 0
+        });
+        window._adminLogId = logRef.id;
+    } catch(e) {}
+
+    // Exibir info no header
+    const headerLabel = document.getElementById('headerUserLabel');
+    if (headerLabel) headerLabel.textContent = `🔵 ${user.email}`;
+
+    // Mostrar botão admin se for admin
+    const btnAdmin = document.getElementById('btnAdminPanel');
+    if (btnAdmin) btnAdmin.style.display = user.email === ADMIN_EMAIL ? '' : 'none';
+
+    // Mostrar tela inicial do app
+    if (typeof mostrarTelaInicial === 'function') mostrarTelaInicial();
+}
+
+function onLogout() {
+    // Atualizar duração da sessão no log
+    if (window._adminLogId && _loginStartTime) {
+        const duration = Math.round((Date.now() - _loginStartTime) / 60000);
+        try {
+            setDoc(doc(db, 'accessLogs', window._adminLogId), { duration }, { merge: true });
+        } catch(e) {}
+    }
+    mostrarTelaLogin();
+    // Limpar campo de senha
+    const senhaEl = document.getElementById('loginSenha');
+    if (senhaEl) senhaEl.value = '';
+}
+
+// ── Listener principal ───────────────────────────────────────────
+onAuthStateChanged(auth, (user) => {
+    if (user) {
+        onLogin(user);
+    } else {
+        onLogout();
+    }
+});
+
+// ── Registrar logout com duração antes de fechar a aba ───────────
+window.addEventListener('beforeunload', async () => {
+    const user = auth.currentUser;
+    if (user && window._adminLogId && _loginStartTime) {
+        const duration = Math.round((Date.now() - _loginStartTime) / 60000);
+        try {
+            await setDoc(doc(db, 'accessLogs', window._adminLogId), { duration }, { merge: true });
+            await setDoc(doc(db, 'sessions', user.uid), { active: false }, { merge: true });
+        } catch(e) {}
+    }
+});
 </script>
 </body>
 </html>
