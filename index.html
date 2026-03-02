@@ -1491,16 +1491,29 @@
 }
 .ntab-btn {
     flex: 1; border: none; background: transparent;
-    padding: 8px 6px; font-size: 0.7rem; font-weight: 800;
-    color: rgba(255,255,255,0.6); cursor: pointer;
-    font-family: 'Nunito', sans-serif; letter-spacing: 0.01em;
-    border-bottom: 2.5px solid transparent; margin-bottom: -1.5px;
-    transition: all 0.2s;
+    padding: 9px 6px; font-size: 0.7rem; font-weight: 800;
+    color: rgba(255,255,255,0.45); cursor: pointer;
+    font-family: 'Nunito', sans-serif; letter-spacing: 0.02em;
+    border-bottom: 3px solid transparent; margin-bottom: -1.5px;
+    transition: all 0.25s ease; position: relative;
+    text-shadow: none;
 }
-.ntab-btn:hover { color: rgba(255,255,255,0.9); }
+.ntab-btn:hover { color: rgba(255,255,255,0.85); background: rgba(255,255,255,0.06); }
 .ntab-btn.active {
-    color: white; border-bottom-color: rgba(255,255,255,0.85);
-    background: rgba(255,255,255,0.08);
+    color: #fff;
+    border-bottom-color: #fff;
+    background: rgba(255,255,255,0.13);
+    text-shadow: 0 0 12px rgba(255,255,255,0.7), 0 0 24px rgba(255,255,255,0.3);
+    letter-spacing: 0.04em;
+}
+@keyframes tabGlow {
+    0%,100% { text-shadow: 0 0 8px rgba(255,255,255,0.6), 0 0 20px rgba(255,255,255,0.2); }
+    50% { text-shadow: 0 0 16px rgba(255,255,255,0.9), 0 0 32px rgba(255,255,255,0.4); }
+}
+#ntab-defrente.active {
+    border-bottom-color: #d9a0ff;
+    text-shadow: 0 0 10px rgba(200,120,255,0.8), 0 0 22px rgba(200,120,255,0.4);
+    animation: tabGlow 2s ease-in-out infinite;
 }
 
 /* ── DE FRENTE COM NARRY ────────────────────────────────── */
@@ -1532,8 +1545,24 @@
 }
 
 .defrente-title {
-    font-size: 1rem; font-weight: 900; color: #1a3a5c;
-    margin-bottom: 4px; letter-spacing: -0.01em;
+    font-size: 1.05rem; font-weight: 900; color: #1a3a5c;
+    margin-bottom: 4px; letter-spacing: 0.01em;
+    background: linear-gradient(135deg, #7b2fff, #00d4ff, #ff6ef7, #7b2fff);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: neonShift 4s ease-in-out infinite, neonPulse 2.5s ease-in-out infinite;
+    filter: drop-shadow(0 0 8px rgba(123,47,255,0.5));
+}
+@keyframes neonShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes neonPulse {
+    0%,100% { filter: drop-shadow(0 0 6px rgba(123,47,255,0.5)) drop-shadow(0 0 14px rgba(0,212,255,0.3)); }
+    50% { filter: drop-shadow(0 0 12px rgba(123,47,255,0.8)) drop-shadow(0 0 28px rgba(0,212,255,0.5)); }
 }
 .defrente-sub {
     font-size: 0.72rem; font-weight: 700; color: #5a8fb5;
