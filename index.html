@@ -2334,10 +2334,11 @@ async function narrySpeak(text, btn) {
 
         if (!res.ok) {
             const err = await res.text();
-            console.warn('ElevenLabs error:', res.status, err);
+            console.error('🔴 ElevenLabs/Worker erro:', res.status, err);
+            alert(`Erro TTS ${res.status}: ${err.slice(0,200)}`);
             if (hasBtn) {
-                btn.innerHTML = '❌'; btn.title = 'Erro'; btn.disabled = false;
-                setTimeout(() => { btn.innerHTML = '🔊'; btn.title = 'Ouvir'; }, 2500);
+                btn.innerHTML = '❌'; btn.title = `Erro ${res.status}`; btn.disabled = false;
+                setTimeout(() => { btn.innerHTML = '🔊'; btn.title = 'Ouvir'; }, 4000);
             }
             return;
         }
