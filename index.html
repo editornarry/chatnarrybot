@@ -1541,9 +1541,6 @@
     #narry-input  { font-size: 0.9rem; padding: 11px 14px; }
     #narry-send   { width: 42px; height: 42px; font-size: 1.1rem; }
     #narry-messages { max-height: calc(62vh - 120px); }
-
-    /* Mic desabilitado no mobile (API não funciona bem) */
-    .nbtn-mic { opacity: 0.35; pointer-events: none; cursor: default; }
 }
 </style>
 
@@ -2274,7 +2271,6 @@ function narryTogglePanel() {
                     fala = `Boa noite${_nomeStr}, tudo bem? Como posso te ajudar?`;
                 }
                 narryAddBot(saudacao);
-                narrySpeak(fala);
             }, 300);
         }
         setTimeout(() => document.getElementById('narry-input').focus(), 400);
@@ -2381,16 +2377,9 @@ function narryAddBot(text) {
     const msgs = document.getElementById('narry-messages');
     const div  = document.createElement('div');
     div.className = 'nmsg bot';
-    // Criar botão de voz
-    const speakBtn = document.createElement('button');
-    speakBtn.className = 'narry-speak-btn';
-    speakBtn.innerHTML = '🔊';
-    speakBtn.title = 'Ouvir';
-    speakBtn.onclick = () => narrySpeak(text, speakBtn);
     const bubble = document.createElement('div');
     bubble.className = 'nmsg-bubble';
     bubble.innerHTML = narryFmt(text);
-    bubble.appendChild(speakBtn);
     const av = document.createElement('div');
     av.className = 'nmsg-av';
     av.innerHTML = MINI_SVG;
@@ -2536,7 +2525,6 @@ async function narrySend() {
         else narrySetExpr('happy');
 
         narryAddBot(reply);
-        narrySpeak(reply, null);
         if (narryMessages.length > 20) narryMessages = narryMessages.slice(-16);
 
     } catch(e) {
@@ -2558,7 +2546,7 @@ function narryStopAudio() {
 // ── MIC / RECONHECIMENTO DE VOZ ──────────────────────────────
 function narryToggleMic() {
     if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        narryAddBot('Seu navegador não suporta reconhecimento de voz 😕 Tenta no Chrome!');
+        narryAddBot('Reconhecimento de voz só funciona no Chrome 🎤 Tenta pelo celular ou pelo Chrome no PC!');
         return;
     }
     if (narryMicActive) {
@@ -2578,64 +2566,122 @@ function narryToggleMic() {
     narrySetExpr('surprised');
 
     narryRecognition.onresult = e => {
-        const transcript = e.results[0][0].transcript;
+        const transcript = e.results[0][0].transcript.trim();
         document.getElementById('narry-input').value = transcript;
+
+        const t = transcript.toLowerCase();
+
+        // Comando "gerar" → clica no botão de cotação
+        if (t.includes('gerar') || t === 'gerar orçamento' || t === 'gerar') {
+            narryAddUser(transcript);
+            narryAddBot('Gerando orçamento! 🚀');
+            setTimeout(() => gerarOrcamento(), 300);
+            return;
+        }
+
         // Verificar se é comando de cotação
         const cmd = narryParseVoiceCommand(transcript);
-        if (cmd) {
+        if (cmd && (cmd.idades.length > 0 || cmd.contrato)) {
             narryAddUser(transcript);
             narryExecuteCommand(cmd);
         } else {
             narrySend();
         }
     };
-    narryRecognition.onerror = () => { narryMicActive = false; btn.classList.remove('listening'); btn.textContent = '🎤'; narrySetExpr('embarrassed'); };
-    narryRecognition.onend   = () => { narryMicActive = false; btn.classList.remove('listening'); btn.textContent = '🎤'; };
+    narryRecognition.onerror = (e) => {
+        narryMicActive = false;
+        btn.classList.remove('listening');
+        btn.textContent = '🎤';
+        narrySetExpr('embarrassed');
+        if (e.error === 'not-allowed') narryAddBot('Permissão de microfone negada 😕 Libera o mic nas configurações do navegador!');
+    };
+    narryRecognition.onend = () => { narryMicActive = false; btn.classList.remove('listening'); btn.textContent = '🎤'; };
     narryRecognition.start();
 }
 
 // Detectar comando de cotação por voz
 function narryParseVoiceCommand(text) {
-    const t = text.toLowerCase();
-    if (!t.includes('cotação') && !t.includes('cot') && !t.includes('plano')) return null;
-    const idades = [...t.matchAll(/(\d+)\s*anos?/g)].map(m => parseInt(m[1]));
+    const t = text.toLowerCase()
+        .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove acentos
+        .replace(/[çÇ]/g, 'c');
+
+    const isCotacao = t.includes('cotacao') || t.includes('cota') || t.includes('plano') ||
+                      t.includes('orcamento') || t.includes('valor') || t.includes('preco') ||
+                      t.includes('quanto') || t.includes('calcular');
+
+    // Idades: "30 anos", "30", múltiplas "30 e 25 anos"
+    const idades = [...t.matchAll(/(\d{1,2})\s*(?:anos?)?/g)]
+        .map(m => parseInt(m[1]))
+        .filter(n => n >= 0 && n <= 99);
+
     let contrato = null;
-    if (t.includes('hapvida') || t.includes('ha pvida')) {
-        contrato = t.includes('simples') ? 'HAPVIDA SUPER SIMPLES' : 'HAPVIDA INDIVIDUAL';
+    if (t.includes('hapvida') || t.includes('ha pvida') || t.includes('apvida')) {
+        contrato = (t.includes('simples') || t.includes('super')) ? 'HAPVIDA SUPER SIMPLES' : 'HAPVIDA INDIVIDUAL';
     } else if (t.includes('samel')) contrato = 'SAMEL';
     else if (t.includes('select')) contrato = 'SELECT';
-    else if (t.includes('adventista')) contrato = t.includes('pme') ? 'ADVENTISTA PME' : 'ADVENTISTA';
+    else if (t.includes('adventista') || t.includes('adv')) contrato = t.includes('pme') ? 'ADVENTISTA PME' : 'ADVENTISTA';
     else if (t.includes('alter')) contrato = 'ALTER';
     else if (t.includes('corpe')) contrato = t.includes('pme') ? 'CORPE PME' : 'CORPE INDIVIDUAL';
     else if (t.includes('affix')) contrato = t.includes('sispeam') ? 'AFFIX SISPEAM' : 'AFFIX PME';
     else if (t.includes('classe')) contrato = 'CLASSE ADMINISTRADORA';
+
     let copart = null;
     if (t.includes('parcial')) copart = 'parcial';
     else if (t.includes('total')) copart = 'total';
-    if (idades.length > 0 || contrato) return { idades, contrato, copart };
-    return null;
+
+    let acomodacao = null;
+    if (t.includes('apartamento') || t.includes('apto')) acomodacao = 'apt';
+    else if (t.includes('enfermaria') || t.includes('enf')) acomodacao = 'enf';
+    else if (t.includes('ambulatorial') || t.includes('amb')) acomodacao = 'amb';
+
+    if (!isCotacao && idades.length === 0 && !contrato) return null;
+    return { idades, contrato, copart, acomodacao };
 }
 
 function narryExecuteCommand(cmd) {
     narrySetExpr('excited');
-    // Preencher campos automaticamente
-    if (cmd.idades.length > 0) document.getElementById('idadesInput').value = cmd.idades.join(', ');
+    let confirmados = [];
+
+    // Preencher idades
+    if (cmd.idades.length > 0) {
+        document.getElementById('idadesInput').value = cmd.idades.join(', ');
+        confirmados.push(`**${cmd.idades.join(', ')} anos**`);
+    }
+
+    // Preencher contrato
     if (cmd.contrato) {
-        document.getElementById('tipoContrato').value = cmd.contrato;
         const cfgC = contratoConfig[cmd.contrato];
-        if (cfgC) document.getElementById('contractSelected').textContent = cfgC.icon + ' ' + cfgC.desc;
-        atualizarOpcoesTipo(cmd.contrato);
-        // Marcar item no dropdown
-        document.querySelectorAll('.contract-dropdown-item').forEach(el => {
-            el.classList.toggle('selected', el.textContent.includes(cfgC?.desc || ''));
-        });
+        if (cfgC) {
+            document.getElementById('tipoContrato').value = cmd.contrato;
+            document.getElementById('contractSelected').textContent = cfgC.icon + ' ' + cfgC.desc;
+            atualizarOpcoesTipo(cmd.contrato);
+            document.querySelectorAll('.contract-dropdown-item').forEach(el => {
+                el.classList.toggle('selected', el.textContent.includes(cfgC.desc || ''));
+            });
+            confirmados.push(`**${cmd.contrato}**`);
+        }
     }
+
+    // Preencher coparticipação
     if (cmd.copart) {
-        document.getElementById('checkParcial').checked = cmd.copart === 'parcial';
-        document.getElementById('checkTotal').checked   = cmd.copart === 'total';
+        document.getElementById('checkParcial').checked = cmd.copart === 'parcial' || cmd.copart === 'ambas';
+        document.getElementById('checkTotal').checked   = cmd.copart === 'total'   || cmd.copart === 'ambas';
+        confirmados.push(`copart. **${cmd.copart}**`);
     }
-    narryAddBot(`Entendido! 🎤 Preenchi os campos: **${cmd.idades.join(', ')} anos**, **${cmd.contrato || 'contrato atual'}**, **${cmd.copart || 'copart. atual'}**. Clique em Gerar Orçamento ou fale "gerar"!`);
-    narrySpeak("Preenchi os campos! Clique em gerar orçamento quando estiver pronto!");
+
+    // Preencher acomodação
+    if (cmd.acomodacao) {
+        const mapAcom = { amb: 'checkAmb', enf: 'checkEnf', apt: 'checkApt' };
+        ['checkAmb','checkEnf','checkApt'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.checked = false;
+        });
+        const elAcom = document.getElementById(mapAcom[cmd.acomodacao]);
+        if (elAcom) { elAcom.checked = true; confirmados.push(`**${cmd.acomodacao}**`); }
+    }
+
+    const resumo = confirmados.length > 0 ? confirmados.join(', ') : 'campos atualizados';
+    narryAddBot(`Entendido! 🎤 Preenchi: ${resumo}. Fale **"gerar"** ou clique em Gerar Orçamento!`);
 }
 
 // ── REATIVIDADE AO COTADOR ───────────────────────────────────
