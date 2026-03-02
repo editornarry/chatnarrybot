@@ -2290,9 +2290,8 @@ function narryTogglePanel() {
 }
 
 // ── ELEVENLABS TTS ───────────────────────────────────────────
-const _EL_KEY     = 'c825ceb53e9530aa1fba0861d9e3f473a8612af21a7dff9dbbf267ff0eb7c6d9';
-const _EL_VOICE   = 'tS45q0QcrDHqHoaWdCDR';
-const _EL_URL     = `https://api.elevenlabs.io/v1/text-to-speech/${_EL_VOICE}`;
+// TTS via Cloudflare Worker (evita bloqueio de CORS do ElevenLabs)
+const _EL_URL = 'https://misty-silence-e8e3.editor-narrymonpsena.workers.dev/tts';
 let _elAudio      = null;
 let _elPlayingBtn = null;
 
@@ -2329,16 +2328,8 @@ async function narrySpeak(text, btn) {
     try {
         const res = await fetch(_EL_URL, {
             method: 'POST',
-            headers: {
-                'xi-api-key': _EL_KEY,
-                'Content-Type': 'application/json',
-                'Accept': 'audio/mpeg'
-            },
-            body: JSON.stringify({
-                text: cleanText,
-                model_id: 'eleven_multilingual_v2',
-                voice_settings: { stability: 0.45, similarity_boost: 0.82, style: 0.35, use_speaker_boost: true }
-            })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ text: cleanText })
         });
 
         if (!res.ok) {
