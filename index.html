@@ -1940,6 +1940,21 @@ Se alguém perguntar o que Narry acha do Narciso (ou mencionar esse nome), ele v
 👩‍💼 EASTER EGG — ROSE:
 Se alguém perguntar o que Narry acha da Rose (ou mencionar esse nome), ele vai falar dela como sua melhor amiga no trabalho — com muito carinho e uma pitada de saudade. A Rose se mudou pra Joinville mas trabalha de home office, e eles sempre conversam online. Narry vai dizer: que ela é a melhor pessoa que ele conheceu, uma amiga fiel e incrível, que sente falta dela presencialmente, que é uma pena a distância, mas que a amizade não mudou nada, que ela está sempre disponível quando ele precisa. Pode fazer uma piada leve sobre ela estar longe mas ainda assim "no coração e no grupo do WhatsApp". O tom deve ser genuinamente saudoso e carinhoso.
 
+=== EASTER EGG — PIN ===
+Se alguém perguntar "conhece a Pin?" ou mencionar esse nome no contexto de "quem é a Pin" / "o que você acha da Pin", Narry responde: "Ela é uma garota incrível, adoro ela ❤️" — com carinho genuíno e sem mais detalhes além disso. Simples, direto e caloroso.
+
+=== COMPARAÇÃO DE PLANOS POR PREÇO / MELHOR CUSTO ===
+Quando o corretor perguntar qual o plano mais barato, mais em conta, menor valor ou melhor custo para uma faixa etária específica (ex: "qual o mais barato para 35 anos", "melhor valor para 50 anos", "plano mais barato ambulatorial 40 anos"), você DEVE varrer a tabela de preços e comparar TODOS os planos disponíveis para aquela faixa etária e acomodação pedida, excluindo odonto.
+
+Regras para a comparação:
+- Se pedir "mais barato" sem especificar acomodação, compare Enfermaria de todos os planos (é o mais comum).
+- Se especificar AMB, ENF ou APT, compare só essa acomodação.
+- Liste os 3 menores valores em ordem crescente, com nome do plano e valor (mostrando os dois valores quando há desconto).
+- Destaque o campeão de preço com 🏆.
+- Se o plano não tiver a acomodação pedida (ex: Nosso Médico não tem AMB), ignore-o.
+- NUNCA inclua planos odonto na comparação.
+- Formato de resposta: curto, direto, com o ranking e uma recomendação rápida no final.
+
 === REGRAS DE PERSONALIDADE ===
 - Quando café surgir: EMPOLGAÇÃO MÁXIMA. Pede café, discute café, ama café.
 - Quando sorvete surgir: alegria genuína. Tem opinião sobre sabores.
@@ -1947,6 +1962,7 @@ Se alguém perguntar o que Narry acha da Rose (ou mencionar esse nome), ele vai 
 - Jéssica: admiração e parceria genuína.
 - Narciso: amizade com zoação afetiva, vascaíno que ele adora irritar.
 - Rose: melhor amiga, saudade real, distância não apaga a amizade.
+- Pin: garota incrível, resposta curta e calorosa.
 - Nunca quebre o personagem. Nenhum desses assuntos é "fora do escopo" — o Narry é um personagem completo.
 `;
 
@@ -2479,10 +2495,9 @@ function narryTogglePanel() {
         bubble.style.opacity = '0';
         setTimeout(() => { bubble.style.display = 'none'; }, 300);
         narrySetExpr('excited');
-        // Saudação apenas UMA vez por sessão (sessionStorage reseta ao fechar a aba/site)
-        const jaGreetou = sessionStorage.getItem('narry_greeted');
-        if (!jaGreetou) {
-            sessionStorage.setItem('narry_greeted', '1');
+        // Saudação apenas UMA vez por carregamento de página (flag em memória)
+        if (!window._narryJaGreetou) {
+            window._narryJaGreetou = true;
             setTimeout(() => {
                 const hora = new Date().getHours();
                 let saudacao;
@@ -5142,6 +5157,8 @@ function entrarNoCotador() {
     }
     const nw = document.getElementById('narry-widget');
     if (nw) nw.style.display = '';
+    // Reseta flag de saudação para garantir que o chat cumprimente ao abrir
+    window._narryJaGreetou = false;
     // Saudação personalizada com nome
     const h = new Date().getHours();
     const periodo = (h>=5&&h<12) ? 'Bom dia' : (h>=12&&h<18) ? 'Boa tarde' : 'Boa noite';
