@@ -1487,6 +1487,18 @@
 #narry-bubble.error-mode::after  { border-top-color: rgba(220,50,50,0.4); }
 #narry-bubble.error-mode::before { border-top-color: #fff0f0; }
 
+/* ── ANIMAÇÃO ROMÂNTICA DA PIN ──────────────────────────── */
+@keyframes pin-glow-in  { from { box-shadow: 0 4px 16px rgba(10,60,140,0.35), 0 0 0 1.5px rgba(100,180,255,0.4); } to { box-shadow: 0 0 0 6px rgba(255,150,200,0.35), 0 0 30px 12px rgba(255,100,180,0.45), 0 0 60px 20px rgba(255,180,220,0.25); border-color: rgba(255,160,210,0.9); } }
+@keyframes pin-glow-out { from { box-shadow: 0 0 0 6px rgba(255,150,200,0.35), 0 0 30px 12px rgba(255,100,180,0.45), 0 0 60px 20px rgba(255,180,220,0.25); border-color: rgba(255,160,210,0.9); } to { box-shadow: 0 4px 16px rgba(10,60,140,0.35), 0 0 0 1.5px rgba(100,180,255,0.4); border-color: rgba(255,255,255,0.85); } }
+#narry-btn.pin-love { animation: pin-glow-in 0.6s ease forwards !important; filter: drop-shadow(0 0 18px rgba(255,120,190,0.8)) brightness(1.08) saturate(1.2); }
+#narry-btn.pin-love-out { animation: pin-glow-out 1.5s ease forwards !important; }
+.pin-particle { position: fixed; pointer-events: none; z-index: 99999; font-size: 18px; animation: pin-particle-fly var(--dur,2s) ease-out forwards; }
+@keyframes pin-particle-fly {
+    0%   { transform: translate(0,0) scale(0.3) rotate(0deg); opacity: 1; }
+    30%  { opacity: 1; transform: translate(var(--tx30),var(--ty30)) scale(1.1) rotate(var(--rot)); }
+    100% { transform: translate(var(--tx),var(--ty)) scale(0.2) rotate(var(--rot2)); opacity: 0; }
+}
+
 /* ── TABS ───────────────────────────────────────────────── */
 .ntabs {
     display: flex; background: rgba(15,50,110,0.12);
@@ -1941,7 +1953,7 @@ Se alguém perguntar o que Narry acha do Narciso (ou mencionar esse nome), ele v
 Se alguém perguntar o que Narry acha da Rose (ou mencionar esse nome), ele vai falar dela como sua melhor amiga no trabalho — com muito carinho e uma pitada de saudade. A Rose se mudou pra Joinville mas trabalha de home office, e eles sempre conversam online. Narry vai dizer: que ela é a melhor pessoa que ele conheceu, uma amiga fiel e incrível, que sente falta dela presencialmente, que é uma pena a distância, mas que a amizade não mudou nada, que ela está sempre disponível quando ele precisa. Pode fazer uma piada leve sobre ela estar longe mas ainda assim "no coração e no grupo do WhatsApp". O tom deve ser genuinamente saudoso e carinhoso.
 
 === EASTER EGG — PIN ===
-Se alguém perguntar "conhece a Pin?" ou mencionar esse nome no contexto de "quem é a Pin" / "o que você acha da Pin", Narry responde: "Ela é uma garota incrível, adoro ela ❤️" — com carinho genuíno e sem mais detalhes além disso. Simples, direto e caloroso.
+Se alguém perguntar "conhece a Pin?" ou mencionar esse nome no contexto de "quem é a Pin" / "o que você acha da Pin", Narry responde com carinho genuíno e MUITO entusiasmo: "Ela é uma garota incrível, adoro ela ❤️❤️❤️ — uma das pessoas mais especiais que conheço! 💕💖" — sempre com vários corações, empolgado, deixando claro que ela é alguém muito especial pra ele.
 
 === COMPARAÇÃO DE PLANOS POR PREÇO / MELHOR CUSTO ===
 Quando o corretor perguntar qual o plano mais barato, mais em conta, menor valor ou melhor custo para uma faixa etária específica (ex: "qual o mais barato para 35 anos", "melhor valor para 50 anos", "plano mais barato ambulatorial 40 anos"), você DEVE varrer a tabela de preços e comparar TODOS os planos disponíveis para aquela faixa etária e acomodação pedida, excluindo odonto.
@@ -1965,6 +1977,50 @@ Regras para a comparação:
 - Pin: garota incrível, resposta curta e calorosa.
 - Nunca quebre o personagem. Nenhum desses assuntos é "fora do escopo" — o Narry é um personagem completo.
 `;
+
+// ── ANIMAÇÃO ROMÂNTICA DA PIN ────────────────────────────────
+function narryPinLoveAnim() {
+    const btn = document.getElementById('narry-btn');
+    if (!btn) return;
+
+    // Glow rosa no ícone
+    btn.classList.remove('pin-love', 'pin-love-out');
+    void btn.offsetWidth;
+    btn.classList.add('pin-love');
+
+    const EMOJIS = ['❤️','💕','💖','💗','💓','🌸','✨','💫','🌺','💝','🌷','⭐'];
+    const rect = btn.getBoundingClientRect();
+    const cx = rect.left + rect.width / 2;
+    const cy = rect.top  + rect.height / 2;
+    let particles = [];
+
+    // Dispara partículas em ondas durante 9s
+    const interval = setInterval(() => {
+        const count = 2 + Math.floor(Math.random() * 2);
+        for (let i = 0; i < count; i++) {
+            const el = document.createElement('div');
+            el.className = 'pin-particle';
+            el.textContent = EMOJIS[Math.floor(Math.random() * EMOJIS.length)];
+            const angle = Math.random() * Math.PI * 2;
+            const dist  = 60 + Math.random() * 110;
+            const tx    = Math.cos(angle) * dist;
+            const ty    = Math.sin(angle) * dist - 30;
+            const dur   = 1.4 + Math.random() * 1.2;
+            el.style.cssText = `left:${cx}px;top:${cy}px;--tx:${tx}px;--ty:${ty}px;--tx30:${tx*0.4}px;--ty30:${ty*0.4-20}px;--dur:${dur}s;--rot:${-30+Math.random()*60}deg;--rot2:${-60+Math.random()*120}deg;font-size:${14+Math.random()*10}px;`;
+            document.body.appendChild(el);
+            particles.push(el);
+            setTimeout(() => el.remove(), dur * 1000 + 100);
+        }
+    }, 350);
+
+    // Para partículas após 9s, fade do glow por 1.5s
+    setTimeout(() => {
+        clearInterval(interval);
+        btn.classList.remove('pin-love');
+        btn.classList.add('pin-love-out');
+        setTimeout(() => btn.classList.remove('pin-love-out'), 1600);
+    }, 9000);
+}
 
 // ── ESTADO ──────────────────────────────────────────────────────
 let narryMessages  = [];
@@ -2718,6 +2774,26 @@ async function narrySend() {
     if (!text) return;
     inp.value = '';
     narryAddUser(text);
+
+    // ── EASTER EGG LOCAL — Pin (intercepta antes da API) ──────
+    const tLow = text.toLowerCase();
+    if (tLow.includes('pin') && (tLow.includes('conhece') || tLow.includes('quem é') || tLow.includes('o que acha') || tLow.includes('fala da') || tLow.includes('pin?') || tLow.replace(/[^a-záéíóúãõâêôçàüñ\s]/gi,'').trim() === 'pin')) {
+        const pinRespostas = [
+            { msg: 'A Pin?? Cara, ela é uma pessoa INCRÍVEL! ❤️❤️❤️ Uma das pessoas mais especiais que conheço, sem exagero. Sortudo quem tem ela por perto! 🥰💕💖', anim: true },
+            { msg: 'AHHH A PIN!! ❤️❤️❤️ Ela é uma garota incrível, adoro ela demais! Uma pessoa muito legal, cheia de energia boa. Coração gigante! 💕💕💖', anim: true },
+            { msg: 'Ela é incrível, mano! ❤️❤️❤️ A Pin é daquelas pessoas que deixa qualquer ambiente mais leve só de aparecer. Adoro ela! 💖💖', anim: true },
+            { msg: 'Ela nunca mais jogou MLBB comigo... 😢', anim: false },
+        ];
+        const escolha = pinRespostas[Math.floor(Math.random() * pinRespostas.length)];
+        const thkPin = narryShowThinking();
+        setTimeout(() => {
+            thkPin.remove();
+            narryAddBot(escolha.msg);
+            if (escolha.anim) narryPinLoveAnim();
+        }, 600);
+        return;
+    }
+
     narrySetExpr('thinking');
     const thk = narryShowThinking();
 
