@@ -2420,10 +2420,10 @@ function narryHideBubble() {
 function narryRotateBubble() {
     if (narryPanelOpen) return;
     narryShowBubble(getBubbleMsg());
-    // Esconde após 45s, mantém 15s em branco, nova frase no próximo ciclo
+    // Esconde após 7s, mantém ~173s em branco, nova frase no próximo ciclo (3 min)
     setTimeout(() => {
         if (!narryPanelOpen) narryHideBubble();
-    }, 45000);
+    }, 7000);
 }
 
 // Força uma mensagem de contexto na próxima rotação (ou imediatamente)
@@ -2435,9 +2435,9 @@ function narryForceBubble(msg, immediate) {
     }
 }
 
-// Primeira bolha após 5 segundos, depois a cada 60 segundos
+// Primeira bolha após 5 segundos, depois a cada 3 minutos
 setTimeout(() => narryRotateBubble(), 5000);
-setInterval(narryRotateBubble, 60000);
+setInterval(narryRotateBubble, 180000);
 
 // ── TOGGLE PANEL ─────────────────────────────────────────────
 function narryBubbleClick() {
