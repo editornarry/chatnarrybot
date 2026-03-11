@@ -657,157 +657,112 @@
         [data-theme="aesthetic95"] ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #bb22ff, #ee22aa); }
 
         /* ════════════════════════════════════════════════════════
-           AESTHETIC 95 — PACOTE DE ANIMAÇÕES
+           AESTHETIC 95 — ANIMAÇÕES v2 (otimizado)
            ════════════════════════════════════════════════════════ */
 
-        /* ── Keyframes base ── */
+        /* Canvas de pixels cadentes */
+        #a95-pixels {
+            position: absolute; inset: 0;
+            width: 100%; height: 100%;
+            pointer-events: none; z-index: 0; opacity: 0.5;
+        }
+
+        /* Keyframes base */
         @keyframes a95GradShift  { to { background-position: 200% center; } }
+
         @keyframes a95TitleGlitch {
-            0%,88%,100% { filter: drop-shadow(0 2px 8px rgba(180,0,255,0.3)); transform: none; }
-            89% { filter: drop-shadow(2px 0 0 #ff00cc) drop-shadow(-2px 0 0 #00ffee); transform: translate(-2px,0) skewX(2deg); }
-            90% { filter: drop-shadow(-2px 0 0 #ff00cc) drop-shadow(2px 0 0 #00ffee); transform: translate(2px,0) skewX(-2deg); }
-            91% { filter: drop-shadow(0 2px 8px rgba(180,0,255,0.3)); transform: none; }
+            0%,90%,100% { filter: drop-shadow(0 2px 8px rgba(180,0,255,0.3)); transform: none; }
+            91%  { filter: drop-shadow(2px 0 0 #ff00cc) drop-shadow(-2px 0 0 #00ccff); transform: translate(-2px,0) skewX(2deg); opacity:.85; }
+            91.8%{ filter: drop-shadow(-2px 0 0 #ff00cc) drop-shadow(2px 0 0 #00ccff); transform: translate(2px,0); opacity:1; }
+            92.5%{ filter: drop-shadow(0 2px 8px rgba(180,0,255,0.3)); transform: none; }
         }
         @keyframes a95BubbleGlitch {
-            0%,84%,100% { transform: none; filter: none; }
-            85% { transform: translate(2px,0) skewX(1deg); filter: hue-rotate(40deg); }
-            86% { transform: translate(-2px,0) skewX(-1deg); filter: hue-rotate(-40deg); }
-            87% { transform: none; filter: none; }
+            0%,88%,100% { transform: none; filter: none; }
+            89%  { transform: translate(2px,0) skewX(1deg); filter: hue-rotate(50deg); }
+            89.8%{ transform: translate(-1px,0); filter: hue-rotate(-30deg); }
+            90%  { transform: none; filter: none; }
         }
 
-        /* ── 1. GLITCH nos cards — RGB split periódico ── */
-        [data-theme="aesthetic95"] .glass-card {
-            animation: a95CardGlitch 9s infinite;
-        }
-        [data-theme="aesthetic95"] .glass-card:nth-child(2) { animation-delay: -3s; }
-        [data-theme="aesthetic95"] .glass-card:nth-child(3) { animation-delay: -6s; }
-        [data-theme="aesthetic95"] .glass-card:nth-child(4) { animation-delay: -1.5s; }
-        @keyframes a95CardGlitch {
-            0%,91%,100% { box-shadow: 3px 3px 0 rgba(140,0,220,0.35), 6px 6px 0 rgba(140,0,220,0.1), inset 0 1px 0 rgba(255,255,255,0.9); }
-            92%  { box-shadow: 3px 3px 0 #ff00cc, 6px 6px 0 rgba(140,0,220,0.1), inset 0 1px 0 rgba(255,255,255,0.9); transform: translate(-1px,0); }
-            93%  { box-shadow: -3px 3px 0 #00ffee, 6px 6px 0 rgba(140,0,220,0.1), inset 0 1px 0 rgba(255,255,255,0.9); transform: translate(1px,0); }
-            94%  { box-shadow: 3px 3px 0 rgba(140,0,220,0.35), 6px 6px 0 rgba(140,0,220,0.1), inset 0 1px 0 rgba(255,255,255,0.9); transform: none; }
-        }
-
-        /* ── 2. CABEÇALHOS dos cards — cor ciclando ── */
+        /* 1 — Headers dos cards ciclando cor */
         [data-theme="aesthetic95"] .card-header {
+            background: linear-gradient(90deg, #7700bb, #cc00aa, #ee0077, #7700bb) !important;
             background-size: 300% auto !important;
-            animation: a95HeaderCycle 5s linear infinite !important;
+            animation: a95HeaderCycle 6s linear infinite !important;
         }
         @keyframes a95HeaderCycle {
             0%   { background-position: 0% center; }
             100% { background-position: 300% center; }
         }
 
-        /* ── 3. ESTÁTICA no body — overlay de ruído ── */
-        [data-theme="aesthetic95"] body::before {
-            animation: blob1 14s ease-in-out infinite alternate, a95StaticFlash 11s infinite !important;
-        }
-        @keyframes a95StaticFlash {
-            0%,94%,100% { opacity: 1; }
-            95% { opacity: 0.4; filter: hue-rotate(90deg) saturate(3); }
-            96% { opacity: 0.8; filter: hue-rotate(-60deg); }
-            97% { opacity: 1; filter: none; }
-        }
-
-        /* ── 4. SCANLINES piscando ── */
-        [data-theme="aesthetic95"] #a95-scan {
-            animation: a95ScanPulse 4s ease-in-out infinite alternate;
-        }
-        @keyframes a95ScanPulse {
-            from { opacity: 0.4; }
-            to   { opacity: 1.0; }
+        /* 2 — Cards RGB split glitch: um de cada vez */
+        [data-theme="aesthetic95"] .glass-card:nth-child(odd)  { animation: a95CardGlitch 12s infinite; }
+        [data-theme="aesthetic95"] .glass-card:nth-child(even) { animation: a95CardGlitch 12s infinite; animation-delay: -5s; }
+        @keyframes a95CardGlitch {
+            0%,93%,100% { box-shadow: 3px 3px 0 rgba(140,0,220,0.35), 6px 6px 0 rgba(140,0,220,0.1), inset 0 1px 0 rgba(255,255,255,0.9); }
+            93.4%{ box-shadow:  4px 3px 0 #ff00cc, -2px 3px 0 #00ffee, 6px 6px 0 rgba(140,0,220,0.1); }
+            93.9%{ box-shadow: -3px 3px 0 #ff00cc,  4px 3px 0 #00ccff, 6px 6px 0 rgba(140,0,220,0.1); }
+            94.3%{ box-shadow:  3px 3px 0 rgba(140,0,220,0.35), 6px 6px 0 rgba(140,0,220,0.1), inset 0 1px 0 rgba(255,255,255,0.9); }
         }
 
-        /* ── 5. GRADE no chão — velocidade variável + glitch ── */
-        [data-theme="aesthetic95"] #a95-grid {
-            animation: a95GridMove 2s linear infinite, a95GridGlitch 13s infinite !important;
-        }
-        @keyframes a95GridGlitch {
-            0%,88%,100% { transform: translateX(-50%) perspective(400px) rotateX(65deg); filter: none; }
-            89% { transform: translateX(-48%) perspective(400px) rotateX(65deg) skewX(1deg); filter: hue-rotate(60deg); }
-            90% { transform: translateX(-52%) perspective(400px) rotateX(65deg) skewX(-1deg); filter: hue-rotate(-60deg); }
-            91% { transform: translateX(-50%) perspective(400px) rotateX(65deg); filter: none; }
-        }
-
-        /* ── 6. SOL — linhas piscando + hue shift ── */
-        [data-theme="aesthetic95"] #a95-sun {
-            animation: a95SunPulse 6s ease-in-out infinite alternate, a95SunHue 15s linear infinite;
-        }
-        @keyframes a95SunPulse {
-            from { box-shadow: 0 0 40px rgba(255,120,200,0.5), 0 0 80px rgba(220,80,160,0.25); }
-            to   { box-shadow: 0 0 70px rgba(255,120,200,0.8), 0 0 130px rgba(220,80,160,0.45); }
-        }
-        @keyframes a95SunHue {
-            0%   { filter: hue-rotate(0deg); }
-            50%  { filter: hue-rotate(40deg); }
-            100% { filter: hue-rotate(0deg); }
-        }
-
-        /* ── 7. ESTRELAS — cintilação individual ── */
-        [data-theme="aesthetic95"] #a95-stars {
-            animation: a95StarTwinkle 3s ease-in-out infinite alternate, a95StarHue 8s linear infinite;
-        }
-        @keyframes a95StarHue {
-            0%   { filter: hue-rotate(0deg); }
-            50%  { filter: hue-rotate(120deg); }
-            100% { filter: hue-rotate(0deg); }
-        }
-
-        /* ── 8. PILLS — neon flicker ao hover ── */
-        [data-theme="aesthetic95"] .pill:hover {
-            animation: a95PillFlicker 0.4s steps(1) infinite !important;
-        }
-        @keyframes a95PillFlicker {
-            0%,100% { box-shadow: 0 0 8px rgba(180,0,255,0.6); }
-            25%     { box-shadow: 0 0 18px rgba(255,0,200,0.9), 0 0 4px rgba(0,220,255,0.4); }
-            50%     { box-shadow: 0 0 4px rgba(180,0,255,0.3); }
-            75%     { box-shadow: 0 0 22px rgba(180,0,255,1), 0 0 6px rgba(255,0,200,0.5); }
-        }
-
-        /* ── 9. TEXTAREA resultado — cursor piscando + borda neon ── */
-        [data-theme="aesthetic95"] textarea#resultadoArea {
-            animation: a95TextareaBorder 4s ease-in-out infinite alternate !important;
-        }
-        @keyframes a95TextareaBorder {
-            from { border-color: rgba(160,60,255,0.4); box-shadow: inset 0 1px 4px rgba(160,0,255,0.1); }
-            to   { border-color: rgba(255,0,180,0.6); box-shadow: inset 0 1px 4px rgba(255,0,180,0.15), 0 0 8px rgba(255,0,180,0.1); }
-        }
-
-        /* ── 10. LABEL dos selects/campos — cor shimmer ── */
+        /* 3 — Labels shimmer arco-íris */
         [data-theme="aesthetic95"] .form-label,
         [data-theme="aesthetic95"] label {
-            background: linear-gradient(90deg, #7700cc, #cc0088, #0088ff, #cc00ff, #7700cc) !important;
+            background: linear-gradient(90deg, #7700cc, #cc0088, #0077ff, #cc00ff, #7700cc) !important;
             background-size: 300% auto !important;
-            -webkit-background-clip: text !important;
-            -webkit-text-fill-color: transparent !important;
+            -webkit-background-clip: text !important; -webkit-text-fill-color: transparent !important;
             background-clip: text !important;
-            animation: a95GradShift 3s linear infinite !important;
-            font-family: 'VT323', monospace !important;
-            font-size: 1rem !important;
-            letter-spacing: 1px;
+            animation: a95GradShift 4s linear infinite !important;
+            font-family: 'VT323', monospace !important; font-size: 1rem !important; letter-spacing: 1px;
         }
 
-        /* ── 11. FOOTER — texto piscando suave ── */
-        [data-theme="aesthetic95"] footer,
-        [data-theme="aesthetic95"] .site-footer {
-            animation: a95FooterGlow 5s ease-in-out infinite alternate;
+        /* 4 — Textarea borda pulsante */
+        [data-theme="aesthetic95"] textarea#resultadoArea {
+            animation: a95TextareaBorder 5s ease-in-out infinite alternate !important;
         }
-        @keyframes a95FooterGlow {
-            from { filter: none; }
-            to   { filter: drop-shadow(0 0 6px rgba(180,0,255,0.4)); }
+        @keyframes a95TextareaBorder {
+            from { border-color: rgba(160,60,255,0.35); }
+            to   { border-color: rgba(255,0,180,0.55); box-shadow: 0 0 6px rgba(255,0,180,0.1); }
         }
 
-        /* ── 12. GLITCH PESADO global — acontece 1x a cada ~20s ── */
-        [data-theme="aesthetic95"] .page-wrap {
-            animation: a95BigGlitch 22s infinite;
+        /* 5 — Sol pulso + hue shift leve */
+        [data-theme="aesthetic95"] #a95-sun {
+            animation: a95SunPulse 7s ease-in-out infinite alternate, a95SunHue 18s linear infinite;
         }
+        @keyframes a95SunPulse {
+            from { box-shadow: 0 0 40px rgba(255,120,200,0.4), 0 0 80px rgba(220,80,160,0.2); }
+            to   { box-shadow: 0 0 65px rgba(255,120,200,0.7), 0 0 120px rgba(220,80,160,0.38); }
+        }
+        @keyframes a95SunHue {
+            0%,100% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(35deg); }
+        }
+
+        /* 6 — Grade contínua */
+        [data-theme="aesthetic95"] #a95-grid { animation: a95GridMove 2.2s linear infinite !important; }
+
+        /* 7 — Scanlines pulso suave */
+        [data-theme="aesthetic95"] #a95-scan { animation: a95ScanPulse 6s ease-in-out infinite alternate; }
+        @keyframes a95ScanPulse { from { opacity: 0.25; } to { opacity: 0.7; } }
+
+        /* 8 — Estrelas hue cycle */
+        [data-theme="aesthetic95"] #a95-stars {
+            animation: a95StarTwinkle 3s ease-in-out infinite alternate, a95StarHue 10s linear infinite;
+        }
+        @keyframes a95StarHue { 0%,100% { filter: hue-rotate(0deg); } 50% { filter: hue-rotate(100deg); } }
+
+        /* 9 — Narry pulse */
+        @keyframes a95NarryPulse {
+            0%,100% { box-shadow: 3px 3px 0 #7700aa, 0 0 16px rgba(200,68,255,0.35); }
+            50%     { box-shadow: 3px 3px 0 #7700aa, 0 0 30px rgba(200,68,255,0.7), 0 0 50px rgba(140,0,220,0.18); }
+        }
+
+        /* 10 — Glitch global pesado 1x a cada ~25s */
+        [data-theme="aesthetic95"] .page-wrap { animation: a95BigGlitch 25s infinite; }
         @keyframes a95BigGlitch {
-            0%,96%,100% { filter: none; transform: none; }
-            97%  { filter: invert(0.04) hue-rotate(30deg); transform: translate(1px,0) skewX(0.5deg); }
-            97.5%{ filter: invert(0.08) hue-rotate(-20deg); transform: translate(-1px,0) skewX(-0.5deg); }
-            98%  { filter: saturate(2) hue-rotate(10deg); transform: translate(0,1px); }
-            98.3%{ filter: none; transform: none; }
+            0%,97%,100% { filter: none; transform: none; }
+            97.2%{ filter: invert(0.05) hue-rotate(25deg); transform: translate(2px,0) skewX(0.8deg); }
+            97.5%{ filter: invert(0.1) hue-rotate(-15deg) saturate(1.8); transform: translate(-1px,0); }
+            97.8%{ filter: brightness(1.1) hue-rotate(10deg); transform: translate(0,1px); }
+            98.0%{ filter: none; transform: none; }
         }
 
         body {
@@ -1179,14 +1134,15 @@
 
 <!-- ── AESTHETIC 95 BACKGROUND ──────────────────────────────── -->
 <div id="a95-bg">
+    <canvas id="a95-pixels"></canvas>
     <div id="a95-stars"></div>
     <div id="a95-fog"></div>
     <div id="a95-sun">
         <div id="a95-sun-lines"></div>
-        <div id="a95-sun-l1" style="position:absolute;left:0;right:0;top:40%;height:5px;background:#0d0020;"></div>
-        <div id="a95-sun-l2" style="position:absolute;left:0;right:0;top:52%;height:6px;background:#0d0020;"></div>
-        <div id="a95-sun-l3" style="position:absolute;left:0;right:0;top:66%;height:8px;background:#0d0020;"></div>
-        <div id="a95-sun-l4" style="position:absolute;left:0;right:0;top:80%;height:10px;background:#0d0020;"></div>
+        <div id="a95-sun-l1" style="position:absolute;left:0;right:0;top:40%;height:5px;background:rgba(245,232,255,0.6);"></div>
+        <div id="a95-sun-l2" style="position:absolute;left:0;right:0;top:52%;height:6px;background:rgba(245,232,255,0.6);"></div>
+        <div id="a95-sun-l3" style="position:absolute;left:0;right:0;top:66%;height:8px;background:rgba(245,232,255,0.6);"></div>
+        <div id="a95-sun-l4" style="position:absolute;left:0;right:0;top:80%;height:10px;background:rgba(245,232,255,0.6);"></div>
     </div>
     <div id="a95-mtn1"></div>
     <div id="a95-mtn2"></div>
@@ -4798,7 +4754,122 @@ function ciclarTema() {
 })();
 
 // ================================================================
-//  HOOKS DE REATIVIDADE DA NARRY
+//  AESTHETIC 95 — PIXELS CADENTES (canvas)
+// ================================================================
+(function() {
+    let _a95raf = null;
+    const COLORS = ['#cc88ff','#ff88dd','#88aaff','#ff44cc','#aaddff','#ffaaee','#dd99ff'];
+    const pixels = [];
+    const PIXEL_COUNT = 38;
+
+    function initPixels(w, h) {
+        pixels.length = 0;
+        for (let i = 0; i < PIXEL_COUNT; i++) {
+            pixels.push(spawnPixel(w, h, true));
+        }
+    }
+
+    function spawnPixel(w, h, randomY) {
+        const size = Math.random() < 0.6 ? 2 : (Math.random() < 0.7 ? 3 : 4);
+        return {
+            x: Math.random() * w,
+            y: randomY ? Math.random() * h : -size * 4,
+            vx: (Math.random() - 0.5) * 0.4,   // leve deriva horizontal
+            vy: 0.35 + Math.random() * 0.85,    // velocidade de queda
+            size,
+            color: COLORS[Math.floor(Math.random() * COLORS.length)],
+            alpha: 0.3 + Math.random() * 0.55,
+            twinkleSpeed: 0.012 + Math.random() * 0.025,
+            twinklePhase: Math.random() * Math.PI * 2,
+            // rastro curto
+            trail: [],
+            trailLen: size === 2 ? 4 : (size === 3 ? 6 : 3)
+        };
+    }
+
+    function drawFrame(ctx, w, h, ts) {
+        ctx.clearRect(0, 0, w, h);
+        const theme = document.documentElement.getAttribute('data-theme');
+        if (theme !== 'aesthetic95') return;
+
+        pixels.forEach((p, i) => {
+            // rastro
+            p.trail.unshift({ x: p.x, y: p.y });
+            if (p.trail.length > p.trailLen) p.trail.pop();
+
+            // desenha rastro
+            p.trail.forEach((pt, ti) => {
+                const tAlpha = p.alpha * (1 - (ti + 1) / (p.trail.length + 1)) * 0.5;
+                ctx.globalAlpha = tAlpha;
+                ctx.fillStyle = p.color;
+                const ts2 = Math.max(1, p.size - ti * 0.6);
+                ctx.fillRect(Math.round(pt.x), Math.round(pt.y), ts2, ts2);
+            });
+
+            // twinkle
+            const tw = Math.abs(Math.sin(ts * p.twinkleSpeed + p.twinklePhase));
+            ctx.globalAlpha = p.alpha * (0.55 + tw * 0.45);
+            ctx.fillStyle = p.color;
+            ctx.fillRect(Math.round(p.x), Math.round(p.y), p.size, p.size);
+
+            // mover
+            p.x += p.vx;
+            p.y += p.vy;
+
+            // respawn
+            if (p.y > h + 10) {
+                pixels[i] = spawnPixel(w, h, false);
+            }
+        });
+        ctx.globalAlpha = 1;
+    }
+
+    function startA95Canvas() {
+        const canvas = document.getElementById('a95-pixels');
+        if (!canvas) return;
+        if (_a95raf) { cancelAnimationFrame(_a95raf); _a95raf = null; }
+
+        const resize = () => {
+            const bg = document.getElementById('a95-bg');
+            if (!bg) return;
+            const r = bg.getBoundingClientRect();
+            canvas.width  = r.width  || window.innerWidth;
+            canvas.height = r.height || window.innerHeight;
+            initPixels(canvas.width, canvas.height);
+        };
+        resize();
+        window.addEventListener('resize', resize);
+
+        const ctx = canvas.getContext('2d');
+        let ts = 0;
+        function loop() {
+            ts += 0.016;
+            drawFrame(ctx, canvas.width, canvas.height, ts);
+            _a95raf = requestAnimationFrame(loop);
+        }
+        loop();
+    }
+
+    // Iniciar quando tema for aesthetic95
+    function checkAndStart() {
+        const theme = document.documentElement.getAttribute('data-theme');
+        if (theme === 'aesthetic95') startA95Canvas();
+        else if (_a95raf) { cancelAnimationFrame(_a95raf); _a95raf = null; }
+    }
+
+    // Observar mudanças no data-theme
+    const _obs = new MutationObserver(checkAndStart);
+    _obs.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+    // Verificar no load
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', checkAndStart);
+    } else {
+        checkAndStart();
+    }
+})();
+
+
 // ================================================================
 // Hook no dropdown de contratos
 const _origSelectContract = selectContract;
