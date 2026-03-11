@@ -1148,6 +1148,18 @@
             </div>
             <!-- ── FIM BROADCAST BUBBLE ──────────────────────── -->
             <div id="adminStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;"></div>
+
+            <!-- ── FILTRO DE DATAS + EXPORTAR ────────────────────── -->
+            <div style="display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px;padding:12px 16px;background:var(--pill-bg);border:1.5px solid var(--pill-border);border-radius:12px;">
+                <div style="font-size:0.72rem;font-weight:900;color:var(--text-light);text-transform:uppercase;letter-spacing:0.6px;flex-shrink:0;">📅 Período:</div>
+                <input type="date" id="adminFiltroInicio" style="padding:6px 10px;border-radius:8px;border:1.5px solid var(--pill-border);background:var(--input-bg);color:var(--text-dark);font-family:'Nunito',sans-serif;font-size:0.8rem;font-weight:700;outline:none;">
+                <span style="color:var(--text-light);font-size:0.8rem;font-weight:700;">até</span>
+                <input type="date" id="adminFiltroFim" style="padding:6px 10px;border-radius:8px;border:1.5px solid var(--pill-border);background:var(--input-bg);color:var(--text-dark);font-family:'Nunito',sans-serif;font-size:0.8rem;font-weight:700;outline:none;">
+                <button onclick="adminCarregarDados()" style="padding:7px 14px;border-radius:20px;border:1.5px solid var(--pill-border);background:var(--pill-bg);color:var(--text-dark);font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:800;cursor:pointer;">🔍 Filtrar</button>
+                <button onclick="adminExportarExcel()" style="padding:7px 16px;border-radius:20px;border:1.5px solid rgba(34,197,94,0.5);background:linear-gradient(135deg,rgba(34,197,94,0.15),rgba(22,163,74,0.2));color:#16a34a;font-family:'Nunito',sans-serif;font-size:0.78rem;font-weight:800;cursor:pointer;margin-left:auto;">📥 Exportar Excel</button>
+            </div>
+            <!-- ── FIM FILTRO ─────────────────────────────────────── -->
+
             <div style="font-size:0.75rem;font-weight:800;color:var(--text-light);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:10px;">📋 Histórico de Acessos</div>
             <div id="adminLogs" style="display:flex;flex-direction:column;gap:8px;"></div>
         </div>
@@ -5955,11 +5967,32 @@ window.adminCarregarDados = async function() {
     const logsEl  = document.getElementById('adminLogs');
     statsEl.innerHTML = '<div style="font-size:0.8rem;color:var(--text-light);padding:10px;">⏳ Carregando...</div>';
     logsEl.innerHTML  = '';
+
+    // Ler filtros de data
+    const filtroInicio = document.getElementById('adminFiltroInicio')?.value;
+    const filtroFim    = document.getElementById('adminFiltroFim')?.value;
+    const dtInicio = filtroInicio ? new Date(filtroInicio + 'T00:00:00') : null;
+    const dtFim    = filtroFim    ? new Date(filtroFim    + 'T23:59:59') : null;
+
     try {
-        const q = query(collection(db, 'accessLogs'), orderBy('timestamp', 'desc'), limit(200));
+        const q = query(collection(db, 'accessLogs'), orderBy('timestamp', 'desc'), limit(500));
         const snap = await getDocs(q);
-        const logs = [];
+        let logs = [];
         snap.forEach(d => logs.push({ id: d.id, ...d.data() }));
+
+        // Aplicar filtro de datas
+        if (dtInicio || dtFim) {
+            logs = logs.filter(l => {
+                if (!l.timestamp) return false;
+                const d = l.timestamp.toDate ? l.timestamp.toDate() : new Date(l.timestamp);
+                if (dtInicio && d < dtInicio) return false;
+                if (dtFim    && d > dtFim)    return false;
+                return true;
+            });
+        }
+
+        // Salvar logs filtrados para exportação
+        window._adminLogsCache = logs;
 
         const usuarios = [...new Set(logs.map(l => l.email).filter(Boolean))];
         const hoje = new Date().toLocaleDateString('pt-BR');
@@ -5997,7 +6030,7 @@ window.adminCarregarDados = async function() {
         `;
 
         if (logs.length === 0) {
-            logsEl.innerHTML = '<div style="color:var(--text-light);font-size:0.85rem;text-align:center;padding:20px;">Nenhum acesso registrado ainda.</div>';
+            logsEl.innerHTML = '<div style="color:var(--text-light);font-size:0.85rem;text-align:center;padding:20px;">Nenhum acesso registrado no período selecionado.</div>';
             return;
         }
 
@@ -6054,6 +6087,135 @@ window.adminCarregarDados = async function() {
         statsEl.innerHTML = `<div style="color:#dc2626;font-size:0.82rem;padding:10px;">❌ Erro: ${e.message}</div>`;
         console.error('Admin error:', e);
     }
+};
+
+// ================================================================
+//  EXPORTAR EXCEL — Relatório de Acessos
+// ================================================================
+window.adminExportarExcel = async function() {
+    const logs = window._adminLogsCache;
+    if (!logs || logs.length === 0) {
+        alert('Carregue os dados primeiro antes de exportar.');
+        return;
+    }
+
+    // Carregar SheetJS dinamicamente se não estiver carregado
+    if (typeof XLSX === 'undefined') {
+        await new Promise((resolve, reject) => {
+            const s = document.createElement('script');
+            s.src = 'https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
+            s.onload = resolve; s.onerror = reject;
+            document.head.appendChild(s);
+        });
+    }
+
+    const wb = XLSX.utils.book_new();
+
+    // ── ABA 1: Detalhes completos ─────────────────────────────────
+    const detalheRows = [['Email', 'Nome', 'Data', 'Horário', 'Dia da Semana', 'Dispositivo', 'Duração (min)', 'Mês/Ano']];
+    const diasNomes = ['Domingo','Segunda','Terça','Quarta','Quinta','Sexta','Sábado'];
+    logs.forEach(l => {
+        const ts = l.timestamp ? (l.timestamp.toDate ? l.timestamp.toDate() : new Date(l.timestamp)) : null;
+        detalheRows.push([
+            l.email || '',
+            l.nome  || '',
+            ts ? ts.toLocaleDateString('pt-BR') : '',
+            ts ? ts.toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'}) : '',
+            ts ? diasNomes[ts.getDay()] : '',
+            l.device || '',
+            l.duration || 0,
+            ts ? `${String(ts.getMonth()+1).padStart(2,'0')}/${ts.getFullYear()}` : ''
+        ]);
+    });
+    const wsDetalhe = XLSX.utils.aoa_to_sheet(detalheRows);
+    wsDetalhe['!cols'] = [28,20,12,10,12,10,16,12].map(w => ({wch:w}));
+    // Estilo cabeçalho
+    ['A1','B1','C1','D1','E1','F1','G1','H1'].forEach(c => {
+        if (wsDetalhe[c]) wsDetalhe[c].s = { font:{bold:true,color:{rgb:'FFFFFF'}}, fill:{fgColor:{rgb:'1A5FA8'}}, alignment:{horizontal:'center'} };
+    });
+    XLSX.utils.book_append_sheet(wb, wsDetalhe, 'Acessos Detalhados');
+
+    // ── ABA 2: Acessos por dia ───────────────────────────────────
+    const porDia = {};
+    logs.forEach(l => {
+        const ts = l.timestamp ? (l.timestamp.toDate ? l.timestamp.toDate() : new Date(l.timestamp)) : null;
+        if (!ts) return;
+        const chave = ts.toLocaleDateString('pt-BR');
+        if (!porDia[chave]) porDia[chave] = { data: ts, total: 0, usuarios: new Set(), mob: 0, desk: 0, duracoes: [] };
+        porDia[chave].total++;
+        if (l.email) porDia[chave].usuarios.add(l.email);
+        if (l.device?.toLowerCase().includes('mobile')) porDia[chave].mob++;
+        else porDia[chave].desk++;
+        if (l.duration > 0) porDia[chave].duracoes.push(l.duration);
+    });
+    const diaRows = [['Data', 'Dia da Semana', 'Total Acessos', 'Usuários Únicos', 'Mobile', 'Desktop', 'Tempo Médio (min)']];
+    Object.entries(porDia).sort((a,b) => b[1].data - a[1].data).forEach(([dia, g]) => {
+        const tempoMed = g.duracoes.length ? Math.round(g.duracoes.reduce((a,b)=>a+b,0)/g.duracoes.length) : 0;
+        diaRows.push([dia, diasNomes[g.data.getDay()], g.total, g.usuarios.size, g.mob, g.desk, tempoMed || '—']);
+    });
+    const wsDia = XLSX.utils.aoa_to_sheet(diaRows);
+    wsDia['!cols'] = [12,14,15,16,10,10,18].map(w => ({wch:w}));
+    ['A1','B1','C1','D1','E1','F1','G1'].forEach(c => {
+        if (wsDia[c]) wsDia[c].s = { font:{bold:true,color:{rgb:'FFFFFF'}}, fill:{fgColor:{rgb:'0F766E'}}, alignment:{horizontal:'center'} };
+    });
+    XLSX.utils.book_append_sheet(wb, wsDia, 'Acessos por Dia');
+
+    // ── ABA 3: Balanço mensal ─────────────────────────────────────
+    const porMes = {};
+    logs.forEach(l => {
+        const ts = l.timestamp ? (l.timestamp.toDate ? l.timestamp.toDate() : new Date(l.timestamp)) : null;
+        if (!ts) return;
+        const chave = `${String(ts.getMonth()+1).padStart(2,'0')}/${ts.getFullYear()}`;
+        if (!porMes[chave]) porMes[chave] = { ts, total: 0, usuarios: new Set(), duracoes: [], porUser: {} };
+        porMes[chave].total++;
+        if (l.email) {
+            porMes[chave].usuarios.add(l.email);
+            porMes[chave].porUser[l.email] = (porMes[chave].porUser[l.email] || 0) + 1;
+        }
+        if (l.duration > 0) porMes[chave].duracoes.push(l.duration);
+    });
+    const mesRows = [['Mês/Ano', 'Total Acessos', 'Usuários Únicos', 'Tempo Médio (min)', 'Top Usuário', 'Acessos Top Usuário']];
+    Object.entries(porMes).sort((a,b) => b[1].ts - a[1].ts).forEach(([mes, g]) => {
+        const tempoMed = g.duracoes.length ? Math.round(g.duracoes.reduce((a,b)=>a+b,0)/g.duracoes.length) : 0;
+        const topEntry = Object.entries(g.porUser).sort((a,b)=>b[1]-a[1])[0];
+        mesRows.push([mes, g.total, g.usuarios.size, tempoMed || '—', topEntry?.[0] || '—', topEntry?.[1] || 0]);
+    });
+    const wsMes = XLSX.utils.aoa_to_sheet(mesRows);
+    wsMes['!cols'] = [12,15,16,18,32,20].map(w => ({wch:w}));
+    ['A1','B1','C1','D1','E1','F1'].forEach(c => {
+        if (wsMes[c]) wsMes[c].s = { font:{bold:true,color:{rgb:'FFFFFF'}}, fill:{fgColor:{rgb:'7C3AED'}}, alignment:{horizontal:'center'} };
+    });
+    XLSX.utils.book_append_sheet(wb, wsMes, 'Balanço Mensal');
+
+    // ── ABA 4: Por usuário ────────────────────────────────────────
+    const porUser = {};
+    logs.forEach(l => {
+        if (!l.email) return;
+        if (!porUser[l.email]) porUser[l.email] = { nome: l.nome || '', total: 0, mob: 0, desk: 0, duracoes: [], ultAcesso: null };
+        porUser[l.email].total++;
+        const ts = l.timestamp ? (l.timestamp.toDate ? l.timestamp.toDate() : new Date(l.timestamp)) : null;
+        if (ts && (!porUser[l.email].ultAcesso || ts > porUser[l.email].ultAcesso)) porUser[l.email].ultAcesso = ts;
+        if (l.device?.toLowerCase().includes('mobile')) porUser[l.email].mob++;
+        else porUser[l.email].desk++;
+        if (l.duration > 0) porUser[l.email].duracoes.push(l.duration);
+    });
+    const userRows = [['Email', 'Nome', 'Total Acessos', 'Mobile', 'Desktop', 'Último Acesso', 'Tempo Médio (min)']];
+    Object.entries(porUser).sort((a,b)=>b[1].total-a[1].total).forEach(([email, u]) => {
+        const tempoMed = u.duracoes.length ? Math.round(u.duracoes.reduce((a,b)=>a+b,0)/u.duracoes.length) : 0;
+        userRows.push([email, u.nome, u.total, u.mob, u.desk, u.ultAcesso ? u.ultAcesso.toLocaleDateString('pt-BR') : '—', tempoMed || '—']);
+    });
+    const wsUser = XLSX.utils.aoa_to_sheet(userRows);
+    wsUser['!cols'] = [30,20,15,10,10,14,18].map(w => ({wch:w}));
+    ['A1','B1','C1','D1','E1','F1','G1'].forEach(c => {
+        if (wsUser[c]) wsUser[c].s = { font:{bold:true,color:{rgb:'FFFFFF'}}, fill:{fgColor:{rgb:'B45309'}}, alignment:{horizontal:'center'} };
+    });
+    XLSX.utils.book_append_sheet(wb, wsUser, 'Por Usuário');
+
+    // Gerar nome do arquivo com período
+    const fi = document.getElementById('adminFiltroInicio')?.value;
+    const ff = document.getElementById('adminFiltroFim')?.value;
+    const periodo = fi && ff ? `_${fi}_a_${ff}` : `_${new Date().toISOString().slice(0,10)}`;
+    XLSX.writeFile(wb, `relatorio_acessos${periodo}.xlsx`);
 };
 
 // ── Controle de autenticação ─────────────────────────────────────
@@ -6209,21 +6371,20 @@ async function adminPublicarBubble() {
     if (!msg) { if (statusEl) { statusEl.style.color='#b91c1c'; statusEl.textContent='⚠️ Digite uma mensagem antes de publicar.'; } return; }
 
     if (pubBtn) { pubBtn.disabled = true; pubBtn.textContent = '⏳ Publicando...'; }
-    if (statusEl) { statusEl.style.color='#92400e'; statusEl.textContent='Enviando para o Firestore...'; }
+    if (statusEl) { statusEl.style.color='#92400e'; statusEl.textContent='Enviando...'; }
 
     try {
         const broadcastRef = doc(db, 'config', 'narry_broadcast');
-        // Usar timestamp numérico (não serverTimestamp) para evitar null no cliente
         await setDoc(broadcastRef, {
             message: msg,
             active: true,
             publishedAt: Date.now(),
             expiresIn: 300
-        });
+        }); // setDoc com merge:false garante sobrescrever tudo
         if (statusEl) { statusEl.style.color='#059669'; statusEl.textContent=`✅ Publicado! "${msg.substring(0,50)}" — aparecerá para todos por 5 min.`; }
         if (inp) inp.value = '';
     } catch(e) {
-        if (statusEl) { statusEl.style.color='#b91c1c'; statusEl.textContent='❌ Erro: ' + e.message + ' (verifique regras do Firestore)'; }
+        if (statusEl) { statusEl.style.color='#b91c1c'; statusEl.textContent='❌ Erro: ' + e.message; }
         console.error('[Broadcast] Erro ao publicar:', e);
     } finally {
         if (pubBtn) { pubBtn.disabled = false; pubBtn.textContent = '📡 Publicar'; }
@@ -6249,14 +6410,15 @@ function iniciarBroadcastListener() {
     let _broadcastTimer = null;
 
     _broadcastUnsub = onSnapshot(broadcastRef, (snap) => {
+        // Documento ainda não existe — ignora silenciosamente
         if (!snap.exists()) return;
         const data = snap.data();
+
         if (!data.active || !data.message) {
             narrySetLive(false);
             return;
         }
 
-        // publishedAt pode ser number (Date.now) ou Firestore Timestamp
         const pubAt = typeof data.publishedAt === 'number'
             ? data.publishedAt
             : (data.publishedAt?.toMillis ? data.publishedAt.toMillis() : Date.now());
