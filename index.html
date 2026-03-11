@@ -6363,7 +6363,7 @@ window.addEventListener('beforeunload', async () => {
 // ================================================================
 let _broadcastUnsub = null;
 
-async function adminPublicarBubble() {
+window.adminPublicarBubble = async function() {
     const inp = document.getElementById('adminBubbleInput');
     const statusEl = document.getElementById('adminBubbleStatus');
     const pubBtn = document.querySelector('[onclick="adminPublicarBubble()"]');
@@ -6391,7 +6391,7 @@ async function adminPublicarBubble() {
     }
 }
 
-async function adminLimparBubble() {
+window.adminLimparBubble = async function() {
     const statusEl = document.getElementById('adminBubbleStatus');
     try {
         const broadcastRef = doc(db, 'config', 'narry_broadcast');
