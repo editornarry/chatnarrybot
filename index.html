@@ -1860,7 +1860,63 @@
 #narry-bubble.error-mode::after  { border-top-color: rgba(220,50,50,0.4); }
 #narry-bubble.error-mode::before { border-top-color: #fff0f0; }
 
-/* ── ANIMAÇÃO ROMÂNTICA DA PIN ──────────────────────────── */
+/* ── BADGE AO VIVO — Broadcast do admin ────────────────────── */
+#narry-live-badge {
+    display: none;
+    position: absolute;
+    bottom: -4px; left: 50%; transform: translateX(-50%);
+    background: #e5000a;
+    color: white;
+    font-family: 'Nunito', sans-serif;
+    font-size: 0.52rem;
+    font-weight: 900;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 10;
+    box-shadow: 0 2px 8px rgba(220,0,10,0.5);
+    animation: liveBadgePulse 1.4s ease-in-out infinite;
+}
+#narry-live-badge::before {
+    content: '● ';
+    font-size: 0.55rem;
+    animation: liveDotBlink 1.4s ease-in-out infinite;
+}
+@keyframes liveBadgePulse {
+    0%,100% { box-shadow: 0 2px 8px rgba(220,0,10,0.5); }
+    50%      { box-shadow: 0 2px 16px rgba(220,0,10,0.9), 0 0 24px rgba(220,0,10,0.4); }
+}
+@keyframes liveDotBlink {
+    0%,100% { opacity: 1; }
+    50%      { opacity: 0.3; }
+}
+#narry-live-badge.visible { display: block; }
+
+/* Borda animada no balão durante broadcast */
+#narry-bubble.live-mode {
+    border-color: rgba(220,0,10,0.6) !important;
+    box-shadow: 0 6px 24px rgba(220,0,10,0.18), 0 0 0 2px rgba(220,0,10,0.15) !important;
+    animation: liveBubbleBorder 2s ease-in-out infinite !important;
+}
+@keyframes liveBubbleBorder {
+    0%,100% { box-shadow: 0 6px 24px rgba(220,0,10,0.15), 0 0 0 2px rgba(220,0,10,0.12); }
+    50%      { box-shadow: 0 6px 28px rgba(220,0,10,0.3),  0 0 0 2px rgba(220,0,10,0.35); }
+}
+/* Anel pulsante ao redor do ícone durante broadcast */
+#narry-btn.live-mode::after {
+    content: '';
+    position: absolute; inset: -5px;
+    border-radius: 50%;
+    border: 2px solid rgba(220,0,10,0.7);
+    animation: liveRingPulse 1.4s ease-out infinite;
+    pointer-events: none;
+}
+@keyframes liveRingPulse {
+    0%   { transform: scale(1);   opacity: 0.8; }
+    100% { transform: scale(1.5); opacity: 0; }
+}
 @keyframes pin-glow-in  { from { box-shadow: 0 4px 16px rgba(10,60,140,0.35), 0 0 0 1.5px rgba(100,180,255,0.4); } to { box-shadow: 0 0 0 6px rgba(255,150,200,0.35), 0 0 30px 12px rgba(255,100,180,0.45), 0 0 60px 20px rgba(255,180,220,0.25); border-color: rgba(255,160,210,0.9); } }
 @keyframes pin-glow-out { from { box-shadow: 0 0 0 6px rgba(255,150,200,0.35), 0 0 30px 12px rgba(255,100,180,0.45), 0 0 60px 20px rgba(255,180,220,0.25); border-color: rgba(255,160,210,0.9); } to { box-shadow: 0 4px 16px rgba(10,60,140,0.35), 0 0 0 1.5px rgba(100,180,255,0.4); border-color: rgba(255,255,255,0.85); } }
 #narry-btn.pin-love { animation: pin-glow-in 0.6s ease forwards !important; filter: drop-shadow(0 0 18px rgba(255,120,190,0.8)) brightness(1.08) saturate(1.2); }
@@ -2084,6 +2140,7 @@
     <!-- Narry avatar -->
     <div id="narry-btn" class="idle" onclick="narryTogglePanel()" role="button" aria-label="Abrir chat do Narry" tabindex="0">
         <img id="narryImg" src="" width="72" height="72" alt="Narry" style="width:72px;height:72px;object-fit:cover;object-position:center top;display:block;border-radius:50%;">
+        <div id="narry-live-badge">AO VIVO</div>
     </div>
 </div>
 
@@ -2396,6 +2453,22 @@ function narryPinLoveAnim() {
         btn.classList.add('pin-love-out');
         setTimeout(() => btn.classList.remove('pin-love-out'), 1600);
     }, 9000);
+}
+
+// ── MODO AO VIVO ─────────────────────────────────────────────
+function narrySetLive(on) {
+    const btn    = document.getElementById('narry-btn');
+    const badge  = document.getElementById('narry-live-badge');
+    const bubble = document.getElementById('narry-bubble');
+    if (on) {
+        badge?.classList.add('visible');
+        btn?.classList.add('live-mode');
+        bubble?.classList.add('live-mode');
+    } else {
+        badge?.classList.remove('visible');
+        btn?.classList.remove('live-mode');
+        bubble?.classList.remove('live-mode');
+    }
 }
 
 // ── ESTADO ──────────────────────────────────────────────────────
@@ -6162,6 +6235,7 @@ async function adminLimparBubble() {
     try {
         const broadcastRef = doc(db, 'config', 'narry_broadcast');
         await setDoc(broadcastRef, { active: false, message: '', publishedAt: Date.now() });
+        narrySetLive(false);
         if (statusEl) { statusEl.style.color='#6b7280'; statusEl.textContent='🗑️ Mensagem removida. Narry voltará ao padrão.'; }
     } catch(e) {
         if (statusEl) { statusEl.style.color='#b91c1c'; statusEl.textContent='❌ Erro: ' + e.message; }
@@ -6178,7 +6252,7 @@ function iniciarBroadcastListener() {
         if (!snap.exists()) return;
         const data = snap.data();
         if (!data.active || !data.message) {
-            // Mensagem desativada — volta ao normal se estava mostrando broadcast
+            narrySetLive(false);
             return;
         }
 
@@ -6189,13 +6263,15 @@ function iniciarBroadcastListener() {
 
         const expiresMs = (data.expiresIn || 300) * 1000;
         const age = Date.now() - pubAt;
-        if (age > expiresMs) return; // Já expirou
+        if (age > expiresMs) { narrySetLive(false); return; }
 
+        narrySetLive(true);
         narryForceBubble('📢 ' + data.message, true);
 
         if (_broadcastTimer) clearTimeout(_broadcastTimer);
         const remaining = Math.max(expiresMs - age, 1000);
         _broadcastTimer = setTimeout(() => {
+            narrySetLive(false);
             narryRotateBubble();
         }, remaining);
 
