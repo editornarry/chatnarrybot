@@ -300,6 +300,38 @@ const tabelaPrecos = {
     },
 
 
+    // ── SAMEL PME ─────────────────────────────────────────────────
+    "SAMEL PME": {
+        "ORIGINAL (ENFERMARIA)": {
+            "TOTAL": {
+                "0-18": {enf:205.29},"19-23":{enf:270.98},"24-28":{enf:311.63},
+                "29-33":{enf:349.02},"34-38":{enf:383.92},"39-43":{enf:433.84},
+                "44-48":{enf:529.28},"49-53":{enf:735.70},"54-58":{enf:1000.55},"59+":{enf:1230.68}
+            }
+        },
+        "ORIGINAL PLUS (APARTAMENTO)": {
+            "TOTAL": {
+                "0-18": {apt:287.40},"19-23":{apt:379.38},"24-28":{apt:436.28},
+                "29-33":{apt:488.63},"34-38":{apt:537.49},"39-43":{apt:607.37},
+                "44-48":{apt:740.99},"49-53":{apt:1029.98},"54-58":{apt:1400.77},"59+":{apt:1722.95}
+            }
+        },
+        "ESSENCIAL (ENFERMARIA)": {
+            "PARCIAL": {
+                "0-18": {enf:256.61},"19-23":{enf:338.73},"24-28":{enf:389.53},
+                "29-33":{enf:436.28},"34-38":{enf:479.91},"39-43":{enf:542.29},
+                "44-48":{enf:661.60},"49-53":{enf:919.62},"54-58":{enf:1250.69},"59+":{enf:1538.34}
+            }
+        },
+        "ESSENCIAL PLUS (APARTAMENTO)": {
+            "PARCIAL": {
+                "0-18": {apt:359.25},"19-23":{apt:474.22},"24-28":{apt:545.35},
+                "29-33":{apt:610.79},"34-38":{apt:671.87},"39-43":{apt:759.21},
+                "44-48":{apt:926.24},"49-53":{apt:1287.47},"54-58":{apt:1750.96},"59+":{apt:2153.68}
+            }
+        }
+    },
+
     // ── CLASSE ADMINISTRADORA ────────────────────────────────────
     "CLASSE ADMINISTRADORA": {
         "FUNCIONÁRIO DO COMÉRCIO": {
@@ -456,6 +488,7 @@ const contratoConfig = {
     "CORPE INDIVIDUAL":       { icon:"🟠", desc:"CORPE Individual",         temDesconto15: true,  temSelect: false },
     "CORPE PME":              { icon:"🟠", desc:"CORPE PME",                temDesconto15: true,  temSelect: false },
     "SAMEL":                  { icon:"🟡", desc:"SAMEL",                    temDesconto15: true,  temSelect: false },
+    "SAMEL PME":              { icon:"🟡", desc:"SAMEL PME",                temDesconto15: true,  temSelect: false, semAmb: true },
     "CLASSE ADMINISTRADORA":  { icon:"🟢", desc:"Classe Administradora",    temDesconto15: false, temSelect: false, somenteParcial: true, semAmb: true },
     "ADVENTISTA":             { icon:"⛪", desc:"Adventista",               temDesconto15: false, temSelect: false, copartFixa: "COM COPARTICIPAÇÃO", temAdv: true },
     "ADVENTISTA PME":         { icon:"⛪", desc:"Adventista PME",           temDesconto15: false, temSelect: false, copartFixa: "COM COPARTICIPAÇÃO", temAdv: true },
