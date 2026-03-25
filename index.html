@@ -2883,6 +2883,12 @@ function atualizarOpcoes() {
             document.getElementById('checkEnf').checked = false;
             document.getElementById('checkApt').checked = true;
         }
+        // SAMEL PME: copart é definida pelo plano — auto-selecionar para evitar confusão
+        if (tipo === 'SAMEL PME') {
+            const isEssencial = plano.includes('ESSENCIAL');
+            document.getElementById('checkParcial').checked = isEssencial;
+            document.getElementById('checkTotal').checked   = !isEssencial;
+        }
         return;
     }
 
