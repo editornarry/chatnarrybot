@@ -211,6 +211,39 @@ const tabelaPrecos = {
         }
     },
 
+    // ── ALTER x FLAMENGO ────────────────────────────────────────
+    // Comercializável: 05 a 64 anos (validar antes de calcular)
+    "ALTER x FLAMENGO": {
+        "ALTER x FLAMENGO": {
+            "PARCIAL": {
+                // AMBULATORIAL PARCIAL (amb) + ENFERMARIA PARCIAL (enf) + APARTAMENTO PARCIAL (apt)
+                "0-18": {amb:170.34,amb15:144.79,enf:255.03,enf15:216.78,apt:380.98,apt15:323.83},
+                "19-23":{amb:224.34,amb15:190.69,enf:335.64,enf15:285.29,apt:501.89,apt15:426.61},
+                "24-28":{amb:255.76,amb15:217.40,enf:385.53,enf15:327.70,apt:576.72,apt15:490.21},
+                "29-33":{amb:285.32,amb15:242.52,enf:431.41,enf15:366.70,apt:645.55,apt15:548.72},
+                "34-38":{amb:300.28,amb15:255.24,enf:452.83,enf15:384.91,apt:677.67,apt15:576.02},
+                "39-43":{amb:337.13,amb15:286.56,enf:511.29,enf15:434.60,apt:765.37,apt15:650.56},
+                "44-48":{amb:412.28,amb15:350.44,enf:623.10,enf15:529.64,apt:933.07,apt15:793.11},
+                "49-53":{amb:571.87,amb15:486.09,enf:858.71,enf15:729.90,apt:1286.46,apt15:1093.49},
+                "54-58":{amb:770.93,amb15:655.29,enf:1158.16,enf15:984.44,apt:1735.65,apt15:1475.30},
+                "59+": {amb:1001.29,amb15:851.10,enf:1504.69,enf15:1278.99,apt:2255.42,apt15:1917.11}
+            },
+            "TOTAL": {
+                // AMBULATORIAL TOTAL (amb) + ENFERMARIA TOTAL (enf) + APARTAMENTO TOTAL (apt)
+                "0-18": {amb:109.27,amb15:92.88,enf:182.26,enf15:154.92,apt:271.84,apt15:231.06},
+                "19-23":{amb:143.56,amb15:122.03,enf:239.59,enf15:203.65,apt:357.82,apt15:304.15},
+                "24-28":{amb:163.50,amb15:138.98,enf:275.06,enf15:233.80,apt:411.03,apt15:349.38},
+                "29-33":{amb:182.28,amb15:154.94,enf:307.71,enf15:261.55,apt:459.99,apt15:390.99},
+                "34-38":{amb:191.78,amb15:163.01,enf:322.93,enf15:274.49,apt:482.84,apt15:410.41},
+                "39-43":{amb:215.18,amb15:182.90,enf:364.52,enf15:309.84,apt:545.21,apt15:463.43},
+                "44-48":{amb:262.89,amb15:223.46,enf:444.03,enf15:377.43,apt:664.47,apt15:564.80},
+                "49-53":{amb:364.21,amb15:309.58,enf:611.58,enf15:519.84,apt:915.78,apt15:778.41},
+                "54-58":{amb:490.61,amb15:417.02,enf:824.56,enf15:700.88,apt:1235.23,apt15:1049.95},
+                "59+": {amb:636.87,amb15:541.34,enf:1070.99,enf15:910.34,apt:1604.87,apt15:1364.14}
+            }
+        }
+    },
+
     // ── CORPE INDIVIDUAL ─────────────────────────────────────────
     "CORPE INDIVIDUAL": {
         "CORPE INDIVIDUAL": {
@@ -474,7 +507,8 @@ const contratoConfig = {
     "HAPVIDA SUPER SIMPLES":  { icon:"🏥", desc:"Hapvida Super Simples",    temDesconto15: true,  temSelect: false, minVidas: 2 },
     "AFFIX SISPEAM":          { icon:"🔷", desc:"AFFIX SISPEAM",            temDesconto15: true,  temSelect: false },
     "AFFIX PME":              { icon:"🔷", desc:"AFFIX PME",                temDesconto15: true,  temSelect: false },
-    "ALTER":                  { icon:"🟣", desc:"ALTER",                    temDesconto15: true,  temSelect: false },
+    "ALTER":                  { icon:"🟣", desc:"ALTER",                    temDesconto15: true,  temSelect: false, idadeMin: 5, idadeMax: 64 },
+    "ALTER x FLAMENGO":       { icon:"🔴", desc:"ALTER x FLAMENGO",         temDesconto15: true,  temSelect: false, idadeMin: 5, idadeMax: 64, corPdf: { primaria: "#CC0000", secundaria: "#1A1A1A" } },
     "CORPE INDIVIDUAL":       { icon:"🟠", desc:"CORPE Individual",         temDesconto15: true,  temSelect: false },
     "CORPE PME":              { icon:"🟠", desc:"CORPE PME",                temDesconto15: true,  temSelect: false },
     "SAMEL":                  { icon:"🟡", desc:"SAMEL",                    temDesconto15: true,  temSelect: false },
