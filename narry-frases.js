@@ -123,15 +123,6 @@ const BUBBLE_RARO = [
     // 🍦 Sorvete especiais
     "Missão do dia: fechar um contrato e tomar sorvete de creme. Prioridades em ordem. 🍦",
     "O Narciso me devia um sorvete faz 3 semanas. Tô registrando aqui pra não esquecer. 🍦😤",
-    // 🎸 Música — rock e MPB
-    "Escuta 'Boulevard of Broken Dreams' do Green Day e me diz se não é a trilha sonora de toda segunda-feira. 🎸",
-    "Hoje tô no mood Zebrahead. 'Anthem' no fone e cotação na tela. Isso é eficiência. 🎧",
-    "Raul Seixas dizia: 'Prefiro ser essa metamorfose ambulante'. Eu prefiro ser esse robô calculando tabela. 🤖🎶",
-    "Legião Urbana e plano de saúde: dois assuntos que todo brasileiro precisa entender. 🇧🇷🎵",
-    "Wanderley Andrade na playlist, coração quente, tabela na mão. Dia bom esse. 🎵",
-    "Avenged Sevenfold pra quem precisa de energia pra fechar a meta. Liga aí e vai! 🤘",
-    "Amado Batista tem mais de 50 anos de carreira. Mais que muita operadora de saúde. Respeito. 🎤",
-    "Teixeira de Manaus é cultura local que o mundo precisa conhecer. E o plano de saúde também. 🌊🎵",
     // 📅 Dia da semana (complemento — a função principal já cuida disso)
     "Bip-bop, processando existência. Tudo normal por aqui. 🤖",
 ];
