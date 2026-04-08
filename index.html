@@ -549,17 +549,54 @@
         </div>
         <div style="padding:20px;">
             <!-- ── BROADCAST BUBBLE ──────────────────────────── -->
-            <div style="margin-bottom:20px;padding:16px;background:linear-gradient(135deg,rgba(255,180,0,0.08),rgba(255,100,0,0.06));border:1.5px solid rgba(255,160,0,0.4);border-radius:14px;">
-                <div style="font-size:0.78rem;font-weight:900;color:#f59e0b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:12px;">📢 Publicar Mensagem no Balão do Narry</div>
-                <div style="font-size:0.72rem;color:#92400e;margin-bottom:10px;font-weight:600;">Todos os usuários verão essa mensagem no balão de pensamento do Narry. Ela fica ativa por 5 minutos e depois volta ao normal automaticamente.</div>
-                <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;">
-                    <textarea id="adminBubbleInput" maxlength="200" rows="2" placeholder="✍️ Digite a mensagem que aparecerá no balão do Narry para todos os usuários..." style="flex:1;min-width:200px;padding:10px 14px;border-radius:10px;border:1.5px solid rgba(255,160,0,0.5);background:rgba(255,250,240,0.9);font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:600;color:#78350f;resize:none;outline:none;"></textarea>
-                    <div style="display:flex;flex-direction:column;gap:6px;">
-                        <button onclick="adminPublicarBubble()" style="padding:9px 18px;border-radius:20px;border:1.5px solid rgba(255,160,0,0.6);background:linear-gradient(135deg,#f59e0b,#d97706);color:white;font-family:'Nunito',sans-serif;font-size:0.8rem;font-weight:800;cursor:pointer;white-space:nowrap;">📡 Publicar</button>
+            <div style="margin-bottom:20px;padding:18px;background:linear-gradient(135deg,rgba(255,180,0,0.08),rgba(255,100,0,0.06));border:1.5px solid rgba(255,160,0,0.4);border-radius:14px;">
+                <div style="font-size:0.78rem;font-weight:900;color:#f59e0b;text-transform:uppercase;letter-spacing:0.8px;margin-bottom:4px;">📡 Transmissão ao Vivo</div>
+                <div style="font-size:0.71rem;color:#92400e;margin-bottom:14px;font-weight:600;">A mensagem aparecerá no balão do Narry para <strong>todos os usuários online</strong> em tempo real.</div>
+
+                <!-- Textarea da mensagem -->
+                <textarea id="adminBubbleInput" maxlength="220" rows="2" placeholder="✍️ Digite a mensagem da transmissão..." style="width:100%;padding:10px 14px;border-radius:10px;border:1.5px solid rgba(255,160,0,0.5);background:rgba(255,250,240,0.9);font-family:'Nunito',sans-serif;font-size:0.85rem;font-weight:600;color:#78350f;resize:none;outline:none;box-sizing:border-box;margin-bottom:10px;"></textarea>
+
+                <!-- Presets rápidos -->
+                <div style="margin-bottom:12px;">
+                    <div style="font-size:0.68rem;font-weight:800;color:#b45309;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:6px;">⚡ Mensagens rápidas</div>
+                    <div style="display:flex;flex-wrap:wrap;gap:5px;" id="broadcastPresets">
+                        <button onclick="adminPreset('🎉 Novidade! Tabela de preços atualizada. Gere suas cotações!')" style="padding:4px 10px;border-radius:20px;border:1px solid rgba(255,160,0,0.4);background:rgba(255,250,240,0.7);color:#78350f;font-family:'Nunito',sans-serif;font-size:0.68rem;font-weight:700;cursor:pointer;">📋 Tabela atualizada</button>
+                        <button onclick="adminPreset('⚠️ Sistema em manutenção programada. Fique à vontade para continuar cotando!')" style="padding:4px 10px;border-radius:20px;border:1px solid rgba(255,160,0,0.4);background:rgba(255,250,240,0.7);color:#78350f;font-family:'Nunito',sans-serif;font-size:0.68rem;font-weight:700;cursor:pointer;">🔧 Manutenção</button>
+                        <button onclick="adminPreset('🔥 Promoção ativa! 15% de desconto nos 3 primeiros meses. Aproveite!')" style="padding:4px 10px;border-radius:20px;border:1px solid rgba(255,160,0,0.4);background:rgba(255,250,240,0.7);color:#78350f;font-family:'Nunito',sans-serif;font-size:0.68rem;font-weight:700;cursor:pointer;">🔥 Promoção 15%</button>
+                        <button onclick="adminPreset('📞 Reunião de equipe em 15 minutos. Prepare suas cotações do dia!')" style="padding:4px 10px;border-radius:20px;border:1px solid rgba(255,160,0,0.4);background:rgba(255,250,240,0.7);color:#78350f;font-family:'Nunito',sans-serif;font-size:0.68rem;font-weight:700;cursor:pointer;">📞 Reunião</button>
+                        <button onclick="adminPreset('🆕 Novo contrato disponível! Confira no menu de contratos.')" style="padding:4px 10px;border-radius:20px;border:1px solid rgba(255,160,0,0.4);background:rgba(255,250,240,0.7);color:#78350f;font-family:'Nunito',sans-serif;font-size:0.68rem;font-weight:700;cursor:pointer;">🆕 Novo contrato</button>
+                    </div>
+                </div>
+
+                <!-- Seletor de duração + botões -->
+                <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                    <div style="display:flex;flex-direction:column;gap:3px;flex:1;min-width:160px;">
+                        <div style="font-size:0.68rem;font-weight:800;color:#b45309;text-transform:uppercase;letter-spacing:0.6px;">⏱ Duração</div>
+                        <select id="adminBubbleDuracao" style="padding:7px 10px;border-radius:8px;border:1.5px solid rgba(255,160,0,0.45);background:rgba(255,250,240,0.9);font-family:'Nunito',sans-serif;font-size:0.8rem;font-weight:700;color:#78350f;outline:none;cursor:pointer;">
+                            <option value="60">1 minuto</option>
+                            <option value="300" selected>5 minutos</option>
+                            <option value="600">10 minutos</option>
+                            <option value="900">15 minutos</option>
+                            <option value="1800">30 minutos</option>
+                            <option value="3600">1 hora</option>
+                            <option value="0">Permanente (até limpar)</option>
+                        </select>
+                    </div>
+                    <div style="display:flex;flex-direction:column;gap:6px;flex-shrink:0;">
+                        <button onclick="adminPublicarBubble()" id="btnAdminPublicar" style="padding:9px 20px;border-radius:20px;border:1.5px solid rgba(255,160,0,0.6);background:linear-gradient(135deg,#f59e0b,#d97706);color:white;font-family:'Nunito',sans-serif;font-size:0.82rem;font-weight:800;cursor:pointer;white-space:nowrap;">📡 Publicar</button>
                         <button onclick="adminLimparBubble()" style="padding:7px 14px;border-radius:20px;border:1.5px solid rgba(200,0,0,0.3);background:rgba(200,0,0,0.08);color:#b91c1c;font-family:'Nunito',sans-serif;font-size:0.75rem;font-weight:700;cursor:pointer;white-space:nowrap;">🗑️ Limpar</button>
                     </div>
                 </div>
-                <div id="adminBubbleStatus" style="font-size:0.72rem;font-weight:700;margin-top:8px;min-height:18px;"></div>
+
+                <!-- Status + contador regressivo -->
+                <div id="adminBubbleStatus" style="font-size:0.72rem;font-weight:700;margin-top:10px;min-height:18px;"></div>
+                <div id="adminBubbleCountdown" style="display:none;margin-top:8px;padding:8px 12px;border-radius:8px;background:rgba(255,240,200,0.6);border:1px solid rgba(255,160,0,0.3);">
+                    <div style="font-size:0.7rem;font-weight:800;color:#92400e;text-transform:uppercase;letter-spacing:0.6px;margin-bottom:2px;">🔴 Transmissão ativa</div>
+                    <div style="display:flex;align-items:center;gap:8px;">
+                        <div id="adminBubbleTimer" style="font-size:1rem;font-weight:900;color:#d97706;font-family:monospace;"></div>
+                        <div style="font-size:0.68rem;color:#92400e;font-weight:600;" id="adminBubbleMsgPreview"></div>
+                    </div>
+                </div>
             </div>
             <!-- ── FIM BROADCAST BUBBLE ──────────────────────── -->
             <div id="adminStats" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px;margin-bottom:20px;"></div>
@@ -1228,10 +1265,10 @@
     background: white; border-radius: 16px 16px 16px 4px;
     padding: 9px 14px; font-size: 0.8rem; font-weight: 700; color: #1a3a5c;
     box-shadow: 0 6px 24px rgba(10,60,140,0.2); border: 2px solid rgba(100,180,255,0.25);
-    max-width: 230px; min-width: 140px; line-height: 1.45; cursor: pointer;
+    max-width: 230px; min-width: 140px; line-height: 1.45;
     transition: opacity 0.35s, transform 0.4s cubic-bezier(.34,1.56,.64,1);
     position: relative; align-self: flex-end; margin-bottom: 2px;
-    z-index: 5;
+    z-index: 5; overflow: visible;
 }
 #narry-bubble::after {
     content: ''; position: absolute; bottom: -9px; right: 18px;
@@ -1544,7 +1581,10 @@
     </div>
 
     <!-- Balão de fala — sempre visível acima do ícone (mobile e desktop) -->
-    <div id="narry-bubble" onclick="narryBubbleClick()" role="status" aria-live="polite" style="display:none;">✨ Oi! Sou o Narry, seu assistente!</div>
+    <div id="narry-bubble" role="status" aria-live="polite" style="display:none;position:relative;">
+        <span id="narry-bubble-text" onclick="narryBubbleClick()" style="display:block;cursor:pointer;padding-right:16px;">✨ Oi! Sou o Narry, seu assistente!</span>
+        <button id="narry-bubble-close" onclick="narryBubbleDismiss(event)" title="Fechar" style="display:none;position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;border:none;background:#e5000a;color:white;font-size:0.6rem;font-weight:900;cursor:pointer;line-height:1;padding:0;box-shadow:0 2px 6px rgba(200,0,0,0.4);z-index:10;">✕</button>
+    </div>
 
     <!-- Badge AO VIVO — aparece acima do balão durante broadcast -->
     <div id="narry-live-badge">🔴 AO VIVO</div>
@@ -2190,8 +2230,10 @@ setInterval(narryRotateBubble, 180000);
 
 // ── TOGGLE PANEL ─────────────────────────────────────────────
 function narryBubbleClick() {
-    // No mobile, balão sempre visível — clicar abre o chat
-    // No desktop, clicar no balão também abre o chat
+    // Durante broadcast, clicar no texto não abre o chat (o ✕ fecha)
+    if (typeof _broadcastDismissed !== 'undefined' && document.getElementById('narry-bubble-close')?.style.display !== 'none') {
+        return; // broadcast ativo — clicar não faz nada, usar o ✕
+    }
     if (!narryPanelOpen) narryTogglePanel();
 }
 
@@ -5255,14 +5297,31 @@ window.addEventListener('beforeunload', async () => {
 // ================================================================
 //  BROADCAST BUBBLE — Admin publica, todos veem em tempo real
 // ================================================================
-let _broadcastUnsub = null;
+let _broadcastUnsub    = null;
+let _broadcastDismissed = false; // user fechou o balão manualmente
+let _countdownInterval  = null;  // intervalo do contador regressivo no admin
 
-window.adminPublicarBubble = async function() {
+// ── Preset rápido ─────────────────────────────────────────────────
+window.adminPreset = function(msg) {
     const inp = document.getElementById('adminBubbleInput');
+    if (inp) { inp.value = msg; inp.focus(); }
+};
+
+// ── Publicar broadcast ────────────────────────────────────────────
+window.adminPublicarBubble = async function() {
+    const inp      = document.getElementById('adminBubbleInput');
     const statusEl = document.getElementById('adminBubbleStatus');
-    const pubBtn = document.querySelector('[onclick="adminPublicarBubble()"]');
-    const msg = inp?.value?.trim();
-    if (!msg) { if (statusEl) { statusEl.style.color='#b91c1c'; statusEl.textContent='⚠️ Digite uma mensagem antes de publicar.'; } return; }
+    const pubBtn   = document.getElementById('btnAdminPublicar');
+    const durSel   = document.getElementById('adminBubbleDuracao');
+    const msg      = inp?.value?.trim();
+
+    if (!msg) {
+        if (statusEl) { statusEl.style.color='#b91c1c'; statusEl.textContent='⚠️ Digite uma mensagem antes de publicar.'; }
+        return;
+    }
+
+    const duracaoSeg = parseInt(durSel?.value || '300');
+    const permanente = duracaoSeg === 0;
 
     if (pubBtn) { pubBtn.disabled = true; pubBtn.textContent = '⏳ Publicando...'; }
     if (statusEl) { statusEl.style.color='#92400e'; statusEl.textContent='Enviando...'; }
@@ -5273,43 +5332,111 @@ window.adminPublicarBubble = async function() {
             message: msg,
             active: true,
             publishedAt: Date.now(),
-            expiresIn: 300
-        }); // setDoc com merge:false garante sobrescrever tudo
-        if (statusEl) { statusEl.style.color='#059669'; statusEl.textContent=`✅ Publicado! "${msg.substring(0,50)}" — aparecerá para todos por 5 min.`; }
+            expiresIn: permanente ? 99999999 : duracaoSeg
+        });
+
+        const duracaoTexto = permanente ? 'permanente (até limpar)' :
+            duracaoSeg < 60 ? `${duracaoSeg}s` :
+            duracaoSeg < 3600 ? `${duracaoSeg/60} min` : `${duracaoSeg/3600}h`;
+
+        if (statusEl) { statusEl.style.color='#059669'; statusEl.textContent=`✅ Transmissão publicada por ${duracaoTexto}!`; }
         if (inp) inp.value = '';
+
+        // Iniciar contador regressivo no painel admin
+        adminIniciarContagem(msg, duracaoSeg, permanente);
+
     } catch(e) {
         if (statusEl) { statusEl.style.color='#b91c1c'; statusEl.textContent='❌ Erro: ' + e.message; }
         console.error('[Broadcast] Erro ao publicar:', e);
     } finally {
         if (pubBtn) { pubBtn.disabled = false; pubBtn.textContent = '📡 Publicar'; }
     }
+};
+
+// ── Contador regressivo no painel admin ───────────────────────────
+function adminIniciarContagem(msg, duracaoSeg, permanente) {
+    if (_countdownInterval) clearInterval(_countdownInterval);
+    const countEl   = document.getElementById('adminBubbleCountdown');
+    const timerEl   = document.getElementById('adminBubbleTimer');
+    const previewEl = document.getElementById('adminBubbleMsgPreview');
+    if (!countEl) return;
+
+    countEl.style.display = 'block';
+    if (previewEl) previewEl.textContent = '"' + msg.substring(0, 60) + (msg.length > 60 ? '…' : '') + '"';
+
+    if (permanente) {
+        if (timerEl) timerEl.textContent = '∞ sem limite';
+        return;
+    }
+
+    let restante = duracaoSeg;
+    const atualizar = () => {
+        if (restante <= 0) {
+            clearInterval(_countdownInterval);
+            if (countEl) countEl.style.display = 'none';
+            const statusEl = document.getElementById('adminBubbleStatus');
+            if (statusEl) { statusEl.style.color='#6b7280'; statusEl.textContent='⌛ Transmissão encerrada automaticamente.'; }
+            return;
+        }
+        const h = Math.floor(restante / 3600);
+        const m = Math.floor((restante % 3600) / 60);
+        const s = restante % 60;
+        if (timerEl) timerEl.textContent = h > 0
+            ? `${h}h ${String(m).padStart(2,'0')}m ${String(s).padStart(2,'0')}s`
+            : m > 0 ? `${m}m ${String(s).padStart(2,'0')}s`
+            : `${s}s`;
+        restante--;
+    };
+    atualizar();
+    _countdownInterval = setInterval(atualizar, 1000);
 }
 
+// ── Limpar broadcast ──────────────────────────────────────────────
 window.adminLimparBubble = async function() {
     const statusEl = document.getElementById('adminBubbleStatus');
     try {
         const broadcastRef = doc(db, 'config', 'narry_broadcast');
         await setDoc(broadcastRef, { active: false, message: '', publishedAt: Date.now() });
         narrySetLive(false);
-        if (statusEl) { statusEl.style.color='#6b7280'; statusEl.textContent='🗑️ Mensagem removida. Narry voltará ao padrão.'; }
+        if (_countdownInterval) { clearInterval(_countdownInterval); _countdownInterval = null; }
+        const countEl = document.getElementById('adminBubbleCountdown');
+        if (countEl) countEl.style.display = 'none';
+        if (statusEl) { statusEl.style.color='#6b7280'; statusEl.textContent='🗑️ Transmissão encerrada.'; }
     } catch(e) {
         if (statusEl) { statusEl.style.color='#b91c1c'; statusEl.textContent='❌ Erro: ' + e.message; }
     }
-}
+};
 
-// Listener ativo para todos os usuários — escuta mudanças no broadcast em tempo real
+// ── Usuário fecha o balão manualmente ────────────────────────────
+window.narryBubbleDismiss = function(e) {
+    if (e) e.stopPropagation();
+    _broadcastDismissed = true;
+    const el = document.getElementById('narry-bubble');
+    const closeBtn = document.getElementById('narry-bubble-close');
+    if (el) {
+        el.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(6px) scale(0.9)';
+        setTimeout(() => { el.style.display = 'none'; el.style.opacity = ''; el.style.transform = ''; }, 320);
+    }
+    if (closeBtn) closeBtn.style.display = 'none';
+    narrySetLive(false);
+};
+
+// ── Listener ativo para todos os usuários ────────────────────────
 function iniciarBroadcastListener() {
     if (_broadcastUnsub) { _broadcastUnsub(); _broadcastUnsub = null; }
     const broadcastRef = doc(db, 'config', 'narry_broadcast');
     let _broadcastTimer = null;
 
     _broadcastUnsub = onSnapshot(broadcastRef, (snap) => {
-        // Documento ainda não existe — ignora silenciosamente
         if (!snap.exists()) return;
         const data = snap.data();
 
         if (!data.active || !data.message) {
             narrySetLive(false);
+            const closeBtn = document.getElementById('narry-bubble-close');
+            if (closeBtn) closeBtn.style.display = 'none';
             return;
         }
 
@@ -5319,20 +5446,48 @@ function iniciarBroadcastListener() {
 
         const expiresMs = (data.expiresIn || 300) * 1000;
         const age = Date.now() - pubAt;
-        if (age > expiresMs) { narrySetLive(false); return; }
+        if (age > expiresMs) {
+            narrySetLive(false);
+            const closeBtn = document.getElementById('narry-bubble-close');
+            if (closeBtn) closeBtn.style.display = 'none';
+            return;
+        }
+
+        // Nova mensagem chega — resetar o dismiss para mostrar de novo
+        _broadcastDismissed = false;
 
         narrySetLive(true);
-        narryForceBubble('📢 ' + data.message, true);
+
+        // Mostrar botão ✕ no balão
+        const closeBtn = document.getElementById('narry-bubble-close');
+        if (closeBtn) closeBtn.style.display = 'block';
+
+        // Atualizar texto do balão diretamente (sem depender do click/open do painel)
+        const bubbleTextEl = document.getElementById('narry-bubble-text');
+        const bubbleEl = document.getElementById('narry-bubble');
+        if (bubbleTextEl) bubbleTextEl.textContent = '📢 ' + data.message;
+        if (bubbleEl) {
+            bubbleEl.style.display = '';
+            bubbleEl.style.opacity = '0';
+            bubbleEl.style.transform = 'translateY(6px) scale(0.9)';
+            requestAnimationFrame(() => requestAnimationFrame(() => {
+                bubbleEl.style.transition = 'opacity 0.4s ease, transform 0.45s cubic-bezier(.34,1.56,.64,1)';
+                bubbleEl.style.opacity = '1';
+                bubbleEl.style.transform = 'translateY(0) scale(1)';
+            }));
+        }
 
         if (_broadcastTimer) clearTimeout(_broadcastTimer);
         const remaining = Math.max(expiresMs - age, 1000);
         _broadcastTimer = setTimeout(() => {
             narrySetLive(false);
-            narryRotateBubble();
+            const closeBtn2 = document.getElementById('narry-bubble-close');
+            if (closeBtn2) closeBtn2.style.display = 'none';
+            if (!narryPanelOpen) narryHideBubble();
         }, remaining);
 
     }, (err) => {
-        console.warn('[Broadcast] Listener error — verifique regras do Firestore para config/narry_broadcast:', err);
+        console.warn('[Broadcast] Listener error:', err);
     });
 }
 
