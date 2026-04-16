@@ -1596,7 +1596,6 @@
 </div>
 
 <script src="logos-operadoras.js"></script>
-<script src="narry-frases.js"></script>
 <script src="precos.js"></script>
 <script src="a95-canvas.js"></script>
 <script>
@@ -2093,10 +2092,9 @@ function narrySetExpr(name) {
     if (name === 'excited') setTimeout(() => narrySetExpr('happy'), 700);
 }
 
-// BUBBLE MSGS carregado de narry-frases.js
 // Mensagens contextuais (gatilhadas por eventos do sistema)
 const BUBBLE_PDF_GERADO = "Consegui gerar o PDF! Só baixar e mandar pra seu cliente. 📄";
-const BUBBLE_ORCAMENTO_GERADO = BUBBLE_ENCERRAMENTO;
+const BUBBLE_ORCAMENTO_GERADO = ["Cotação gerada! Pronto para enviar ao cliente. 😄", "Orçamento pronto! É só copiar ou exportar. 🚀", "Feito! Confira o resultado ao lado. ✅"];
 const BUBBLE_CONTRATO_SELECIONADO = null; // usa narryOnContratoChange
 
 // Estado do sistema de bolhas
@@ -2138,7 +2136,7 @@ function getBubbleMsg() {
     } else if (roll < 0.80) {
         return BUBBLE_SISTEMA[Math.floor(Math.random() * BUBBLE_SISTEMA.length)];
     } else {
-        return BUBBLE_ENCERRAMENTO[Math.floor(Math.random() * BUBBLE_ENCERRAMENTO.length)];
+        return BUBBLE_ORCAMENTO_GERADO[Math.floor(Math.random() * BUBBLE_ORCAMENTO_GERADO.length)];
     }
 }
 
