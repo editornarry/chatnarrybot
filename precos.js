@@ -502,7 +502,7 @@ const contratoConfig = {
     "CORPE INDIVIDUAL":       { icon:"🟠", desc:"CORPE Individual",         temDesconto15: true,  temSelect: false },
     "CORPE PME":              { icon:"🟠", desc:"CORPE PME",                temDesconto15: true,  temSelect: false },
     "SAMEL":                  { icon:"🟡", desc:"SAMEL",                    temDesconto15: true,  temSelect: false },
-    "SAMEL PME":              { icon:"🟡", desc:"SAMEL PME",                temDesconto15: true,  temSelect: false, semAmb: true },
+    "SAMEL PME":              { icon:"🟡", desc:"SAMEL PME",                temDesconto15: false,  temSelect: false, semAmb: true },
     "CLASSE ADMINISTRADORA":  { icon:"🟢", desc:"Classe Administradora",    temDesconto15: false, temSelect: false, somenteParcial: true, semAmb: true },
     "ADVENTISTA":             { icon:"⛪", desc:"Adventista",               temDesconto15: false, temSelect: false, copartFixa: "COM COPARTICIPAÇÃO", temAdv: true },
     "ADVENTISTA PME":         { icon:"⛪", desc:"Adventista PME",           temDesconto15: false, temSelect: false, copartFixa: "COM COPARTICIPAÇÃO", temAdv: true },
