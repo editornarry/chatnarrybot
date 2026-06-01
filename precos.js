@@ -17,54 +17,54 @@ const tabelaPrecos = {
     "HAPVIDA INDIVIDUAL": {
         "NOSSO MÉDICO": {
             "PARCIAL": {
-                "0-18": {enf:278.23,enf15:236.50,apt:415.41,apt15:353.10},
-                "19-23":{enf:366.03,enf15:311.13,apt:547.11,apt15:465.04},
-                "24-28":{enf:420.36,enf15:357.31,apt:628.60,apt15:534.31},
-                "29-33":{enf:470.34,enf15:399.79,apt:703.57,apt15:598.03},
-                "34-38":{enf:493.66,enf15:419.61,apt:738.56,apt15:627.78},
-                "39-43":{enf:557.34,enf15:473.74,apt:834.07,apt15:708.96},
-                "44-48":{enf:679.11,enf15:577.24,apt:1016.72,apt15:864.21},
-                "49-53":{enf:935.71,enf15:795.35,apt:1401.61,apt15:1191.37},
-                "54-58":{enf:1261.86,enf15:1072.58,apt:1890.83,apt15:1607.21},
-                "59+": {enf:1639.26,enf15:1393.37,apt:2456.92,apt15:2088.38}
+                "0-18": {enf:291.95,enf15:248.16,apt:435.99,apt15:370.59},
+                "19-23":{enf:384.14,enf15:326.52,apt:574.27,apt15:488.13},
+                "24-28":{enf:441.18,enf15:375.00,apt:659.83,apt15:560.86},
+                "29-33":{enf:493.66,enf15:419.61,apt:738.55,apt15:627.77},
+                "34-38":{enf:518.15,enf15:440.43,apt:775.29,apt15:659.00},
+                "39-43":{enf:585.01,enf15:497.26,apt:875.58,apt15:744.24},
+                "44-48":{enf:712.87,enf15:605.94,apt:1067.36,apt15:907.26},
+                "49-53":{enf:982.30,enf15:834.96,apt:1471.49,apt15:1250.77},
+                "54-58":{enf:1324.76,enf15:1126.05,apt:1985.16,apt15:1687.39},
+                "59+": {enf:1721.03,enf15:1462.88,apt:2579.55,apt15:2192.62}
             },
             "TOTAL": {
-                "0-18": {enf:198.98,enf15:169.13,apt:296.54,apt15:252.06},
-                "19-23":{enf:261.42,enf15:222.21,apt:390.20,apt15:331.67},
-                "24-28":{enf:300.06,enf15:255.05,apt:448.15,apt15:380.93},
-                "29-33":{enf:335.61,enf15:285.27,apt:501.47,apt15:426.25},
-                "34-38":{enf:352.20,enf15:299.37,apt:526.35,apt15:447.40},
-                "39-43":{enf:397.49,enf15:337.87,apt:594.28,apt15:505.14},
-                "44-48":{enf:484.09,enf15:411.48,apt:724.17,apt15:615.54},
-                "49-53":{enf:666.58,enf15:566.59,apt:997.89,apt15:848.21},
-                "54-58":{enf:898.54,enf15:763.76,apt:1345.80,apt15:1143.93},
-                "59+": {enf:1166.95,enf15:991.91,apt:1748.39,apt15:1486.13}
+                "0-18": {enf:208.74,enf15:177.43,apt:311.18,apt15:264.50},
+                "19-23":{enf:274.30,enf15:233.16,apt:409.53,apt15:348.10},
+                "24-28":{enf:314.87,enf15:267.64,apt:470.38,apt15:399.82},
+                "29-33":{enf:352.19,enf15:299.36,apt:526.36,apt15:447.41},
+                "34-38":{enf:369.61,enf15:314.17,apt:552.49,apt15:469.62},
+                "39-43":{enf:417.16,enf15:354.59,apt:623.81,apt15:530.24},
+                "44-48":{enf:508.09,enf15:431.88,apt:760.20,apt15:646.17},
+                "49-53":{enf:699.70,enf15:594.75,apt:1047.61,apt15:890.47},
+                "54-58":{enf:943.25,enf15:801.76,apt:1412.93,apt15:1200.99},
+                "59+": {enf:1225.07,enf15:1041.31,apt:1835.65,apt15:1560.30}
             }
         },
         "NOSSO PLANO": {
             "PARCIAL": {
-                "0-18": {amb:218.13,amb15:185.41,enf:326.65,enf15:277.65,apt:488.04,apt15:414.83},
-                "19-23":{amb:287.34,amb15:244.24,enf:429.95,enf15:365.46,apt:642.98,apt15:546.53},
-                "24-28":{amb:327.60,amb15:278.46,enf:493.87,enf15:419.79,apt:738.85,apt15:628.02},
-                "29-33":{amb:365.48,amb15:310.66,enf:552.67,enf15:469.77,apt:827.05,apt15:703.00},
-                "34-38":{amb:384.65,amb15:326.95,enf:580.11,enf15:493.09,apt:868.21,apt15:737.98},
-                "39-43":{amb:431.87,amb15:367.09,enf:655.02,enf15:556.77,apt:980.58,apt15:833.49},
-                "44-48":{amb:528.17,amb15:448.94,enf:798.28,enf15:678.54,apt:1195.46,apt15:1016.14},
-                "49-53":{amb:732.65,amb15:622.75,enf:1100.16,enf15:935.14,apt:1648.27,apt15:1401.03},
-                "54-58":{amb:987.73,amb15:839.57,enf:1483.87,enf15:1261.29,apt:2223.82,apt15:1890.25},
-                "59+": {amb:1282.89,amb15:1090.46,enf:1927.88,enf15:1638.70,apt:2889.81,apt15:2456.34}
+                "0-18": {amb:228.84,amb15:194.51,enf:342.79,enf15:291.37,apt:512.25,apt15:435.41},
+                "19-23":{amb:301.51,amb15:256.28,enf:451.25,enf15:383.56,apt:674.94,apt15:573.70},
+                "24-28":{amb:343.78,amb15:292.21,enf:518.36,enf15:440.61,apt:775.60,apt15:659.26},
+                "29-33":{amb:383.55,amb15:326.02,enf:580.10,enf15:493.09,apt:868.21,apt15:737.98},
+                "34-38":{amb:403.67,amb15:343.12,enf:608.91,enf15:517.57,apt:911.43,apt15:774.72},
+                "39-43":{amb:453.25,amb15:385.26,enf:687.57,enf15:584.43,apt:1029.42,apt15:875.01},
+                "44-48":{amb:554.37,amb15:471.21,enf:837.99,enf15:712.29,apt:1255.05,apt15:1066.79},
+                "49-53":{amb:769.07,amb15:653.71,enf:1154.96,enf15:981.72,apt:1730.51,apt15:1470.93},
+                "54-58":{amb:1036.90,amb15:881.37,enf:1557.85,enf15:1324.17,apt:2334.84,apt15:1984.61},
+                "59+": {amb:1346.82,amb15:1144.80,enf:2024.05,enf15:1720.44,apt:3034.14,apt15:2579.02}
             },
             "TOTAL": {
-                "0-18": {amb:139.89,amb15:118.91,enf:233.42,enf15:198.41,apt:348.19,apt15:295.96},
-                "19-23":{amb:183.83,amb15:156.26,enf:306.88,enf15:260.85,apt:458.38,apt15:389.62},
-                "24-28":{amb:209.39,amb15:177.98,enf:352.33,enf15:299.48,apt:526.56,apt15:447.58},
-                "29-33":{amb:233.44,amb15:198.42,enf:394.15,enf15:335.03,apt:589.29,apt15:500.90},
-                "34-38":{amb:245.61,amb15:208.77,enf:413.67,enf15:351.62,apt:618.56,apt15:525.78},
-                "39-43":{amb:275.59,amb15:234.25,enf:466.95,enf15:396.91,apt:698.47,apt15:593.70},
-                "44-48":{amb:336.73,amb15:286.22,enf:568.83,enf15:483.51,apt:851.29,apt15:723.60},
-                "49-53":{amb:466.55,amb15:396.57,enf:783.52,enf15:665.99,apt:1173.32,apt15:997.32},
-                "54-58":{amb:628.50,amb15:534.23,enf:1056.40,enf15:897.94,apt:1582.63,apt15:1345.24},
-                "59+": {amb:815.90,amb15:693.52,enf:1372.17,enf15:1166.34,apt:2056.26,apt15:1747.82}
+                "0-18": {amb:146.69,amb15:124.69,enf:244.90,enf15:208.17,apt:365.41,apt15:310.60},
+                "19-23":{amb:192.83,amb15:163.91,enf:322.04,enf15:273.73,apt:481.11,apt15:408.94},
+                "24-28":{amb:219.67,amb15:186.72,enf:369.77,enf15:314.30,apt:552.70,apt15:469.80},
+                "29-33":{amb:244.92,amb15:208.18,enf:413.68,enf15:351.63,apt:618.56,apt15:525.78},
+                "34-38":{amb:257.70,amb15:219.05,enf:434.17,enf15:369.04,apt:649.30,apt15:551.91},
+                "39-43":{amb:289.18,amb15:245.80,enf:490.11,enf15:416.59,apt:733.21,apt15:623.23},
+                "44-48":{amb:353.38,amb15:300.37,enf:597.09,enf15:507.53,apt:893.67,apt15:759.62},
+                "49-53":{amb:489.70,amb15:416.25,enf:822.52,enf15:699.14,apt:1231.80,apt15:1047.03},
+                "54-58":{amb:659.75,amb15:560.79,enf:1109.05,enf15:942.69,apt:1661.58,apt15:1412.34},
+                "59+": {amb:856.52,amb15:728.04,enf:1440.61,enf15:1224.52,apt:2158.90,apt15:1835.07}
             }
         }
     },
@@ -493,10 +493,10 @@ const tabelaPrecos = {
 //  CONFIGURAÇÃO DOS CONTRATOS
 // ================================================================
 const contratoConfig = {
-    "HAPVIDA INDIVIDUAL":     { icon:"🏥", desc:"Hapvida Individual",       temDesconto15: true,  temSelect: false },
+    "HAPVIDA INDIVIDUAL":     { icon:"🏥", desc:"Hapvida Individual (att.06/26)",       temDesconto15: true,  temSelect: false },
     "HAPVIDA SUPER SIMPLES":  { icon:"🏥", desc:"Hapvida Super Simples",    temDesconto15: true,  temSelect: false, minVidas: 2 },
     "AFFIX SISPEAM":          { icon:"🔷", desc:"AFFIX SISPEAM",            temDesconto15: true,  temSelect: false },
-    "AFFIX PME":              { icon:"🔷", desc:"AFFIX PME",                temDesconto15: true,  temSelect: false },
+    "AFFIX PME":              { icon:"🔷", desc:"AFFIX PME (att.05/26)",                temDesconto15: true,  temSelect: false },
     "ALTER":                  { icon:"🟣", desc:"ALTER",                    temDesconto15: true,  temSelect: false, idadeMin: 5, idadeMax: 64 },
     "ALTER x FLAMENGO":       { icon:"🔴", desc:"ALTER x FLAMENGO",         temDesconto15: true,  temSelect: false, idadeMin: 5, idadeMax: 64, corPdf: { primaria: "#CC0000", secundaria: "#1A1A1A" } },
     "CORPE INDIVIDUAL":       { icon:"🟠", desc:"CORPE Individual",         temDesconto15: true,  temSelect: false },
@@ -506,7 +506,7 @@ const contratoConfig = {
     "CLASSE ADMINISTRADORA":  { icon:"🟢", desc:"Classe Administradora",    temDesconto15: false, temSelect: false, somenteParcial: true, semAmb: true },
     "ADVENTISTA":             { icon:"⛪", desc:"Adventista",               temDesconto15: false, temSelect: false, copartFixa: "COM COPARTICIPAÇÃO", temAdv: true },
     "ADVENTISTA PME":         { icon:"⛪", desc:"Adventista PME",           temDesconto15: false, temSelect: false, copartFixa: "COM COPARTICIPAÇÃO", temAdv: true },
-    "SELECT":                 { icon:"⭐", desc:"SELECT",                   temDesconto15: false, temSelect: true  },
+    "SELECT":                 { icon:"⭐", desc:"SELECT (desatualizado)",                   temDesconto15: false, temSelect: true  },
     "ODONTO INDIVIDUAL":      { icon:"🦷", desc:"Odonto Individual",        temDesconto15: false, temSelect: false, temOdonto: true, valorOdonto: 34.90 },
     "ODONTO PME":             { icon:"🦷", desc:"Odonto PME",               temDesconto15: false, temSelect: false, temOdonto: true, planosOdonto: {"PORTE I (2 a 29 vidas)": 23.90, "PORTE II (30 a 99 vidas)": 18.61} },
 };
