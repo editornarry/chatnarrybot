@@ -494,7 +494,7 @@ const tabelaPrecos = {
 // ================================================================
 const contratoConfig = {
     "HAPVIDA INDIVIDUAL":     { icon:"🏥", desc:"Hapvida Individual (att.07/26)",       temDesconto15: false,  temSelect: false },
-    "HAPVIDA SUPER SIMPLES":  { icon:"🏥", desc:"Hapvida Super Simples",    temDesconto15: true,  temSelect: false, minVidas: 2 },
+    "HAPVIDA SUPER SIMPLES":  { icon:"🏥", desc:"Hapvida Super Simples",    temDesconto15: false,  temSelect: false, minVidas: 2 },
     "AFFIX SISPEAM":          { icon:"🔷", desc:"AFFIX SISPEAM",            temDesconto15: true,  temSelect: false },
     "AFFIX PME":              { icon:"🔷", desc:"AFFIX PME (att.05/26)",                temDesconto15: true,  temSelect: false },
     "ALTER":                  { icon:"🟣", desc:"ALTER",                    temDesconto15: true,  temSelect: false, idadeMin: 5, idadeMax: 64 },
