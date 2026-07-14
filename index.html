@@ -1094,6 +1094,7 @@ const NARRY_TELA_SRC = "";
 const NARRY_MINI_SRC = "";
 function narryShowError(msg) { try { alert(msg); } catch(e) { console.error(msg); } }
 function narryForceBubble() { /* removido */ }
+function narrySetLive() { /* removido */ }
 function narrySetExpr() { /* removido */ }
 function narryReact() { /* removido */ }
 function narryShowBubble() { /* removido */ }
@@ -1716,7 +1717,6 @@ function compartilharWhatsApp() {
 function abrirPdf() {
     const val = document.getElementById('resultadoArea').value;
     if (!val) { narryShowError("Gere o orçamento primeiro."); return; }
-    narryForceBubble(BUBBLE_PDF_GERADO, true);
     // Reset modelo para padrão
     modeloPdfAtual = 'padrao';
     document.querySelectorAll('.pdf-model-btn').forEach(b => {
@@ -2584,12 +2584,37 @@ async function exportarPNGModelo(modelo) {
     }
     try {
         const canvas = await html2canvas(temp, { backgroundColor:'#ffffff', scale:2, useCORS:true, allowTaint:true });
-        const link = document.createElement('a');
-        link.download = `cotacao-${ultimoResultado.tipo}-${modelo}-${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.png`;
-        link.href = canvas.toDataURL('image/png');
-        link.click();
-        statusEl.textContent = '✅ Imagem baixada!';
-        setTimeout(() => { statusEl.style.display = 'none'; fecharPngModal(); }, 1500);
+        const fileName = `cotacao-${ultimoResultado.tipo}-${modelo}-${new Date().toLocaleDateString('pt-BR').replace(/\//g,'-')}.png`;
+
+        // Converter para Blob (necessário para o Web Share API funcionar com arquivos)
+        const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/png'));
+        const file = new File([blob], fileName, { type: 'image/png' });
+
+        // iPhone/iPad (Safari) não baixa data: URLs via <a download> — usamos o
+        // compartilhamento nativo, que abre a folha com "Salvar Imagem".
+        if (navigator.canShare && navigator.canShare({ files: [file] })) {
+            try {
+                await navigator.share({ files: [file], title: fileName });
+                statusEl.textContent = '✅ Escolha "Salvar Imagem" na folha de compartilhamento!';
+                setTimeout(() => { statusEl.style.display = 'none'; fecharPngModal(); }, 2000);
+            } catch (shareErr) {
+                // Usuário cancelou o compartilhamento — não é um erro real
+                if (shareErr.name !== 'AbortError') {
+                    statusEl.textContent = '❌ Erro ao compartilhar. Tente novamente.';
+                } else {
+                    statusEl.style.display = 'none';
+                }
+            }
+        } else {
+            // Navegadores desktop / Android — download tradicional continua igual
+            const link = document.createElement('a');
+            link.download = fileName;
+            link.href = URL.createObjectURL(blob);
+            link.click();
+            URL.revokeObjectURL(link.href);
+            statusEl.textContent = '✅ Imagem baixada!';
+            setTimeout(() => { statusEl.style.display = 'none'; fecharPngModal(); }, 1500);
+        }
     } catch(e) {
         statusEl.textContent = '❌ Erro ao gerar. Tente novamente.';
     }
