@@ -1916,10 +1916,12 @@ function renderPdfComModelo(dados, modelo) {
     const obs = document.getElementById('obsInput')?.value.trim() || '';
     const validade = document.getElementById('validadeInput')?.value;
     const validadeTexto = validade === 'hoje' ? ' · Válida somente hoje' : validade ? ` · Válida por ${validade} dias` : '';
-    const temDesconto = ['HAPVIDA INDIVIDUAL','HAPVIDA SUPER SIMPLES','AFFIX SISPEAM','AFFIX PME','ALTER','CORPE INDIVIDUAL','CORPE PME','SAMEL','SAMEL PME'].includes(tipo);
+    // Reflete o desconto real dos valores já calculados (respeita o temDesconto15
+    // de precos.js automaticamente), em vez de uma lista fixa de operadoras.
+    const temDesconto = (itens || []).some(b => (b.linhas || []).some(l => Math.abs(l.vDesc - l.valorBase) > 0.01));
 
     const benefHTML = (itens || []).map((b, idx) => {
-        const linhas = b.linhas.map(l => `
+        const linhas = b.linhas.map(l => temDesconto ? `
             <tr>
                 <td style="padding:10px 14px;font-size:13px;color:${c.text};font-weight:600;border-bottom:1px solid ${c.border};">${l.label}</td>
                 <td style="padding:10px 14px;font-size:13px;text-align:right;border-bottom:1px solid ${c.border};">
@@ -1929,6 +1931,12 @@ function renderPdfComModelo(dados, modelo) {
                 <td style="padding:10px 14px;font-size:13px;text-align:right;border-bottom:1px solid ${c.border};">
                     <div style="color:${c.sub};font-weight:700;">${fmt(l.valorBase)}</div>
                     ${l.vDesc !== l.valorBase ? `<div style="color:#9ca3af;font-size:10px;margin-top:1px;">após 3 meses</div>` : ''}
+                </td>
+            </tr>` : `
+            <tr>
+                <td style="padding:10px 14px;font-size:13px;color:${c.text};font-weight:600;border-bottom:1px solid ${c.border};">${l.label}</td>
+                <td style="padding:10px 14px;font-size:13px;text-align:right;border-bottom:1px solid ${c.border};">
+                    <div style="color:${c.acc};font-weight:800;font-size:14px;">${fmt(l.valorBase)}</div>
                 </td>
             </tr>`).join('');
         return `
@@ -1943,8 +1951,10 @@ function renderPdfComModelo(dados, modelo) {
                 <table style="width:100%;border-collapse:collapse;background:${c.bg};">
                     <thead><tr style="background:${c.border}20;">
                         <th style="padding:7px 14px;font-size:10px;text-align:left;color:${c.acc};font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Cobertura</th>
-                        <th style="padding:7px 14px;font-size:10px;text-align:right;color:${c.acc};font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Valor Normal</th>
-                        <th style="padding:7px 14px;font-size:10px;text-align:right;color:${c.acc};font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Valor Normal</th>
+                        ${temDesconto ? `
+                        <th style="padding:7px 14px;font-size:10px;text-align:right;color:${c.acc};font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Com Desconto</th>
+                        <th style="padding:7px 14px;font-size:10px;text-align:right;color:${c.acc};font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Valor Normal</th>` : `
+                        <th style="padding:7px 14px;font-size:10px;text-align:right;color:${c.acc};font-weight:800;text-transform:uppercase;letter-spacing:0.5px;">Valor</th>`}
                     </tr></thead>
                     <tbody>${linhas}</tbody>
                 </table>
@@ -2355,7 +2365,7 @@ function renderModelo2(dados) {
     const telefone = document.getElementById('telCorretor').value.trim();
     const obs = document.getElementById('obsInput')?.value.trim() || '';
     const validade = document.getElementById('validadeInput')?.value;
-    const temDesc = ['HAPVIDA INDIVIDUAL','HAPVIDA SUPER SIMPLES','AFFIX SISPEAM','AFFIX PME','ALTER','CORPE INDIVIDUAL','CORPE PME','SAMEL','SAMEL PME'].includes(tipo);
+    const temDesc = (itens || []).some(b => (b.linhas || []).some(l => Math.abs(l.vDesc - l.valorBase) > 0.01));
 
     // Se tiver itensPorCopart com múltiplas coparts (Parcial + Total), renderizar ambas
     const coparts = (itensPorCopart && copartsSel && copartsSel.length > 1) ? copartsSel : null;
@@ -2446,7 +2456,7 @@ function renderCompCard(dados) {
     if (!dados) return '<div style="text-align:center;padding:32px 16px;color:var(--text-light);font-size:0.82rem;font-weight:700;">Nenhuma cotação capturada ainda.</div>';
     const { tipo, plano, copart, idades, itens, somaAmb, somaEnf, somaApt, querAmb, querEnf, querApt } = dados;
     const cores = CORES_OPERADORA[tipo] || { c1:'#0d4fa0', c2:'#1a7bbf' };
-    const temDesc = ['HAPVIDA INDIVIDUAL','HAPVIDA SUPER SIMPLES','AFFIX SISPEAM','AFFIX PME','ALTER','CORPE INDIVIDUAL','CORPE PME','SAMEL','SAMEL PME'].includes(tipo);
+    const temDesc = (itens || []).some(b => (b.linhas || []).some(l => Math.abs(l.vDesc - l.valorBase) > 0.01));
 
     let totalHTML = '';
     if (querAmb && somaAmb>0) totalHTML += `<div style="margin-bottom:4px;"><span style="font-size:0.75rem;color:#6b7280;font-weight:700;">Ambulatorial: </span><span style="font-size:0.9rem;font-weight:900;color:${cores.c1};">${fmt(somaAmb)}</span></div>`;
